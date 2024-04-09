@@ -1,7 +1,9 @@
 # GALEON
-
 #### A Comprehensive Bioinformatic Tool to Analyse and Visualise Gene Clusters in Complete Genomes
 
+<div>
+    <img src="https://github.com/molevol-ub/galeon/blob/main/GALEON_masterScripts/GaleonLogo.png" alt="My Logo" width="200">
+</div>
 
 To facilitate the identification, analysis, and visualisation of physically clustered gene family genes within chromosome-level genomes, we introduce GALEON, a user-friendly bioinformatic tool. GALEON identifies gene clusters by studying the spatial distribution of pairwise physical distances among gene family members along with the genome-wide gene density. The pipeline also enables the simultaneous analysis and comparison of two gene families, and allows the exploration of the relationship between physical and evolutionary distances. This tool offers a novel approach for studying the origin and evolution of gene families.
 
