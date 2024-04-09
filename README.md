@@ -157,12 +157,12 @@ which GALEON_ControlScript.py
 ## 2. Input data
 **Warning**: Please be careful while preparing the inputs, follow precisely the below instructions. Input file names and formats are mandatory. 
 
-GALEON uses two types of files for each gene family:
+GALEON uses three types of files for each gene family:
 - Annotation files: with the coordinates of the genes.
-- Proteins (or MSA): in FASTA format. 
+- Proteins (or MSA): in FASTA format. Needed for evolutionary distances computation.
+- Chromosome/Scaffold sizes file. Needed for the summary plots and final report.
 
 ### 2.1. Annotation files format
-All the input coordinate files MUST be provided in the same file format.
 
 - Input coordinate file format: *GFF3*, *BED1*, *BED2* (check the formats below)
 - Input coordinates file name: **{FAMILYNAME}_fam.{FORMAT}**
@@ -170,6 +170,8 @@ All the input coordinate files MUST be provided in the same file format.
    - *GFF3* file name: GR_fam.gff3
    - *BED1* file name: GR_fam.bed1
    - *BED2* file name: GR_fam.bed2
+
+All the input coordinate files MUST be provided in the same file format.
 
 #### 2.1.1. GFF3 format
 - 9 tab separated columns. Only five of them will be used: `scaffold`, `feature` `start`, `end` and `attribute`.
@@ -227,13 +229,10 @@ To compute the evolutionary distances, you will need to provide either the prote
 **NOTES**:
 
 - Protein names MUST coincide with the gene name of the input GFF3 or BED2 file.
-- If raw protein data is provided, mafft will align them.
-- If pre-computed MSA data is provided, it will be used directly to run FastTree or iqtree and get the evo. distances.
+- If raw protein data is provided, *mafft* will align them.
+- If pre-computed MSA data is provided, it will be used directly to run *FastTree* or *iqtree* and get the evo. distances.
 - BED1 format does not contain the gene name information, so BED2 format should be used instead.
  
-### 2.1. Annotation files format
-All the input coordinate files MUST be provided in the same file format.
-
 
 ### 2.3. Chromosome/Scaffold sizes file
 This is used mainly as a guide to filter the output results and summarise the findings focusing on the main scaffolds (those corresponding to chromosomes) or a subset of scaffolds of choice (for example: the ten largest scaffolds or a list of scaffolds of interest).
@@ -249,23 +248,62 @@ This is used mainly as a guide to filter the output results and summarise the fi
 
 
 
-## 2. Running GALEON
+## 3. Running GALEON
 
-### 2.1. Estimate g parameter
+### 3.1. Estimate g parameter (*mode: gestimate*)
+In this mode, the pipeline estimates the expected number of genes found in a number of bases, as well as the number of genes expected across the g input values and the probability of finding 2 or more genes in a window of g size (i.e.: 100 Kb), which would be considered as a cluster in the following analyses (**Section 3.2.**).
 
-The following script will estimate the g parameter based in the inputs:
+Run the following command to estimate the g parameter based on the inputs. No input files are required here.
 
--n define ...
--s ...
--g ...
+- `-n NUM` Gene family size (number of genes)
+- `-s NUM` Genome size (in Mb units)
+- `-g NUM` g value (in Kb units): more that one can be tested
+- `-outdir DIRNAME` Output directory, set by default to *g_estimation_Results_Directory*.
 
+**Commands**
 ```
-python ControlScript.py gestimate -n 411 -s 1365.69 -g 100
+# Run using one g value
+GALEON_ControlScript.py gestimate -n 134 -s 1354 -g 100
+
+# Test several g values
+GALEON_ControlScript.py gestimate -n 134 -s 1354 -g 150,200,300,400
 ```
 
+**Help message**
+```
+# Run using one g value
+GALEON_ControlScript.py gestimate -h
+```
+
+**Results**
+
+Estimation table: `g_estimation.table.txt`
+
+Output table that contains:
+
+column: "g value" - input g value
+
+column: "Exp. 1 gene each X Mb" - 1 gene, expected to be found each "X" Mb
+
+column: "Exp. genes / Mb" - # of genes, expected to be found each Mb
+
+column: "Exp. Genes / Kb" - # of genes, expected to be found each 1 Kb
+
+column: "Exp. Genes/g value" - # of genes, expected to be found each "g" Kb
+
+column: "P(X>=2) / g value" - The probability of finding by chance two (or more) genes in a "g" kb stretch
+
+column: "Poisson's λ"
+
+Log files: 
+
+Logs_gestimate_mode/gestimation.out 
+
+Logs_gestimate_mode/gestimation.err
 
 
-### 2.2. Identifying gene clusters
+
+### 3.2. Gene cluster identification (*mode: clusterfinder*)
 
 
 
