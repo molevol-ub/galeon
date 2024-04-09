@@ -1,4 +1,3 @@
-#!/home/vadim/miniconda3/bin/python
 import os, shutil, subprocess, ast, sys
 import pandas as pd
 from collections import Counter
