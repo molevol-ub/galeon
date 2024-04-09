@@ -186,3 +186,12 @@ if temp == "":
 else:
     msg = f"- Using 'R' from {temp}"
     print(msg)
+
+
+# Check pandoc
+temp = subprocess.run("which pandoc", shell=True, capture_output=True, text=True).stdout.strip()
+if temp == "":
+    raise ValueError("'pandoc' not found")
+else:
+    msg = f"- Using 'pandoc' from {temp}"
+    print(msg)
