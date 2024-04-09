@@ -622,6 +622,8 @@ clusterfinder_Results_Directory/
 ## 4. Example dataset
 
 An example to run GALEON can be found in `Example_data` folder. You enter to each Test directory (or copy it somewhere else) and run the commands described below.
+Remember to have the Galeon conda environment activated before running the commands.
+- All the example are solved, check this file [Solved_examples.tar.gz](https://github.com/molevol-ub/galeon/blob/main/GALEON_compressed_file/Solved_examples.tar.gz)
 
 ### 4.1. Test 1. Estimate g parameter
 
