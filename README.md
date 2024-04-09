@@ -711,7 +711,7 @@ GALEON_Report.py -clust 3_OneFam_PhysEvoDistances_GFF3/ -plots Plots -ssize ChrS
 cd Test_4
 
 # Run Galeon
-GALEON_ControlScript.py clusterfinder -a GFFs/ -e enabled -p Proteins/ -pm True -outdir 4_OneFam_PhysEvoDistances_GFF3_pm/
+GALEON_ControlScript.py clusterfinder -a GFFs/ -g 100,300 -e enabled -p Proteins/ -pm True -outdir 4_OneFam_PhysEvoDistances_GFF3_pm/
 
 # Get evolutionary statistics (Cst) and perform the Mann-Whitney test
 GALEON_GetEvoStats.py -clust 4_OneFam_PhysEvoDistances_GFF3_pm/ -prot Proteins/ -coords GFFs
@@ -731,17 +731,19 @@ GALEON_Report.py -clust 4_OneFam_PhysEvoDistances_GFF3_pm/ -plots Plots -ssize C
 - Input g value: `-g 100,200`
 - Enable the usage of Proteins: `-e enabled`
 - Perform the joint analysis of two families: `-F BetweenFamilies`
-- Output directory: `-outdir 5_TwoFamInteraction_GFF3`
+- Output directory: `-outdir 5_TwoFamJointAnalysis_GFF3`
 
 ```
+cd Test_5
+
 # Run Galeon
-GALEON_ControlScript.py clusterfinder -a GFFs/ -F BetweenFamilies -e disabled -outdir 5_TwoFamInteraction_GFF3
+GALEON_ControlScript.py clusterfinder -a GFFs/ -F BetweenFamilies -e disabled -outdir 5_TwoFamJointAnalysis_GFF3
 
 # Generate summary files and tables
-GALEON_SummaryFiles.py -fam merged -clust 5_TwoFamInteraction_GFF3/ -coords GFFs/merged_dir/ -ssize ChrSizes.txt -sfilter 7
+GALEON_SummaryFiles.py -fam merged -clust 5_TwoFamJointAnalysis_GFF3/ -coords GFFs/merged_dir/ -ssize ChrSizes.txt -sfilter 7
 
 # Create a summary report
-GALEON_Report.py -clust 5_TwoFamInteraction_GFF3/ -ssize ChrSizes.txt -echo False
+GALEON_Report.py -clust 5_TwoFamJointAnalysis_GFF3/ -ssize ChrSizes.txt -echo False
 ```
 
 
