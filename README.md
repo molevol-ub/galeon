@@ -16,11 +16,12 @@ V1: Initial release
 ## 0. Contents
 
  1. Installation and prerequisites
- 2. Running GALEON
- 3. Output
- 4. Example data
- 5. Citation
- 6. Troubleshooting
+ 2. Input data
+ 3. Running GALEON
+ 4. Output
+ 5. Example data
+ 6. Citation
+ 7. Troubleshooting
 
 
 ## 1. Installation and prerequisites
@@ -151,6 +152,70 @@ source ~/.bashrc
 which GALEON_ControlScript.py
 # now it should output: YOURPATH_to/GALEON_ControlScript.py
 ```
+
+## 2. Input data
+**Warning**: Please be careful while preparing the inputs, follow precisely the below instructions. Input file names and formats are mandatory. 
+
+GALEON uses two types of files for each gene family:
+- Annotation files: with the coordinates of the genes.
+- Proteins: in FASTA format. 
+
+### 2.1. Annotation files format
+All the input coordinate files MUST be provided in the same file format.
+
+- Input coordinate file format: *GFF3*, *BED1*, *BED2* (check the formats below)
+- Input coordinates file name: **{FAMILYNAME}_fam.{FORMAT}**
+  - Examples:
+   - *GFF3 format*: GR_fam.gff3
+   - *BED1 format*: GR_fam.bed1
+   - *BED2 format*: GR_fam.bed2
+
+#### 2.1.1. GFF3 format
+- 9 tab separated columns. Only five of them will be used: `scaffold`, `feature` `start`, `end` and `attribute`.
+- Make sure that the "gene" is present in the `feature` column.
+- Gene names are inferred from the `attribute` column.
+- The header is shown to clarify the meaning of each field but it is not required.
+
+| scaffold | source | feature | start | end | score | strand | frame | attribute |
+| ------------- | ------------- | ------------- | ------------- | ------------- | ------------- | ------------- | ------------- | ------------- |
+| Scaffold_14804_HRSCAF_18385 | AnnotGFF | gene | 41841903 | 41843055 | 0.51 | - | . | ID=g10232;blastphmmer;annot;Pos:1-383 |
+| Scaffold_14804_HRSCAF_18385 | AnnotGFF | mRNA | 41841903 | 41843055 | 0.51 | - | . | ID=g10232.t1;Parent=g10232;blastphmmer;annot;Pos:1-383 |
+| Scaffold_14804_HRSCAF_18385 | AnnotGFF | CDS | 41841904 | 41843052 | 0.51 | - | 0 | ID=g10232.t1.CDS1;Parent=g10232.t1;blastphmmer;annot;Pos:1-383 |
+| Scaffold_14804_HRSCAF_18385 | AnnotGFF | gene | 47268322 | 47268742 | 0.67 | + | . | ID=g10331;blastphmmer;annot;Pos:1-139 |
+| Scaffold_14804_HRSCAF_18385 | AnnotGFF | mRNA | 47268322 | 47268742 | 0.67 | + | . | ID=g10331.t1;Parent=g10331;blastphmmer;annot;Pos:1-139 |
+| Scaffold_14804_HRSCAF_18385 | AnnotGFF | CDS | 47268322 | 47268738 | 0.67 | + | 0 | ID=g10331.t1.CDS1;Parent=g10331.t1;blastphmmer;annot;Pos:1-139 |
+| Scaffold_14804_HRSCAF_18385 | AnnotGFF | gene | 47277448 | 47277868 | 0.63 | + | . | ID=g10332;blastphmmer;annot;Pos:1-139 |
+| Scaffold_14804_HRSCAF_18385 | AnnotGFF | mRNA | 47277448 | 47277868 | 0.63 | + | . | ID=g10332.t1;Parent=g10332;blastphmmer;annot;Pos:1-139 |
+| Scaffold_14804_HRSCAF_18385 | AnnotGFF | CDS | 47277448 | 47277864 | 0.63 | + | 0 | ID=g10332.t1.CDS1;Parent=g10332.t1;blastphmmer;annot;Pos:1-139 |
+
+#### 2.1.2. BED2 format
+- 4 tab separated columns
+
+| scaffold | start | end | attribute |
+| ------------- | ------------- | ------------- | ------------- |
+| Scaffold_14804_HRSCAF_18385 | 41841903 | 41843055 | g10232 |
+| Scaffold_14804_HRSCAF_18385 | 47268322 | 47268742 | g10331 |
+| Scaffold_14804_HRSCAF_18385 | 47277448 | 47277868 | g10332 |
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 ## 2. Running GALEON
