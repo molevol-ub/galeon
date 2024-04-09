@@ -16,6 +16,7 @@ V1: Initial release
 
 ## 0. Contents
 [Installation and prerequisites](## "1. Installation and prerequisites")  
+[Troubleshooting](## "7. Troubleshooting")  
 
  1. Installation and prerequisites
  2. Input data
