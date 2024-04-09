@@ -1,3 +1,4 @@
+#!/home/vadim/miniconda3/bin/python
 import os, shutil, subprocess, ast, sys
 import pandas as pd
 from collections import Counter
@@ -169,7 +170,7 @@ def CheckAnnotFile(i_file):
 
 	else:
 		if fileformat == "gff3":
-			DF = pd.read_csv(i_file, sep="\t")
+			DF = pd.read_csv(i_file, sep="\t", header=None)
 			temp = DF.shape
 			colnum = temp[1]
 
@@ -182,7 +183,7 @@ def CheckAnnotFile(i_file):
 				return True
 
 		elif fileformat == "bed2":
-			DF = pd.read_csv(i_file, sep="\t")
+			DF = pd.read_csv(i_file, sep="\t", header=None)
 			temp = DF.shape
 			colnum = temp[1]
 
@@ -194,7 +195,7 @@ def CheckAnnotFile(i_file):
 				return True
 
 		elif fileformat == "bed1":
-			DF = pd.read_csv(i_file, sep="\t")
+			DF = pd.read_csv(i_file, sep="\t", header=None)
 			temp = DF.shape
 			colnum = temp[1]
 
@@ -449,6 +450,10 @@ print(msg)
 
 annotfiles_list, annotfiles_format = check_dir(GFF_dir, "content") # this folder must contain coord_files to be analyzed
 
+if len(annotfiles_list) != 2:
+	emsg = f"This is the input '{annotfiles_list}', only 2 families must be present. Check this please."
+	raise ValueError(emsg)
+	
 msg = "# | S2.1.2 Step | The following annotation files will be analyzed"
 print(msg)
 
