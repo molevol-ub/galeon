@@ -173,7 +173,7 @@ else:
 # Check R
 temp = subprocess.run("which Rscript", shell=True, capture_output=True, text=True).stdout.strip()
 if temp == "":
-    raise ValueError("'Rscript' not found, check whether 'mafft' is installed")
+    raise ValueError("'Rscript' not found, check whether 'Rscript' is installed")
 else:
     msg = f"- Using 'Rscript' from {temp}"
     print(msg)
@@ -182,7 +182,7 @@ else:
 # Check R
 temp = subprocess.run("which R", shell=True, capture_output=True, text=True).stdout.strip()
 if temp == "":
-    raise ValueError("'R' not found, check whether 'mafft' is installed")
+    raise ValueError("'R' not found, check whether 'R' is installed")
 else:
     msg = f"- Using 'R' from {temp}"
     print(msg)
