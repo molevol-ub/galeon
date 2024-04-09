@@ -1,4 +1,3 @@
-#!/home/vadim/miniconda3/bin/python
 import os, re, subprocess, shutil, argparse
 import pandas as pd
 
