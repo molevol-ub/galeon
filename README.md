@@ -2,14 +2,13 @@
 #### A Comprehensive Bioinformatic Tool to Analyse and Visualise Gene Clusters in Complete Genomes
 
 <div>
-    <img src="https://github.com/molevol-ub/galeon/blob/main/GALEON_masterScripts/GaleonLogo.png" alt="My Logo" width="200">
+    <img src="https://github.com/molevol-ub/galeon/blob/main/GALEON_masterScripts/GaleonLogo.png" alt="Software Logo" width="200">
 </div>
 
 To facilitate the identification, analysis, and visualisation of physically clustered gene family genes within chromosome-level genomes, we introduce GALEON, a user-friendly bioinformatic tool. GALEON identifies gene clusters by studying the spatial distribution of pairwise physical distances among gene family members along with the genome-wide gene density. The pipeline also enables the simultaneous analysis and comparison of two gene families, and allows the exploration of the relationship between physical and evolutionary distances. This tool offers a novel approach for studying the origin and evolution of gene families.
 
 
 GALEON documentation can be also be found in: http://www.ub.edu/softevol/galeon
-
 
 ### Version history
 
@@ -160,7 +159,7 @@ which GALEON_ControlScript.py
 
 GALEON uses two types of files for each gene family:
 - Annotation files: with the coordinates of the genes.
-- Proteins: in FASTA format. 
+- Proteins (or MSA): in FASTA format. 
 
 ### 2.1. Annotation files format
 All the input coordinate files MUST be provided in the same file format.
@@ -168,9 +167,9 @@ All the input coordinate files MUST be provided in the same file format.
 - Input coordinate file format: *GFF3*, *BED1*, *BED2* (check the formats below)
 - Input coordinates file name: **{FAMILYNAME}_fam.{FORMAT}**
   - Examples:
-   - *GFF3 format*: GR_fam.gff3
-   - *BED1 format*: GR_fam.bed1
-   - *BED2 format*: GR_fam.bed2
+   - *GFF3* file name: GR_fam.gff3
+   - *BED1* file name: GR_fam.bed1
+   - *BED2* file name: GR_fam.bed2
 
 #### 2.1.1. GFF3 format
 - 9 tab separated columns. Only five of them will be used: `scaffold`, `feature` `start`, `end` and `attribute`.
@@ -194,7 +193,7 @@ All the input coordinate files MUST be provided in the same file format.
 - 4 tab separated columns
 - This provides directly the coordinates and the gene IDs.
 
-| scaffold | start | end | attribute |
+| Scaffold ID | start | end | attribute |
 | ------------- | ------------- | ------------- | ------------- |
 | Scaffold_14804_HRSCAF_18385 | 41841903 | 41843055 | g10232 |
 | Scaffold_14804_HRSCAF_18385 | 47268322 | 47268742 | g10331 |
@@ -206,7 +205,7 @@ All the input coordinate files MUST be provided in the same file format.
 - This format does not include gene IDs. Gene names will be given by the gene order. Consider this example annotation file name: `GR_fam.bed1`. The genes will be named as *GR_0*, *GR_1*, etc.
 
 
-| scaffold | start | end |
+| Scaffold ID | start | end |
 | ------------- | ------------- | ------------- |
 | Scaffold_14804_HRSCAF_18385 | 41841903 | 41843055 |
 | Scaffold_14804_HRSCAF_18385 | 47268322 | 47268742 |
@@ -217,16 +216,36 @@ All the input coordinate files MUST be provided in the same file format.
 **NOTE**: This format might be of use when there is some kind of problem related with the gene names format. Then, the user may run some tests to check whether the input gene family is organized in cluster.
 
 
+### 2.2. Proteins and MSA files format
+To compute the evolutionary distances, you will need to provide either the proteins of your gene family of interest or the corresponding MSA in FASTA format.
+
+- Input proteins FASTA and MSA format: **{FAMILYNAME}_fam.{FORMAT}**
+  - Examples:
+   - *Proteins* file name: GR_fam.fasta
+   - *MSA* file name: GR_fam.aln
+
+**NOTES**:
+
+- Protein names MUST coincide with the gene name of the input GFF3 or BED2 file.
+- If raw protein data is provided, mafft will align them.
+- If pre-computed MSA data is provided, it will be used directly to run FastTree or iqtree and get the evo. distances.
+- BED1 format does not contain the gene name information, so BED2 format should be used instead.
+ 
+### 2.1. Annotation files format
+All the input coordinate files MUST be provided in the same file format.
 
 
+### 2.3. Chromosome/Scaffold sizes file
+This is used mainly as a guide to filter the output results and summarise the findings focusing on the main scaffolds (those corresponding to chromosomes) or a subset of scaffolds of choice (for example: the ten largest scaffolds or a list of scaffolds of interest).
 
+- Input file name: **ChrSizes.txt**
+- 3 tab separated columns
 
-
-
-
-
-
-
+| Scaffold ID | Length (in bp) | Scaffold associated name |
+| ------------- | ------------- | ------------- |
+| Scaffold_15362_HRSCAF_19823 | 317950935 | ChrX |
+| Scaffold_14804_HRSCAF_18385 | 177171321 | Chr1 |
+| Scaffold_14178_HRSCAF_16784 | 176727214 | Chr2 |
 
 
 
