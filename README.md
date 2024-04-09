@@ -25,7 +25,7 @@ V1: Initial release
  6. Citation
  7. Troubleshooting
 
-#headers
+# headers
 ## 1. Installation and prerequisites
 
 GALEON is distributed as a set of several scripts that can be called from Galeon_masterScripts folder, but do not require any specific installation or compiilation step. However, the pipelines does require the following python modules, R packages as well as some additional software.
