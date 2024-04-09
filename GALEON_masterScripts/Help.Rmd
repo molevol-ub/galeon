@@ -1,4 +1,4 @@
-#### <span style="color: #98817B;"> **Single family analysis**</span>
+#### <span style="color: #98817B;"> **One family analysis**</span>
 ##### <span style="color: #98817B;"> **Summary tables**</span>
 
 **Table 1. Gene family cluster organization**
@@ -61,31 +61,31 @@ $$
 
 **Table 2. FAM1 gene family cluster organization**
 
-- Same definition as *Table 1.* from *Single family analysis* section. 
+- Same definition as *Table 1.* from *One family analysis* section. 
 
 </br>
 
 **Table 3. FAM1 Gene family cluster sizes**
 
-- Same definition as *Table 2.* from *Single family analysis* section. 
+- Same definition as *Table 2.* from *One family analysis* section. 
 
 </br>
 
 **Table 4. FAM2 gene family cluster organization**
 
-- Same definition as *Table 1.* from *Single family analysis* section. 
+- Same definition as *Table 1.* from *One family analysis* section. 
 
 </br>
 
 **Table 5. FAM2 Gene family cluster sizes**
 
-- Same definition as *Table 2.* from *Single family analysis* section. 
+- Same definition as *Table 2.* from *One family analysis* section. 
 
 </br>
 
 **Table 6. FAM1 and FAM2 gene families membership**
 
-- Same definition as *Table 3.* from *Single family analysis* section. 
+- Same definition as *Table 3.* from *One family analysis* section. 
 
 </br>
 

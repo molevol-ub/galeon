@@ -1,3 +1,4 @@
+#!/home/vadim/miniconda3/bin/python
 import os, re, subprocess, shutil, argparse
 import pandas as pd
 
@@ -131,13 +132,16 @@ for r, d, f in os.walk(PLOTSdir):
 for sumfile in SummaryTable_list:
     GeneFamName = os.path.dirname(sumfile).split("/")[-1]
     gvalue_key = sumfile.split(".table.")[-1].replace(".tsv","")
-    # print(GeneFamName, gvalue_key, sumfile)
+    print(GeneFamName, gvalue_key, sumfile)
     
     if GeneFamName not in D_GLOB.keys():
         D_GLOB[GeneFamName] = {}
         D_GLOB[GeneFamName][gvalue_key] = {"SummaryFiles" : [sumfile]}
     else:
-        D_GLOB[GeneFamName][gvalue_key]["SummaryFiles"].append(sumfile)
+        if gvalue_key not in D_GLOB[GeneFamName].keys():
+            D_GLOB[GeneFamName][gvalue_key] = {"SummaryFiles" : [sumfile]}
+        else:
+            D_GLOB[GeneFamName][gvalue_key]["SummaryFiles"].append(sumfile)
 
 ''' Find Physical distance plots '''
 for r, d, f in os.walk(GaleonClusterFinderResults):
@@ -625,7 +629,7 @@ def sort_2FamClustSum_plots(i_obj, i_opt):
             if "." in iname:
                 sorted_list.append(i)
                 famnames = iname.split(".")
-                CasesTitles.append("B. Two families interaction")
+                CasesTitles.append("B. Two families joint analysis")
 
             # if there's no interaction, only plots for merged analysis and individual families will be printed in the final report
             if len(famnames) == 0:
@@ -686,7 +690,7 @@ def sort_2FamClustSum_plots(i_obj, i_opt):
             if "." in iname:
                 sorted_list.append(i)
                 famnames = iname.split(".")
-                CasesTitles.append("B. Two families interaction")
+                CasesTitles.append("B. Two families joint analysis")
                 
             # if there's no interaction, only plots for merged analysis and individual families will be printed in the final report
             if len(famnames) == 0:

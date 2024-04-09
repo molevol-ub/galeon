@@ -1,3 +1,4 @@
+#!/home/vadim/miniconda3/envs/Galeon/bin/python
 import argparse, ast, subprocess, os, shutil
 
 temp = subprocess.run("which GALEON_ControlScript.py", shell=True, capture_output=True, text=True).stdout.strip()
@@ -151,7 +152,7 @@ if __name__ == "__main__":
         help = "Choose 'one' or 'two' color maps to be used for visualization of Physical and Evolutionary distances on a merged distance heatmap'")
 
     parser_default.add_argument("-f", "--SquareFrameColor",
-        default = "yellow",
+        default = "black",
         type = str,
         help = "Choose the color of square frame that will highlight clustered genes")
 
@@ -161,7 +162,7 @@ if __name__ == "__main__":
         help = "Choose the color of square frame that will highlight clustered genes (enabled in the 'joint analysis' of two gene families to highlight clusters of the second family)")
 
     parser_default.add_argument("-f3", "--SquareFrameColor3",
-        default = "green",
+        default = "red",
         type = str,
         help = "Choose the color of square frame that will highlight clustered genes between families")
 
@@ -468,7 +469,8 @@ if config["mode"] == "clusterfinder":
 
                         #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                     except subprocess.CalledProcessError as e:
-                        raise ValueError(e.stdout)
+                        # raise ValueError(e.stdout)
+                        raise ValueError(e.stderr)
                 else:
                     emsg = f"Error! Tree Inference Software: '{Binaries_dir}/{Tree_Soft}' is not executable. Make it executable with 'chmod +x'"
                     raise ValueError(emsg)
@@ -689,7 +691,7 @@ if config["mode"] == "clusterfinder":
                                         EvoDistUse_opt,
                                         str(g_val), 
                                         FamName, PMatrix_dir, FamilyNum,
-                                        HColorScaleOpt, HSquareFrameColor, HSquareFrameColor2, HCmap1, HCmap2]))
+                                        HColorScaleOpt, HSquareFrameColor, HSquareFrameColor2, HSquareFrameColor3, HCmap1, HCmap2]))
 
                         Dparam = {"S24 script name: ": S24_script,
                                         "Evo. Distances Usage: ": EvoDistUse_opt,
@@ -705,12 +707,11 @@ if config["mode"] == "clusterfinder":
                             print("- ", Dk, Dvalue)
 
                         subprocess.run(["python", 
-                                        
                                         S24_script, 
                                         EvoDistUse_opt,
                                         str(g_val), 
                                         FamName, PMatrix_dir, FamilyNum, 
-                                        HColorScaleOpt, HSquareFrameColor, HSquareFrameColor2, HCmap1, HCmap2],
+                                        HColorScaleOpt, HSquareFrameColor, HSquareFrameColor2, HSquareFrameColor3, HCmap1, HCmap2],
                                         stdout=l4)
                     
             # #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -745,13 +746,14 @@ if config["mode"] == "clusterfinder":
                 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
                 temp = subprocess.run(["python", S21_script, Annot_dir, Bedtools_dir], text=True, capture_output=True, check=True)
-
+                print(temp.stderr)
                 s21out.write(temp.stdout)
                 s21out.write(temp.stderr)
 
                 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
             except subprocess.CalledProcessError as e:
-                raise ValueError(e.stdout)
+                # raise ValueError(e.stdout)
+                raise ValueError(e.stderr)
 
         # S22
         print_header("sub")
