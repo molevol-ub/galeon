@@ -15,6 +15,7 @@ GALEON documentation can be also be found in: http://www.ub.edu/softevol/galeon
 V1: Initial release
 
 ## 0. Contents
+[Headers](#headers)  
 
  1. Installation and prerequisites
  2. Input data
@@ -24,7 +25,7 @@ V1: Initial release
  6. Citation
  7. Troubleshooting
 
-
+#headers
 ## 1. Installation and prerequisites
 
 GALEON is distributed as a set of several scripts that can be called from Galeon_masterScripts folder, but do not require any specific installation or compiilation step. However, the pipelines does require the following python modules, R packages as well as some additional software.
