@@ -681,7 +681,7 @@ GALEON_Report.py -clust 2_OneFam_PhysDistOnly_GFF3/ -ssize ChrSizes.txt -echo Fa
 cd Test_3
 
 # Run Galeon
-GALEON_ControlScript.py clusterfinder -a GFFs/ -e enabled -p Proteins/ -outdir 3_OneFam_PhysEvoDistances_GFF3/
+GALEON_ControlScript.py clusterfinder -a GFFs/ -g 100,300 -e enabled -p Proteins/ -outdir 3_OneFam_PhysEvoDistances_GFF3/
 
 # Get evolutionary statistics (Cst) and perform the Mann-Whitney test
 GALEON_GetEvoStats.py -clust 3_OneFam_PhysEvoDistances_GFF3/ -prot Proteins/ -coords GFFs
