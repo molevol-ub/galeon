@@ -190,6 +190,7 @@ All the input coordinate files MUST be provided in the same file format.
 
 #### 2.1.2. BED2 format
 - 4 tab separated columns
+- This provides directly the coordinates and the gene IDs.
 
 | scaffold | start | end | attribute |
 | ------------- | ------------- | ------------- | ------------- |
@@ -198,11 +199,20 @@ All the input coordinate files MUST be provided in the same file format.
 | Scaffold_14804_HRSCAF_18385 | 47277448 | 47277868 | g10332 |
 
 
+#### 2.1.3 - BED1 format
+- 3 tab separated columns
+- This format does not include gene IDs. Gene names will be given by the gene order. Consider this example annotation file name: `GR_fam.bed1`. The genes will be named as *GR_0*, *GR_1*, etc.
 
 
+| scaffold | start | end |
+| ------------- | ------------- | ------------- |
+| Scaffold_14804_HRSCAF_18385 | 41841903 | 41843055 |
+| Scaffold_14804_HRSCAF_18385 | 47268322 | 47268742 |
+| Scaffold_14804_HRSCAF_18385 | 47277448 | 47277868 |
+| Scaffold_14804_HRSCAF_18385 | 51844347 | 51844998 |
+| Scaffold_14804_HRSCAF_18385 | 52310537 | 52311098 |
 
-
-
+**NOTE**: This format might be of use when there is some kind of problem related with the gene names format. Then, the user may run some tests to check whether the input gene family is organized in cluster.
 
 
 
