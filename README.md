@@ -25,22 +25,61 @@ V1: Initial release
 
 ## 1. Installation and prerequisites
 
-GALEON is distributed as a set of several scripts that can be called from Galeon_masterScripts folder, but do not require any specific installation or compiilation step. However, the pipelines does require the following python modules that can be installed using the Configure.py script: *Is this correct Vadim?*
+GALEON is distributed as a set of several scripts that can be called from Galeon_masterScripts folder, but do not require any specific installation or compiilation step. However, the pipelines does require the following python modules and R packages.
+
+### 1.1 - Python Packages
+If conda is avaiilable, all these packages can be easily obtained by installing the Galeon conda environment, as well as some of the required software: mafft and newick_utils. Alternatively, you may install them separately using `pip`, consult the appropriate documentation for each of them. 
+```
+argparse
+ast
+collections
+copy
+gc
+itertools
+matplotlib
+numpy
+operator
+os
+pandas
+re
+seaborn
+shutil
+string
+scipy
+subprocess
+sys
+time
+```
+
+### 1.2 - R Packages
+
+Make sure to have R installed, as well as two additional R packages: `rmarkdown` and `DT`, which are needed to create the final Report in HTML format. These packages can be installed as follows directly from the R terminal.
 
 
 ```
-python Configure.py
+# 1-Open a terminal and run “R”
+R
+
+# 2-Install packages
+>install.packages(“rmarkdown”)
+>install.packages(“DT”)
+
+# 3-Check that they can be loaded
+>library(“rmarkdown”)
+>library(“DT”)
 ```
 
-In addition, the program requires the following external softwares, which can be found in the bin folder within GALEON:
+### 1.3 - Additional software
 
-- BedTools
+The following programs must be installed and available from command line: **mafft**, **bedtools**, **FastTree** and **iqtree2**. 
 
-- FastTree - By default, GALEON uses FastTree to infer the phylogeny among gene family copies. http://www.microbesonline.org/fasttree/
+We provide a `bin` directory with binaries of `bedtools`, `FastTree` and `iqtree2`. If the Galeon conda environment was created, `mafft` and `newick_utils` should be available upon environment activation. Alternatively, check the corresponding documentation for installation instructions.
 
-- Iqtree: IqTree can be used instead of FastTree to reconstruct the gene family phylogeny: http://www.iqtree.org/
 
-- Mafft?
+**Notes**:
+- **Binaries** - Remember to make them executable by running: `chmod +x bin/*`.
+- **FastTree** - By default, GALEON uses FastTree to infer the phylogeny among gene family copies. http://www.microbesonline.org/fasttree/
+- **Iqtree** - IqTree can be used instead of FastTree to reconstruct the gene family phylogeny: http://www.iqtree.org/
 
 
 
