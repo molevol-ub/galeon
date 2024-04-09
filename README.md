@@ -107,7 +107,7 @@ chmod +x GALEON_masterScripts/bin/*
 
 # 4-Activate conda and install the Galeon conda environment
 conda activate
-conda create env -f GaleonEnv.yml
+conda env create -f GaleonEnv.yml
 
 # 5-Activate the environment
 conda activate Galeon
