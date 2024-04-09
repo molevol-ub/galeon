@@ -548,6 +548,7 @@ clusterfinder_Results_Directory/
 ├── PhysicalDist_Matrices
 │   ├── merged_fam.gff3.temp_matrices # contains matrices *matrix
 │   └── merged_fam.gff3.temp_matrices_1.0g # physical distance plots in svg and pdf format
+│
 ├── Plots
 │   └── merged_fam # summary tables and plots
 │       ├── GR_family_ClusterSizes.table.1.0g.tsv
@@ -572,6 +573,7 @@ clusterfinder_Results_Directory/
 │           ├── GR.IR
 │           ├── IR
 │           └── merged
+│           
 └── Reports
     ├── merged_fam_1.0g_Report.html
     └── merged_fam_1.0g_Report.Rmd
