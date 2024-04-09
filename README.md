@@ -433,7 +433,6 @@ GALEON_ControlScript.py clusterfinder -a GFFs/ -e enabled -p Proteins -pm True
 **Step 2-3)** Generate summary plots, tables and the HTML report
 
 ```
-
 # Generate summary files for the GR family
 GALEON_SummaryFiles.py -fam GR -clust clusterfinder_Results_Directory/ -coords GFFs -ssize ChrSizes.txt -sfilter 7
 
@@ -442,7 +441,6 @@ GALEON_SummaryFiles.py -fam IR -clust clusterfinder_Results_Directory/ -coords G
 
 # Generate the final HTML report
 GALEON_Report.py -clust clusterfinder_Results_Directory/ -ssize ChrSizes.txt -echo False
-
 ```
 
 <br>
