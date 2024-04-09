@@ -202,7 +202,7 @@ All the input coordinate files MUST be provided in the same file format.
 | Scaffold_14804_HRSCAF_18385 | 47277448 | 47277868 | g10332 |
 
 
-#### 2.1.3 - BED1 format
+#### 2.1.3. BED1 format
 - 3 tab separated columns
 - This format does not include gene IDs. Gene names will be given by the gene order. Consider this example annotation file name: `GR_fam.bed1`. The genes will be named as *GR_0*, *GR_1*, etc.
 
@@ -246,7 +246,7 @@ This is used mainly as a guide to filter the output results and summarise the fi
 | Scaffold_14804_HRSCAF_18385 | 177171321 | Chr1 |
 | Scaffold_14178_HRSCAF_16784 | 176727214 | Chr2 |
 
-
+<br>
 
 ## 3. Running GALEON
 
@@ -299,6 +299,8 @@ The table that contains:
 6. column: **P(X>=2) / g value** - The probability of finding by chance two (or more) genes in a "g" kb stretch
 7. column: **Poisson's λ**
 
+<br>
+
 ### 3.2. Gene cluster identification (*mode: clusterfinder*)
 In this mode the pipeline analyzes one (or several) gene families to identify clusters of genes in the genome. 
 
@@ -350,15 +352,31 @@ GALEON_Report.py -clust clusterfinder_Results_Directory/ -ssize ChrSizes.txt -ec
 - `-ssize FILE` Chromosome/Scaffold size file.
 - `-echo True|False` If `True` complete the paths to the files and plots are shown in the report. 
 
+<br>
+
 **Output**
 
 GALEON will generate a portable HTML report, one for each family and per tested g value. It will contain all the generated tables and reports, making it easy to quickly access all the results. The report includes a "HELP" tab with useful information for interpreting the results.
 
-Galeon results directory contents
+Galeon results directory content
 
+- **PhysicalDist_Matrices** directory
+    - This directory containts pairwise physical distance matrices (`*matrix`) between genes of a given Gene Family, in each scaffold.
+    - Also, physical distance heatmaps are present in svg and pdf format.
+- **Plots** directory
+    - This directory contains summary plots with cluster size distribution at genome level (dir.: `SummaryPlots_1.0g`) and individual scaffold level (dir.: `IndividualPlots_1.0g`)
+    - Also, it contains some summary tables.
+        - `X_family_ClusterSizes.table.1.0g.tsv` - This tables contains a more explicit information about the size of each cluster in each scaffold.
+        - `X_family_GeneLocation.table.1.0g.tsv` - This tables contains information detailed at gene level, specifically, gene coordinates and membership (singleton or clustered).
+        - `X_family_GeneOrganizationGenomeSummary.table.1.0g.tsv` - This tables informs about how many genes are organized in clusters (Clustered category) or are not (Singleton category) at genome level.
+        - `X_family_GeneOrganizationSummary.table.1.0g.tsv` - This tables informs about how many genes are organized in clusters (Clustered category) or are not (Singleton category) in each scaffold.
+
+- **Reports** directory
+    - This directory contains html reports, one for each family and g value.
+
+
+Galeon results directory, tree-like representation:
 ```
-# Results directory
-
 clusterfinder_Results_Directory/
 ├── PhysicalDist_Matrices
 │   ├── GR_fam.gff3.temp_matrices # Physical distance matrices, *matrix (in bp units)
@@ -376,13 +394,20 @@ clusterfinder_Results_Directory/
 │   │   ├── IndividualPlots_1.0g 
 │   │   └── SummaryPlots_1.0g
 │   └── IR_fam
-│       ├── IndividualPlots_1.0g
-│       └── SummaryPlots_1.0g
+│   │   ├── IR_family_ClusterSizes.table.1.0g.tsv
+│   │   ├── IR_family_GeneLocation.table.1.0g.tsv
+│   │   ├── IR_family_GeneOrganizationGenomeSummary.table.1.0g.tsv
+│   │   ├── IR_family_GeneOrganizationSummary.table.1.0g.tsv
+│   │   |
+│   │   ├── IndividualPlots_1.0g
+│   └── └── SummaryPlots_1.0g
 |
 └── Reports # One report for each family and tested g value.
     ├── GR_fam_1.0g_Report.html
     └── IR_fam_1.0g_Report.html
 ```
+
+<br>
 
 #### 3.2.2 - One family analysis using physical and evolutionary distances
 
@@ -420,14 +445,27 @@ GALEON_Report.py -clust clusterfinder_Results_Directory/ -ssize ChrSizes.txt -ec
 
 ```
 
+<br>
+
+
 **Output**
 
-Galeon results directory contents
+Galeon results directory content
+- **MergedDistances_Dataframes** directory.
+    - This directory containts pairwise physical + evolutionary distance files (`*matrix` and `*distance.tsv`) between genes of a given Gene Family, in each scaffold.
+    - Also, it contains physical + evolutionary distance heatmaps and scatterplots in svg and pdf format at a genome level (representing the entire gene family) as well as for each scaffold (showing each one separately).
+- **PhysicalDist_Matrices** directory. Same as in Section 3.2.1.
+- **Plots** directory. Same as in Section 3.2.1.
+- **Reports** directory. Same as in Section 3.2.1.
+
+Galeon results directory, tree-like representation:
 
 ```
-# Results directory
-
 clusterfinder_Results_Directory/
+├── GR_fam.GlobScatterPlot_1.0g.pdf # Physical vs Evo. distance scatter plot considering at genome level, that is, considering all the genes of the input gene family
+├── GR_fam.GlobScatterPlot_1.0g.svg
+├── IR_fam.GlobScatterPlot_1.0g.pdf
+├── IR_fam.GlobScatterPlot_1.0g.svg
 ├── MergedDistances_Dataframes
 │   ├── GR_fam.IntermediateFiles
 │   ├── GR_fam.merged.matrices # Physical + Evolutionary distance matrices
@@ -440,21 +478,35 @@ clusterfinder_Results_Directory/
 │   ├── GR_fam.gff3.temp_matrices_1.0g # Heatmaps in svg and pdf format
 │   ├── IR_fam.gff3.temp_matrices
 │   └── IR_fam.gff3.temp_matrices_1.0g
-├── Plots
+├── Plots # same content as in "Section 3.2.1"
 │   ├── GR_fam
 │   │   ├── IndividualPlots_1.0g
 │   │   └── SummaryPlots_1.0g
 │   └── IR_fam
 │       ├── IndividualPlots_1.0g
 │       └── SummaryPlots_1.0g
-└── Reports
+└── Reports # same content as in "Section 3.2.1"
     ├── GR_fam_1.0g_Report.html
     └── IR_fam_1.0g_Report.html
 
 ```
 
+#### 3.2.3 - Joint family analysis
+Find clusters between two input families using the coordinates from the input files. ONLY two families can be analysed at once, note that Proteins cannot be used in this mode.
 
+**Commands**
 
+**Step 1)** Find clusters using the input coordinates
+
+- Remember that in this analysis, only two families must be present in the input annotation directory (`-a GFFs`).
+
+```
+# Simplest command to run Galeon
+GALEON_ControlScript.py clusterfinder -a GFFs/ -e disabled -F BetweenFamilies
+```
+- `-a DIRNAME` Input annotation directory with the coordinate files `-a GFFs`)
+- `-e enabled|disabled` Disable the use of proteins (`-e enabled`)
+- `-F WithinFamilies|BetweenFamilies` Perform a separate analysis for each family or a joint analysis for two input families (`-F BetweenFamilies`)
 
 
 
