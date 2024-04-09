@@ -375,7 +375,8 @@ Galeon results directory content
     - This directory contains html reports, one for each family and g value.
 
 
-Galeon results directory, tree-like representation:
+Galeon results directory, example tree-like representation for two gene families "GR_fam" and "IR_fam":
+
 ```
 clusterfinder_Results_Directory/
 ├── PhysicalDist_Matrices
@@ -456,7 +457,7 @@ Galeon results directory content
 - **Plots** directory. Same as in Section 3.2.1.
 - **Reports** directory. Same as in Section 3.2.1.
 
-Galeon results directory, tree-like representation:
+Galeon results directory, example tree-like representation for two gene families "GR_fam" and "IR_fam":
 
 ```
 clusterfinder_Results_Directory/
@@ -546,7 +547,8 @@ Galeon results directory content
     - This directory contains html reports, one for each family and g value.
 
 
-Galeon results directory, tree-like representation:
+Galeon results directory, example tree-like representation for two gene families "GR_fam" and "IR_fam":
+
 ```
 clusterfinder_Results_Directory/
 ├── PhysicalDist_Matrices
