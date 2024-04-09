@@ -1,5 +1,6 @@
 name: Galeon
 channels:
+  - conda-forge
   - bioconda
   - defaults
 dependencies:
@@ -55,6 +56,7 @@ dependencies:
   - openssl=3.0.13=h7f8727e_0
   - packaging=23.2=py312h06a4308_0
   - pandas=2.2.1=py312h526ad5a_0
+  - pandoc=3.1.13=ha770c72_0
   - pillow=10.2.0=py312h5eee18b_0
   - pip=23.3.1=py312h06a4308_0
   - pyparsing=3.0.9=py312h06a4308_0
@@ -75,4 +77,4 @@ dependencies:
   - xz=5.4.6=h5eee18b_0
   - zlib=1.2.13=h5eee18b_0
   - zstd=1.5.5=hc292b87_0
-prefix: /home/vadim/miniconda3/envs/Galeon
+prefix: /home/jack/miniconda3/envs/Galeon
