@@ -308,6 +308,16 @@ GALEON_ControlScript.py gestimate -h
 ```
 
 #### 3.2.1. One family analysis using physical distances
+**Inputs**
+
+- More than one families can be analyzed at the same time
+
+```
+# How your input annotation directory "GFFs/" should look
+└── GFFs
+    ├── GR_fam.gff3
+    └── IR_fam.gff3
+```
 
 **Commands**
 
@@ -409,6 +419,19 @@ clusterfinder_Results_Directory/
 <br>
 
 #### 3.2.2. One family analysis using physical and evolutionary distances
+**Inputs**
+
+- More than one families can be analyzed at the same time
+
+```
+# How your input annotation directory "GFFs/" and protein directory "Proteins/" should look
+├── GFFs
+│   ├── GR_fam.gff3
+│   └── IR_fam.gff3
+└── Proteins
+    ├── GR_fam.fasta # or GR_fam.aln if MSA is provided
+    └── IR_fam.fasta # or IR_fam.aln
+```
 
 **Commands**
 
@@ -417,7 +440,7 @@ clusterfinder_Results_Directory/
 ```
 # Simplest command to run Galeon
 # Run this...
-GALEON_ControlScript.py clusterfinder -a GFFs/ -e enabled -p Proteins
+GALEON_ControlScript.py clusterfinder -a GFFs/ -e enabled -p Proteins/
 
 # ...or this if the MSA files are already present in the "Proteins/" directory for each of the gene families of interest
 GALEON_ControlScript.py clusterfinder -a GFFs/ -e enabled -p Proteins -pm True
@@ -494,6 +517,17 @@ clusterfinder_Results_Directory/
 
 #### 3.2.3. Joint family analysis
 Find clusters between two input families using the coordinates from the input files. ONLY two families can be analysed at once, note that Proteins cannot be used in this mode.
+
+**Inputs**
+
+- Only two families are allowed and can be analyzed at the same time.
+
+```
+# How your input annotation directory "GFFs/" should look
+└── GFFs
+    ├── GR_fam.gff3
+    └── IR_fam.gff3
+```
 
 **Commands**
 
@@ -587,25 +621,137 @@ clusterfinder_Results_Directory/
 
 ## 4. Example dataset
 
+An example to run GALEON can be found in `Example_data` folder. You enter to each Test directory (or copy it somewhere else) and run the commands described below.
 
-An example to run GALEON can be found in Example_data folder. 
+### 4.1. Test 1. Estimate g parameter
 
-To run GALEON with the example dataset, the following commands should be used:
+*No input files are required here.
+- Gene family size (number of genes): `-n 134`
+- Genome size (in Mb units): `-s 1354`
+- g value (in Kb units): one `-g 100` or several values `-g 100,200,300`
 
 ```
-commands?
+cd Test_1
+
+# Run using one g value
+GALEON_ControlScript.py gestimate -n 134 -s 1354 -g 100
+
+# Test several g values
+GALEON_ControlScript.py gestimate -n 134 -s 1354 -g 150,200,300,400
 ```
 
-## 9. Citation
+- Check the output directory "g_estimation_Results_Directory"
 
+### 4.2. Test 2. One family analysis using physical distances
+
+- Input directory with annotation files: `-a GFFs`
+- Input g value: `-g 100,200`
+- Output directory: `-outdir 2_OneFam_PhysDistOnly_GFF3`
+- Chromosome/Scaffold size file: `-ssize ChrSizes.txt`
+- Summarize the results for the first 7 largest scaffolds: `-sfilter 7`
+- Write the path to files in the final report?: `-echo False`
+
+```
+cd Test_2
+
+# Run Galeon
+GALEON_ControlScript.py clusterfinder -a GFFs/ -g 100,200 -e disabled -outdir 2_OneFam_PhysDistOnly_GFF3
+
+# Generate summary files and tables for GR family
+GALEON_SummaryFiles.py -fam GR -clust 2_OneFam_PhysDistOnly_GFF3/ -coords GFFs -ssize ChrSizes.txt -sfilter 7
+
+# Generate summary files and tables for IR family
+GALEON_SummaryFiles.py -fam IR -clust 2_OneFam_PhysDistOnly_GFF3/ -coords GFFs -ssize ChrSizes.txt -sfilter 7
+
+# Create a summary report
+GALEON_Report.py -clust 2_OneFam_PhysDistOnly_GFF3/ -ssize ChrSizes.txt -echo False
+```
+
+### 4.3. Test 3. One family analysis using physical and evolutionary distances (use Proteins)
+- Input directory with annotation files: `-a GFFs`
+- Input g value: `-g 100,200`
+- Enable the usage of Proteins: `-e enabled`
+- Protein directory with fasta files: `-p Proteins`
+- Output directory: `-outdir 3_OneFam_PhysEvoDistances_GFF3`
+- Chromosome/Scaffold size file: `-ssize ChrSizes.txt`
+- Summarize the results for the first 7 largest scaffolds: `-sfilter 7`
+- Write the path to files in the final report?: `-echo False`
+
+```
+cd Test_3
+
+# Run Galeon
+GALEON_ControlScript.py clusterfinder -a GFFs/ -e enabled -p Proteins/ -outdir 3_OneFam_PhysEvoDistances_GFF3/
+
+# Get evolutionary statistics (Cst) and perform the Mann-Whitney test
+GALEON_GetEvoStats.py -clust 3_OneFam_PhysEvoDistances_GFF3/ -prot Proteins/ -coords GFFs
+
+# Generate summary files and tables for GR family
+GALEON_SummaryFiles.py -fam GR -clust 3_OneFam_PhysEvoDistances_GFF3/ -coords GFFs -ssize ChrSizes.txt -sfilter 7
+
+# Generate summary files and tables for IR family
+GALEON_SummaryFiles.py -fam IR -clust 3_OneFam_PhysEvoDistances_GFF3/ -coords GFFs -ssize ChrSizes.txt -sfilter 7
+
+# Create a summary report
+GALEON_Report.py -clust 3_OneFam_PhysEvoDistances_GFF3/ -plots Plots -ssize ChrSizes.txt -echo False
+```
+
+### 4.4. Test 4. One family analysis using physical and evolutionary distances (use MSA)
+- Input directory with annotation files: `-a GFFs`
+- Input g value: `-g 100,200`
+- Enable the usage of Proteins: `-e enabled`
+- Protein directory with fasta files: `-p Proteins`
+- Use pre-computed MSA files: `-pm True`
+- Output directory: `-outdir 4_OneFam_PhysEvoDistances_GFF3_pm`
+- Chromosome/Scaffold size file: `-ssize ChrSizes.txt`
+- Summarize the results for the first 7 largest scaffolds: `-sfilter 7`
+- Write the path to files in the final report?: `-echo False`
+
+```
+cd Test_4
+
+# Run Galeon
+GALEON_ControlScript.py clusterfinder -a GFFs/ -e enabled -p Proteins/ -pm True -outdir 4_OneFam_PhysEvoDistances_GFF3_pm/
+
+# Get evolutionary statistics (Cst) and perform the Mann-Whitney test
+GALEON_GetEvoStats.py -clust 4_OneFam_PhysEvoDistances_GFF3_pm/ -prot Proteins/ -coords GFFs
+
+# Generate summary files and tables for GR family
+GALEON_SummaryFiles.py -fam GR -clust 4_OneFam_PhysEvoDistances_GFF3_pm/ -coords GFFs -ssize ChrSizes.txt -sfilter 7
+
+# Generate summary files and tables for IR family
+GALEON_SummaryFiles.py -fam IR -clust 4_OneFam_PhysEvoDistances_GFF3_pm/ -coords GFFs -ssize ChrSizes.txt -sfilter 7
+
+# Create a summary report
+GALEON_Report.py -clust 4_OneFam_PhysEvoDistances_GFF3_pm/ -plots Plots -ssize ChrSizes.txt -echo False
+```
+
+### 4.5. Test 5. Joint analysis of two gene families
+- Input directory with annotation files: `-a GFFs`
+- Input g value: `-g 100,200`
+- Enable the usage of Proteins: `-e enabled`
+- Perform the joint analysis of two families: `-F BetweenFamilies`
+- Output directory: `-outdir 5_TwoFamInteraction_GFF3`
+
+```
+# Run Galeon
+GALEON_ControlScript.py clusterfinder -a GFFs/ -F BetweenFamilies -e disabled -outdir 5_TwoFamInteraction_GFF3
+
+# Generate summary files and tables
+GALEON_SummaryFiles.py -fam merged -clust 5_TwoFamInteraction_GFF3/ -coords GFFs/merged_dir/ -ssize ChrSizes.txt -sfilter 7
+
+# Create a summary report
+GALEON_Report.py -clust 5_TwoFamInteraction_GFF3/ -ssize ChrSizes.txt -echo False
+```
+
+
+## 5. Citation
 
 Vadim Pisarenco, Joel Vizueta, Julio Rozas. GALEON . Submitted. 2023.
 
 
+## 6. Troubleshooting
 
-## 10. Troubleshooting
-
-
-If you find any error, please create an issue in Github specifying the error and all details as possible.
+Should you encounter any error, please create an issue on GitHub specifying the error and providing as many details as possible.
 
 
