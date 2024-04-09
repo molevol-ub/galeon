@@ -15,8 +15,7 @@ GALEON documentation can be also be found in: http://www.ub.edu/softevol/galeon
 V1: Initial release
 
 ## 0. Contents
-[Installation and prerequisites](## "1. Installation and prerequisites")  
-[Troubleshooting](## "10. Troubleshooting")  
+[1. Installation and prerequisites](##1. Installation and prerequisites)
 
  1. Installation and prerequisites
  2. Input data
