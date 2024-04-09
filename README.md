@@ -409,7 +409,7 @@ clusterfinder_Results_Directory/
 
 <br>
 
-#### 3.2.2 - One family analysis using physical and evolutionary distances
+#### 3.2.2. One family analysis using physical and evolutionary distances
 
 **Commands**
 
@@ -491,7 +491,7 @@ clusterfinder_Results_Directory/
 
 ```
 
-#### 3.2.3 - Joint family analysis
+#### 3.2.3. Joint family analysis
 Find clusters between two input families using the coordinates from the input files. ONLY two families can be analysed at once, note that Proteins cannot be used in this mode.
 
 **Commands**
@@ -504,27 +504,82 @@ Find clusters between two input families using the coordinates from the input fi
 # Simplest command to run Galeon
 GALEON_ControlScript.py clusterfinder -a GFFs/ -e disabled -F BetweenFamilies
 ```
+
 - `-a DIRNAME` Input annotation directory with the coordinate files `-a GFFs`)
-- `-e enabled|disabled` Disable the use of proteins (`-e enabled`)
+- `-e enabled|disabled` Disable the use of proteins (`-e disabled`)
 - `-F WithinFamilies|BetweenFamilies` Perform a separate analysis for each family or a joint analysis for two input families (`-F BetweenFamilies`)
 
+**Step 2-3)** Generate summary plots, tables and the HTML report
+
+```
+# Generate summary files for the GR, IR families and merged data of both
+GALEON_SummaryFiles.py -fam merged -clust clusterfinder_Results_Directory/ -coords GFFs/merged_dir/ -ssize ChrSizes.txt -sfilter 7
+
+# Generate the final HTML report
+GALEON_Report.py -clust clusterfinder_Results_Directory/ -ssize ChrSizes.txt -echo False
+```
+
+Note how the `-coord` parameter is specified here (`-coord GFFs/merged_dir`), it is a bit different because you must add "merged_dir" at the end of the command.
+
+Galeon results directory content
+
+- **PhysicalDist_Matrices** directory
+    - This directory containts pairwise physical distance matrices (`*matrix`) between genes of a given Gene Family, in each scaffold.
+    - Also, physical distance heatmaps are present in svg and pdf format.
+- **Plots** directory
+    - This directory contains summary plots with cluster size distribution at genome level (dir.: `SummaryPlots_1.0g`) and individual scaffold level (dir.: `IndividualPlots_1.0g`)
+    - Since now we are interested in the joint analysis of two families (let's name them X and Y), the output summary plots are presented in 4 subdirectories:
+        - `X` - plots for clusters of X gene family
+        - `Y` - plots for clusters of Y gene family
+        - `X.Y` - plots for clusters of X and Y gene family members (when members both families belong to the same cluster).
+        - `merged` - plots for clusters of X and Y gene family considered as one.
+    - Also, it contains some summary tables.
+        - `X_family_ClusterSizes.table.1.0g.tsv` - This tables contains a more explicit information about the size of each cluster in each scaffold.
+        - `merged_family_GeneLocation.table.1.0g.tsv` - This tables contains information detailed at gene level of both families, specifically, gene coordinates and membership (singleton or clustered).
+        - `X_family_GeneOrganizationGenomeSummary.table.1.0g.tsv` - This tables informs about how many genes are organized in clusters (Clustered category) or are not (Singleton category) at genome level.
+        - `X_family_GeneOrganizationSummary.table.1.0g.tsv` - This tables informs about how many genes are organized in clusters (Clustered category) or are not (Singleton category) in each scaffold.
+        - `X.Y_family_GeneOrganizationSummary.table.1.0g.tsv` - This tables informs about how many genes of both families are jointly organized in clusters (Clustered category) or are not (Singleton category) in each scaffold. This file appears only when there are clusters formed by members of both families. Otherwise, it is absent.
+
+- **Reports** directory
+    - This directory contains html reports, one for each family and g value.
 
 
+Galeon results directory, tree-like representation:
+```
+clusterfinder_Results_Directory/
+├── PhysicalDist_Matrices
+│   ├── merged_fam.gff3.temp_matrices # contains matrices *matrix
+│   └── merged_fam.gff3.temp_matrices_1.0g # physical distance plots in svg and pdf format
+├── Plots
+│   └── merged_fam # summary tables and plots
+│       ├── GR_family_ClusterSizes.table.1.0g.tsv
+│       ├── GR_family_GeneOrganizationGenomeSummary.table.1.0g.tsv
+│       ├── GR_family_GeneOrganizationSummary.table.1.0g.tsv
+│       │
+│       ├── IR_family_ClusterSizes.table.1.0g.tsv
+│       ├── IR_family_GeneOrganizationGenomeSummary.table.1.0g.tsv
+│       ├── IR_family_GeneOrganizationSummary.table.1.0g.tsv
+│       │
+│       ├── GR.IR_family_GeneOrganizationSummary.table.1.0g.tsv
+│       │
+│       ├── merged_family_GeneLocation.table.1.0g.tsv
+│       │
+│       ├── IndividualPlots_1.0g
+│       │   ├── GR # Gr family clusters' size distribution
+│       │   ├── GR.IR # Two family clusters size distribution
+│       │   ├── IR # Gr family clusters' size distribution
+│       │   └── merged # All clusters' size distribution
+│       └── SummaryPlots_1.0g
+│           ├── GR
+│           ├── GR.IR
+│           ├── IR
+│           └── merged
+└── Reports
+    ├── merged_fam_1.0g_Report.html
+    └── merged_fam_1.0g_Report.Rmd
+```
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+<br>
 
 
 ## 4. Example dataset
