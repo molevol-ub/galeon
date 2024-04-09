@@ -63,12 +63,12 @@ Make sure to have R installed, as well as two additional R packages: `rmarkdown`
 R
 
 # 2-Install packages
->install.packages(“rmarkdown”)
->install.packages(“DT”)
+>install.packages("rmarkdown")
+>install.packages("DT")
 
 # 3-Check that they can be loaded
->library(“rmarkdown”)
->library(“DT”)
+>library("rmarkdown")
+>library("DT")
 ```
 
 ### 1.3. Additional software
