@@ -464,6 +464,7 @@ clusterfinder_Results_Directory/
 ├── GR_fam.GlobScatterPlot_1.0g.svg
 ├── IR_fam.GlobScatterPlot_1.0g.pdf
 ├── IR_fam.GlobScatterPlot_1.0g.svg
+│
 ├── MergedDistances_Dataframes
 │   ├── GR_fam.IntermediateFiles
 │   ├── GR_fam.merged.matrices # Physical + Evolutionary distance matrices
@@ -471,11 +472,13 @@ clusterfinder_Results_Directory/
 │   ├── IR_fam.IntermediateFiles
 │   ├── IR_fam.merged.matrices
 │   └── IR_fam.plots_1.0g
+│           
 ├── PhysicalDist_Matrices 
 │   ├── GR_fam.gff3.temp_matrices  # Physical distance matrices, *matrix (in bp units)
 │   ├── GR_fam.gff3.temp_matrices_1.0g # Heatmaps in svg and pdf format
 │   ├── IR_fam.gff3.temp_matrices
 │   └── IR_fam.gff3.temp_matrices_1.0g
+│
 ├── Plots # same content as in "Section 3.2.1"
 │   ├── GR_fam
 │   │   ├── IndividualPlots_1.0g
@@ -483,6 +486,7 @@ clusterfinder_Results_Directory/
 │   └── IR_fam
 │       ├── IndividualPlots_1.0g
 │       └── SummaryPlots_1.0g
+│
 └── Reports # same content as in "Section 3.2.1"
     ├── GR_fam_1.0g_Report.html
     └── IR_fam_1.0g_Report.html
