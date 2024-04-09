@@ -5,6 +5,7 @@
     <img src="https://github.com/molevol-ub/galeon/blob/main/GALEON_masterScripts/GaleonLogo.png" alt="Software Logo" width="200">
 </div>
 
+
 To facilitate the identification, analysis, and visualisation of physically clustered gene family genes within chromosome-level genomes, we introduce GALEON, a user-friendly bioinformatic tool. GALEON identifies gene clusters by studying the spatial distribution of pairwise physical distances among gene family members along with the genome-wide gene density. The pipeline also enables the simultaneous analysis and comparison of two gene families, and allows the exploration of the relationship between physical and evolutionary distances. This tool offers a novel approach for studying the origin and evolution of gene families.
 
 
@@ -25,10 +26,10 @@ V1: Initial release
 
 ## 1. Installation and prerequisites
 
-GALEON is distributed as a set of several scripts that can be called from Galeon_masterScripts folder, but do not require any specific installation or compiilation step. However, the pipelines does require the following python modules, R packages as well as some additional software.
+GALEON is distributed as a set of scripts that can be called from Galeon_masterScripts folder, but do not require any specific installation or compilation step. However, the pipeline does require the following python modules, R packages, as well as some external software.
 
 ### 1.1. Python Packages
-If conda is avaiilable, all these packages can be easily obtained by installing the Galeon conda environment, as well as some of the required software: mafft and newick_utils. Alternatively, you may install them separately using `pip`, consult the appropriate documentation for each of them.
+If conda is available, all these packages can be easily obtained by installing the Galeon conda environment (see 1.4), as well as some of the required software : mafft and newick_utils. Alternatively, you may install them separately using `pip`, consult the appropriate documentation for each of them.
 
 ```
 argparse
@@ -99,7 +100,7 @@ git clone https://github.com/molevol-ub/galeon.git
 
 # 2-Decompress the source code file (if needed)
 cd galeon
-tar -xf GALEON.v1.tar.gz 
+tar -xf GALEON.v1.tar.gz
 cd GALEON_v1
 
 # 3-Make the binaries executable
@@ -153,7 +154,7 @@ which GALEON_ControlScript.py
 ```
 
 ## 2. Input data
-**Warning**: Please be careful while preparing the inputs, follow precisely the below instructions. Input file names and formats are mandatory. 
+**Warning**: Please be careful while preparing the inputs, follow precisely the below instructions. Input file names and formats are mandatory.
 
 GALEON uses three types of files for each gene family:
 - Annotation files: with the coordinates of the genes.
@@ -202,7 +203,7 @@ All the input coordinate files MUST be provided in the same file format.
 
 #### 2.1.3. BED1 format
 - 3 tab separated columns
-- This format does not include gene IDs. Gene names will be given by the gene order. Consider this example annotation file name: `GR_fam.bed1`. The genes will be named as *GR_0*, *GR_1*, etc.
+- This format does not include gene IDs. Gene names will be given by the gene order. Consider this example annotation file name: `GR_fam.bed1`. The genes will be named as *GR_0*, *GR_1*, etc.
 
 
 | Scaffold ID | start | end |
