@@ -19,10 +19,9 @@ V1: Initial release
  1. Installation and prerequisites
  2. Input data
  3. Running GALEON
- 4. Output
- 5. Example data
- 6. Citation
- 7. Troubleshooting
+ 4. Example data
+ 5. Citation
+ 6. Troubleshooting
 
 ## 1. Installation and prerequisites
 
