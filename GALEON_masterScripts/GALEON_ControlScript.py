@@ -1,4 +1,3 @@
-#!/home/vadim/miniconda3/envs/Galeon/bin/python
 import argparse, ast, subprocess, os, shutil
 
 temp = subprocess.run("which GALEON_ControlScript.py", shell=True, capture_output=True, text=True).stdout.strip()
