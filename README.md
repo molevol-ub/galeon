@@ -338,21 +338,21 @@ GALEON_SummaryFiles.py -fam IR -clust clusterfinder_Results_Directory/ -coords G
 - `-clust DIRNAME` Input Galeon results directory. For ex: `clusterfinder_Results_Directory`
 - `-coords DIRNAME` Annotation directory with the coordinate files, same as in `-a GFFs`
 - `-ssize FILE` Chromosome/Scaffold size file.
-- `-sfilter ALL|NUM|FILE` The summary plots will represent the results for a "NUM" number of largest scaffolds; a list of scaffolds of interest provided as a single column in an input "FILE"; "ALL" the scaffolds (often too many, the resulting summary plots might not informative); 
+- `-sfilter ALL|NUM|FILE` The summary plots will represent the results for a "NUM" number of largest scaffolds; a list of scaffolds of interest provided as a single column in an input "FILE"; "ALL" the scaffolds (often too many, the resulting summary plots might not informative).
 
 **Step 3)** Generate a final HTML report
 ```
 # Generate the final HTML report
 GALEON_Report.py -clust clusterfinder_Results_Directory/ -ssize ChrSizes.txt -echo False
-
 ```
+
 - `-clust DIRNAME` Input Galeon results directory. For ex: `clusterfinder_Results_Directory`
 - `-ssize FILE` Chromosome/Scaffold size file.
 - `-echo True|False` If `True` complete the paths to the files and plots are shown in the report. 
 
 **Output**
 
-GALEON will generate HTML reports, one for each family and per tested g value. The report will slightly vary between different analysis. It comes with a HELP tab with useful information for results interpretatino.
+GALEON will generate a portable HTML report, one for each family and per tested g value. It will contain all the generated tables and reports, making it easy to quickly access all the results. The report includes a "HELP" tab with useful information for interpreting the results.
 
 Galeon results directory contents
 
@@ -362,7 +362,7 @@ Galeon results directory contents
 clusterfinder_Results_Directory/
 ├── PhysicalDist_Matrices
 │   ├── GR_fam.gff3.temp_matrices # Physical distance matrices, *matrix (in bp units)
-│   ├── IR_fam.gff3.temp_matrices
+│   ├── IR_fam.gff3.temp_matrices 
 │   ├── GR_fam.gff3.temp_matrices_1.0g # Heatmaps in svg and pdf format
 │   └── IR_fam.gff3.temp_matrices_1.0g
 |
@@ -392,10 +392,10 @@ clusterfinder_Results_Directory/
 
 ```
 # Simplest command to run Galeon
-# Run this or...
+# Run this...
 GALEON_ControlScript.py clusterfinder -a GFFs/ -e enabled -p Proteins
 
-# ...this if the MSA files are already present in the "Proteins/" directory for each of the gene families of interest
+# ...or this if the MSA files are already present in the "Proteins/" directory for each of the gene families of interest
 GALEON_ControlScript.py clusterfinder -a GFFs/ -e enabled -p Proteins -pm True
 ```
 
@@ -428,28 +428,29 @@ Galeon results directory contents
 # Results directory
 
 clusterfinder_Results_Directory/
-├── PhysicalDist_Matrices
-│   ├── GR_fam.gff3.temp_matrices # Physical distance matrices, *matrix (in bp units)
-│   ├── IR_fam.gff3.temp_matrices
+├── MergedDistances_Dataframes
+│   ├── GR_fam.IntermediateFiles
+│   ├── GR_fam.merged.matrices # Physical + Evolutionary distance matrices
+│   ├── GR_fam.plots_1.0g # Physical + Evolutionary distance Heatmaps and Scatterplots in svg and pdf format
+│   ├── IR_fam.IntermediateFiles
+│   ├── IR_fam.merged.matrices
+│   └── IR_fam.plots_1.0g
+├── PhysicalDist_Matrices 
+│   ├── GR_fam.gff3.temp_matrices  # Physical distance matrices, *matrix (in bp units)
 │   ├── GR_fam.gff3.temp_matrices_1.0g # Heatmaps in svg and pdf format
+│   ├── IR_fam.gff3.temp_matrices
 │   └── IR_fam.gff3.temp_matrices_1.0g
-|
-├── Plots # Contains summary tables and plots for each input family
+├── Plots
 │   ├── GR_fam
-│   │   ├── GR_family_ClusterSizes.table.1.0g.tsv
-│   │   ├── GR_family_GeneLocation.table.1.0g.tsv
-│   │   ├── GR_family_GeneOrganizationGenomeSummary.table.1.0g.tsv
-│   │   ├── GR_family_GeneOrganizationSummary.table.1.0g.tsv
-│   │   |
-│   │   ├── IndividualPlots_1.0g 
+│   │   ├── IndividualPlots_1.0g
 │   │   └── SummaryPlots_1.0g
 │   └── IR_fam
 │       ├── IndividualPlots_1.0g
 │       └── SummaryPlots_1.0g
-|
-└── Reports # One report for each family and tested g value.
+└── Reports
     ├── GR_fam_1.0g_Report.html
     └── IR_fam_1.0g_Report.html
+
 ```
 
 
