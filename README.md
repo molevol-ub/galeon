@@ -180,7 +180,7 @@ All the input coordinate files MUST be provided in the same file format.
 - The header is shown to clarify the meaning of each field but it is not required.
 
 | scaffold | source | feature | start | end | score | strand | frame | attribute |
-| ------------- | ------------- | ------------- | ------------- | ------------- | ------------- | ------------- | ------------- | ------------- |
+| :-------------: | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: | ------------- |
 | Scaffold_14804_HRSCAF_18385 | AnnotGFF | gene | 41841903 | 41843055 | 0.51 | - | . | ID=g10232;blastphmmer;annot;Pos:1-383 |
 | Scaffold_14804_HRSCAF_18385 | AnnotGFF | mRNA | 41841903 | 41843055 | 0.51 | - | . | ID=g10232.t1;Parent=g10232;blastphmmer;annot;Pos:1-383 |
 | Scaffold_14804_HRSCAF_18385 | AnnotGFF | CDS | 41841904 | 41843052 | 0.51 | - | 0 | ID=g10232.t1.CDS1;Parent=g10232.t1;blastphmmer;annot;Pos:1-383 |
@@ -196,7 +196,7 @@ All the input coordinate files MUST be provided in the same file format.
 - This provides directly the coordinates and the gene IDs.
 
 | Scaffold ID | start | end | attribute |
-| ------------- | ------------- | ------------- | ------------- |
+| :-------------: | :-------------: | :-------------: | :-------------: |
 | Scaffold_14804_HRSCAF_18385 | 41841903 | 41843055 | g10232 |
 | Scaffold_14804_HRSCAF_18385 | 47268322 | 47268742 | g10331 |
 | Scaffold_14804_HRSCAF_18385 | 47277448 | 47277868 | g10332 |
@@ -208,7 +208,7 @@ All the input coordinate files MUST be provided in the same file format.
 
 
 | Scaffold ID | start | end |
-| ------------- | ------------- | ------------- |
+| :-------------: | :-------------: | :-------------: |
 | Scaffold_14804_HRSCAF_18385 | 41841903 | 41843055 |
 | Scaffold_14804_HRSCAF_18385 | 47268322 | 47268742 |
 | Scaffold_14804_HRSCAF_18385 | 47277448 | 47277868 |
@@ -241,7 +241,7 @@ This is used mainly as a guide to filter the output results and summarise the fi
 - 3 tab separated columns
 
 | Scaffold ID | Length (in bp) | Scaffold associated name |
-| ------------- | ------------- | ------------- |
+| :-------------: | :-------------: | :-------------: |
 | Scaffold_15362_HRSCAF_19823 | 317950935 | ChrX |
 | Scaffold_14804_HRSCAF_18385 | 177171321 | Chr1 |
 | Scaffold_14178_HRSCAF_16784 | 176727214 | Chr2 |
@@ -260,6 +260,11 @@ Run the following command to estimate the g parameter based on the inputs. No in
 - `-g NUM` g value (in Kb units): more that one can be tested
 - `-outdir DIRNAME` Output directory, set by default to *g_estimation_Results_Directory*.
 
+**Help message**
+```
+GALEON_ControlScript.py gestimate -h
+```
+
 **Commands**
 ```
 # Run using one g value
@@ -269,50 +274,89 @@ GALEON_ControlScript.py gestimate -n 134 -s 1354 -g 100
 GALEON_ControlScript.py gestimate -n 134 -s 1354 -g 150,200,300,400
 ```
 
+**Output**
+```
+# Output table
+g_estimation_Results_Directory/
+└── g_estimation.table.txt
+
+# Logs and error messages
+Logs_gestimate_mode/
+├── gestimation.err
+└── gestimation.out
+```
+- Output table: `g_estimation.table.txt`
+The table that contains:
+
+1. column: **g value** - input g value
+2. column: **Exp. 1 gene each X Mb** - 1 gene, expected to be found each "X" Mb
+3. column: **Exp. genes / Mb** - # of genes, expected to be found each Mb
+4. column: **Exp. Genes / Kb** - # of genes, expected to be found each 1 Kb
+5. column: **Exp. Genes/g value** - # of genes, expected to be found each "g" Kb
+6. column: **P(X>=2) / g value** - The probability of finding by chance two (or more) genes in a "g" kb stretch
+7. column: **Poisson's λ**
+
+### 3.2. Gene cluster identification (*mode: clusterfinder*)
+In this mode the pipeline analyzes one (or several) gene families to identify clusters of genes in the genome. 
+
 **Help message**
 ```
-# Run using one g value
 GALEON_ControlScript.py gestimate -h
 ```
 
-**Results**
+#### 3.2.1. One family analysis using physical distances
+**Commands**
+**Step 1)** Find clusters, independently for each input gene family using the coordinates files.
 
-Estimation table: `g_estimation.table.txt`
+- `-a DIRNAME` Input annotation directory with the coordinate files `-a GFFs`).
+- `-g NUM` The g value is set to 100 Kb by default (`-g 100`)
+- `-o DIRNAME` Output directory name, set by default to to `-o clusterfinder_Results_Directory`,
 
-Output table that contains:
-
-column: "g value" - input g value
-
-column: "Exp. 1 gene each X Mb" - 1 gene, expected to be found each "X" Mb
-
-column: "Exp. genes / Mb" - # of genes, expected to be found each Mb
-
-column: "Exp. Genes / Kb" - # of genes, expected to be found each 1 Kb
-
-column: "Exp. Genes/g value" - # of genes, expected to be found each "g" Kb
-
-column: "P(X>=2) / g value" - The probability of finding by chance two (or more) genes in a "g" kb stretch
-
-column: "Poisson's λ"
-
-Log files: 
-
-Logs_gestimate_mode/gestimation.out 
-
-Logs_gestimate_mode/gestimation.err
-
-
-
-### 3.2. Gene cluster identification (*mode: clusterfinder*)
-
-
-
+NOTE: The use of evolutionary distances is disabled here (`-e disabled`).
 
 ```
-python ControlScript.py clusterfinder -a GFFs/ -g 100
+# Simplest command to run Galeon
+GALEON_ControlScript.py clusterfinder -a GFFs/ -e disabled
 ```
 
-*Continue manual*
+**Step 2)** Generate summary plots and tables for each input gene family
+```
+# Generate summary files for the GR family
+GALEON_SummaryFiles.py -fam GR -clust clusterfinder_Results_Directory/ -coords GFFs -ssize ChrSizes.txt -sfilter 7
+
+# Generate summary files for the IR family
+GALEON_SummaryFiles.py -fam IR -clust clusterfinder_Results_Directory/ -coords GFFs -ssize ChrSizes.txt -sfilter 7
+```
+
+**Step 3)** Generate a final HTML report
+```
+# Generate the final HTML report
+GALEON_Report.py -clust clusterfinder_Results_Directory/ -ssize ChrSizes.txt -echo False
+
+```
+
+**Output**
+
+```
+clusterfinder_Results_Directory/
+├── PhysicalDist_Matrices
+│   ├── GR_fam.gff3.temp_matrices
+│   ├── GR_fam.gff3.temp_matrices_1.0g
+│   ├── IR_fam.gff3.temp_matrices
+│   └── IR_fam.gff3.temp_matrices_1.0g
+├── Plots
+│   ├── GR_fam
+│   │   ├── IndividualPlots_1.0g
+│   │   └── SummaryPlots_1.0g
+│   └── IR_fam
+│       ├── IndividualPlots_1.0g
+│       └── SummaryPlots_1.0g
+└── Reports
+    ├── GR_fam_1.0g_Report.html
+    └── IR_fam_1.0g_Report.html
+```
+
+
 
 
 ## 3. Output 
