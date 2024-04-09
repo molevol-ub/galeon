@@ -73,9 +73,9 @@ R
 
 ### 1.3. Additional software
 
-The following programs must be installed and available from command line: **mafft**, **bedtools**, **FastTree** and **iqtree2**. 
+The following programs must be installed and available from command line: **pandoc**, **mafft**, **bedtools**, **FastTree** and **iqtree2**. 
 
-We provide a `bin` directory with binaries of `bedtools`, `FastTree` and `iqtree2`. If the Galeon conda environment will be created, `mafft` and `newick_utils` should be available upon environment activation. Alternatively, check the corresponding documentation for installation instructions.
+We provide a `bin` directory with binaries of `bedtools`, `FastTree` and `iqtree2`. If the Galeon conda environment will be created, `pandoc`, `mafft` and `newick_utils` should be available upon environment activation. Alternatively, check the corresponding documentation for installation instructions.
 
 
 **Notes**:
