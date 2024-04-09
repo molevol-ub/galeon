@@ -870,9 +870,9 @@ for scffile, clusterinfo in clusterdict.items():
         
         elif FamNum_opt == "WithinFamilies":
             if plothint == "Normal":
-                Plot_and_Save_PhysDistOnly(scffile, A1, newdf, clusterdict, z_phys_ln, ClustInfo_dir, i_CMAP_list[0], dfmax_value, 0.5, square_color_1, square_color_2, FamNum_opt, None)
+                Plot_and_Save_PhysDistOnly(scffile, A1, newdf, clusterdict, z_phys_ln, ClustInfo_dir, i_CMAP_list[0], dfmax_value, 0.5, square_color_1, square_color_2, square_color_3, FamNum_opt, None)
             elif plothint == "Special":
-                Plot_and_Save_PhysDistOnly(scffile, A1, newdf, clusterdict, z_phys_ln, ClustInfo_dir, i_CMAP_list[0], dfmax_value, 0.1, square_color_1, square_color_2, FamNum_opt, None)
+                Plot_and_Save_PhysDistOnly(scffile, A1, newdf, clusterdict, z_phys_ln, ClustInfo_dir, i_CMAP_list[0], dfmax_value, 0.1, square_color_1, square_color_2, square_color_3, FamNum_opt, None)
 
     else:
         emsg = f"Unknown 'evo_mode' parameter: {evo_mode}"
