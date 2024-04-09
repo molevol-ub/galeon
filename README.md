@@ -546,7 +546,6 @@ Galeon results directory content
 - **Reports** directory
     - This directory contains html reports, one for each family and g value.
 
-
 Galeon results directory, example tree-like representation for two gene families "GR_fam" and "IR_fam":
 
 ```
