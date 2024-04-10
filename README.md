@@ -448,7 +448,13 @@ GALEON_ControlScript.py clusterfinder -a GFFs/ -e enabled -p Proteins -pm True
 - `-p DIRNAME` Input directory with Proteins or MSA files (`-p Proteins`)
 - `-o DIRNAME` Output directory name, set by default to `-o clusterfinder_Results_Directory`
 
-**Step 2-3)** Generate summary plots, tables and the HTML report
+**Step 2)** Get evolutionary statistics (Cst) and perform the Mann-Whitney test
+```
+# Get evolutionary statistics (Cst) and perform the Mann-Whitney test
+GALEON_GetEvoStats.py -clust clusterfinder_Results_Directory/ -prot Proteins/ -coords GFFs
+```
+
+**Step 3)** Generate summary plots, tables and the HTML report
 
 ```
 # Generate summary files for the GR family
