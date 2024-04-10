@@ -131,7 +131,7 @@ for r, d, f in os.walk(PLOTSdir):
 for sumfile in SummaryTable_list:
     GeneFamName = os.path.dirname(sumfile).split("/")[-1]
     gvalue_key = sumfile.split(".table.")[-1].replace(".tsv","")
-    print(GeneFamName, gvalue_key, sumfile)
+    # print(GeneFamName, gvalue_key, sumfile)
     
     if GeneFamName not in D_GLOB.keys():
         D_GLOB[GeneFamName] = {}
