@@ -98,22 +98,17 @@ Tested software versions:
 # 1-Download the software
 git clone https://github.com/molevol-ub/galeon.git
 
-# 2-Decompress the source code file (if needed)
-cd galeon
-tar -xf GALEON.v1.tar.gz
-cd GALEON_v1
-
-# 3-Make the binaries executable
+# 2-Make the binaries executable
 chmod +x GALEON_masterScripts/bin/*
 
-# 4-Activate conda and install the Galeon conda environment
+# 3-Activate conda and install the Galeon conda environment
 conda activate
 conda env create -f GaleonEnv.yml
 
-# 5-Activate the environment
+# 4-Activate the environment
 conda activate Galeon
 
-# 6-Run the configuration script
+# 5-Run the configuration script
 # this will add a header like this “#!/home/user/miniconda3/envs/Galeon/bin/python” to the python scripts
 python Configure.py YOURPATH_to/GALEON_masterScripts
 
@@ -124,7 +119,7 @@ python Configure.py YOURPATH_to/GALEON_masterScripts
 Once all the packages have been installed, run the following command to check that all the dependencies are available and accessible. 
 
 ```
-# 7-Enter to the GALEON_masterScripts directory and run the following script
+# 6-Enter to the GALEON_masterScripts directory and run the following script
 cd GALEON_masterScripts
 python Scripts/Check_installed_packages_and_PythonEnv.py 
 ```
@@ -140,7 +135,7 @@ python Scripts/Check_installed_packages_and_PythonEnv.py -h
 GALEON scripts should be preferably added to PATH to have general access.
 
 ```
-# 8-Export the path_to_GALEON to PATH
+# 7-Export the path_to_GALEON to PATH
 nano ~/.bashrc
 
 # add this line: export PATH=YOURPATH_to/GALEON_v1:$PATH
@@ -148,7 +143,7 @@ nano ~/.bashrc
 # run
 source ~/.bashrc
 
-# 9-Check the accessibility to the Galeon control script
+# 8-Check the accessibility to the Galeon control script
 which GALEON_ControlScript.py
 # now it should output: YOURPATH_to/GALEON_ControlScript.py
 ```
