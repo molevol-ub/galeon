@@ -138,7 +138,7 @@ GALEON scripts should be preferably added to PATH to have general access.
 # 7-Export the path_to_GALEON to PATH
 nano ~/.bashrc
 
-# add this line: export PATH=YOURPATH_to/GALEON_v1:$PATH
+# add this line: export PATH=YOURPATH_to/GALEON_masterScripts:$PATH
 # save and exit
 # run
 source ~/.bashrc
