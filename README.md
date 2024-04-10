@@ -29,7 +29,7 @@ V1: Initial release
 GALEON is distributed as a set of scripts that can be called from Galeon_masterScripts folder, but do not require any specific installation or compilation step. However, the pipeline does require the following python modules, R packages, as well as some external software.
 
 ### 1.1. Python Packages
-If conda is available, all these packages can be easily obtained by installing the Galeon conda environment (see 1.4), as well as some of the required software : mafft and newick_utils. Alternatively, you may install them separately using `pip`, consult the appropriate documentation for each of them.
+It is highly recommended to use conda since all the python packages will be easily installed with the Galeon conda environment (see Section 1.4), as well as some of the required software : mafft and newick_utils. Alternatively, you may install them separately using `pip`, consult the appropriate documentation for each of them.
 
 ```
 argparse
@@ -92,7 +92,7 @@ Tested software versions:
 - R v4.1.2, v4.2.3
 
 
-#### 1.4. Install GALEON
+### 1.4. Install GALEON
 
 ```
 # 1-Download the software
