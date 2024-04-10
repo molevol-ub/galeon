@@ -5,10 +5,6 @@ import os, sys
 import matplotlib.pyplot as plt
 from collections import Counter
 
-
-# In[2]:
-
-
 GeneFamilyFile = sys.argv[1] # "OutTable.GR.tsv"
 hint = sys.argv[2]
 PlotDir = sys.argv[3]
@@ -25,10 +21,6 @@ ColorValueChoice = sys.argv[6]
 
 FAMname = os.path.basename(GeneFamilyFile).split("_")[0]
 
-
-# In[3]:
-
-
 # Column containing the IDs of scaffolds
 ScaffoldIDcol = "ScfName"
 
@@ -36,10 +28,6 @@ ScaffoldIDcol = "ScfName"
 if ScaffoldIDcol not in ["ScfName", "ScaffoldID"]:
     emsg = f"Unknown name for 'ScaffoldIDcol={ScaffoldIDcol} column. Accepted values: ['ScfName', 'ScaffoldID'] "
     raise ValueError(emsg)
-
-
-# In[4]:
-
 
 # Output dirs
 SummaryPlotsDir = f"{PlotDir}/SummaryPlots_{hint}"
@@ -50,9 +38,6 @@ for i in [SummaryPlotsDir, SinglePlotsDir]:
         pass
     else:
         os.mkdir(i)
-
-
-# In[5]:
 
 
 # Check Scaffold to retain 
@@ -72,11 +57,6 @@ elif isinstance(ScfToRetain, str) == True:
             -'NUM' - only the first NUM largest scaffolds are considered' \n"
         raise ValueError(emsg)
     
-# ScfToRetain
-
-
-# In[6]:
-
 
 # Load dataframe
 DF = pd.read_csv(GeneFamilyFile, sep="\t")
@@ -112,13 +92,6 @@ def SplitDF_by_Fam(iDF):
     
     return oDF_1Fam, oDF_2Fam
 
-
-### SplitDF_by_Fam(DF)
-
-
-# In[7]:
-
-
 # Fx to filter retain only some scaffolds of interest 
 def GetSomeScf(i_DF, iScfIDcolumn, i_filter):
     if isinstance(i_filter, int):
@@ -153,10 +126,6 @@ else:
     DFcp = GetSomeScf(DF, ScaffoldIDcol, ScfToRetain)
     DF_1Fam, DF_2Fam = SplitDF_by_Fam(DFcp)
 
-
-# In[8]:
-
-
 def GroupBy_ChrClusterID(i_DF, iScfIDcolumn):
     # Group by Chromosome and ClusterID
     clustersizes = []
@@ -182,9 +151,6 @@ def GroupBy_ChrClusterID(i_DF, iScfIDcolumn):
 # Create a dataframe with the following information:
 # Number of genes per cluster in each chr/scf
 ### DF_Chr, ClusterSizes = GroupBy_ChrClusterID(DFcp, ScaffoldIDcol)
-
-
-# In[9]:
 
 
 def GeneralSummary_Plot(iClusterSizes, iColor, iPlotName, iFAMname):
@@ -249,9 +215,6 @@ def GeneralSummary_Plot(iClusterSizes, iColor, iPlotName, iFAMname):
 ### GeneralSummary_Plot(ClusterSizes, "lightgrey", "Global_ClusterSize_Distribution.svg")
 
 
-# In[10]:
-
-
 def ModDf(i_DF, iScfIDcolumn, iNumOFClusters):
     # Add scaffolds as keys
     D_temp = {k : {} for k in i_DF[iScfIDcolumn].unique()} # temp dictionary. It will be used to create a barplot with cluster frequencies for each chromosome
@@ -275,9 +238,6 @@ def ModDf(i_DF, iScfIDcolumn, iNumOFClusters):
     df = pd.DataFrame(data)
 
     return df
-
-
-# In[11]:
 
 
 def GeneralBar_Plot(iDF_Chr, iScaffoldIDcolumn, oDirName, i_color_opt, i_colorOBJ, iVerticalLine, iZeroLineStyle, iZeroLineSize, iPlotName, iFamName, izerofreq_plot_opt=True):
@@ -305,9 +265,6 @@ def GeneralBar_Plot(iDF_Chr, iScaffoldIDcolumn, oDirName, i_color_opt, i_colorOB
     MultipleScf_Barplot(DF_byChrFreqGenenum, iScaffoldIDcolumn, newDF, NumOFClusters, oDirName, i_color_opt, i_colorOBJ, iVerticalLine, iZeroLineStyle, iZeroLineSize, iFamName, iPlotName, izerofreq_plot_opt)
     
     return DF_byChrFreqGenenum, NumOFClusters
-
-
-# In[12]:
 
 
 def MultipleScf_Barplot(iFreqDF, iScafColName, inewDF, inumclust, oDir, icolor_opt, icolorOBJ, iVertical, iZeroLineStyle, iZeroLineSize, iFamName, iplotName, zero_plot_opt=True):
@@ -437,9 +394,6 @@ def MultipleScf_Barplot(iFreqDF, iScafColName, inewDF, inumclust, oDir, icolor_o
 ###    DF_ChrFreqGenenum, NumOfClusters = GeneralBar_Plot(DF_Chr, ScaffoldIDcol, SummaryPlotsDir, "OneColor", "blue", "False", "--", 5, "ClusterSize_Distribution_by_Scaffolds.svg", False)
 
 
-# In[13]:
-
-
 def ScfbyScf_Barplot(iDF_byChrFreqGenenum, iScaffoldIDcolname, iNumOfClusters, oDirname, icolor_opt, icolorOBJ, iVertical, iZeroLineStyle, iZeroLineSize, iFamName, iTwoFam_opt=False):
     DF_byChrFreqGenenum_gb = iDF_byChrFreqGenenum.groupby(iScaffoldIDcolname)
 
@@ -461,9 +415,6 @@ def ScfbyScf_Barplot(iDF_byChrFreqGenenum, iScaffoldIDcolname, iNumOfClusters, o
         
         
 #### ScfbyScf_Barplot(DF_ChrFreqGenenum, ScaffoldIDcol, NumOfClusters, SinglePlotsDir, "OneColor", "pink", "AddVerticalLine", "-", 5)
-
-
-# In[14]:
 
 
 # Save here the names of subdirs for each case
@@ -489,8 +440,6 @@ for idir in subdirs:
         os.mkdir(f"{SinglePlotsDir}/{idir}")
 
 
-# In[15]:
-
 
 ''' General plots considering the data from both families at the same time (as if they were one single family )'''
 
@@ -513,8 +462,6 @@ else:
 ScfbyScf_Barplot(DF_ChrFreqGenenum, ScaffoldIDcol, NumOfClusters, f"{SinglePlotsDir}/merged/", "OneColor", "lightgrey", "AddVerticalLine", "-", 5, "merged")
 
 
-# In[16]:
-
 
 for iFamID, vDF in DF_1Fam.groupby("FamID"):
     
@@ -534,9 +481,6 @@ for iFamID, vDF in DF_1Fam.groupby("FamID"):
         DF_ChrFreqGenenum, NumOfClusters = GeneralBar_Plot(DF_Chr, ScaffoldIDcol, f"{SummaryPlotsDir}/{iFamID}", ColorOpt, ColorValueChoice, "False", "--", 5, f"{iFamID}_fam_ClusterSize_Distribution_by_Scaffolds.svg", iFamID, False)
     # Create Barplots
     ScfbyScf_Barplot(DF_ChrFreqGenenum, ScaffoldIDcol, NumOfClusters, f"{SinglePlotsDir}/{iFamID}", "OneColor", "lightgrey", "AddVerticalLine", "-", 5, iFamID)
-
-
-# In[17]:
 
 
 if len(DF_2Fam) == 0:
@@ -562,22 +506,3 @@ else:
         
     # Create Barplots
     ScfbyScf_Barplot(DF_ChrFreqGenenum, ScaffoldIDcol, NumOfClusters, f"{SinglePlotsDir}/{FamID}", "OneColor", "lightgrey", "AddVerticalLine", "-", 5, FamID, True)
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-

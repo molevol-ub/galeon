@@ -93,6 +93,7 @@ def find_inputfiles(i_wkd, i_genefamily):
 
 def discard_samefamily_clusters(i_dictfile, iD_clusters):
     odict_name = i_dictfile.replace("cluster.dict", "bw.cluster.dict")
+    ofamlist = set()
 
     D_retained_info = {}
 
@@ -101,6 +102,7 @@ def discard_samefamily_clusters(i_dictfile, iD_clusters):
             genelist = ilist[-1]
             famlist = [ii.split("_")[0] for ii in genelist]
             famlist_set = set(famlist)
+            ofamlist.update(famlist_set)
 
             if len(famlist_set) != 1:
                 outinfo = ilist
@@ -114,7 +116,7 @@ def discard_samefamily_clusters(i_dictfile, iD_clusters):
     # with open(odict_name, "w") as o1: # Sept 1 2023
         # o1.write(str(odict_name)) # Sept 1 2023
 
-    return D_retained_info
+    return D_retained_info, list(ofamlist)
 
 def import_dict(i_dictfile, i_filter=False):
     ''' Function for importing a dictionary from a text file'''
@@ -125,8 +127,8 @@ def import_dict(i_dictfile, i_filter=False):
         odict = ast.literal_eval(xtemp)
 
         if i_filter == True:
-            odict_filtered = discard_samefamily_clusters(i_dictfile, odict)
-            return odict, odict_filtered
+            odict_filtered, ofamIDs = discard_samefamily_clusters(i_dictfile, odict)
+            return odict, odict_filtered, ofamIDs
 
         elif i_filter == False:
             return odict
@@ -495,7 +497,8 @@ def Plot_and_Save_PhysDistOnly(i_matrixname, i_canvas, i_df, i_clusterdict, i_ph
                     i_canvas.add_patch(Rectangle((c_keys_index[0],c_keys_index[0]), c_shape, c_shape, fill=False, linewidth=4, edgecolor=DictColor_bw2fam[famIDhint]))
 
         else:
-            raise ValueError()
+            emsg = f"Unknown option '{i_FamNum_opt}'"
+            raise ValueError(emsg)
 
     # Heatmap title
     i_canvas.set_title(f"{i_matrixname}")
@@ -676,6 +679,7 @@ def GetNum_of_Fams(i_elem, i_opt, i_color1="green", i_color2="blue"):
 
             return D_out
         else:
+            print(i_elem, genefam_ids)
             raise ValueError("Something is wrong with in 'BetweenFamilies' analysis")
     
     elif i_opt == "getfamname":
@@ -703,8 +707,18 @@ dfile = find_inputfiles(ClustInfo_dir, genefamily)
 
 # Import physical distance dictionary
 if FamNum_opt == "BetweenFamilies":
-    clusterdict, clusterdict_filtered = import_dict(dfile, True)
-    DictColor_bw2fam = GetNum_of_Fams(clusterdict_filtered, "assign", square_color_1, square_color_2)
+    clusterdict, clusterdict_filtered, famIDs = import_dict(dfile, True)
+    if len(clusterdict_filtered) != 0:
+        DictColor_bw2fam = GetNum_of_Fams(clusterdict_filtered, "assign", square_color_1, square_color_2)
+    else:
+        DictColor_bw2fam = {}
+        if len(famIDs) != 2:
+            raise ValueError("Unknown error")
+        else:
+            for iFAM, ycolor in zip(famIDs, [square_color_1, square_color_2]):
+                iFAM = iFAM + "_"
+                DictColor_bw2fam[iFAM] = ycolor
+        
 elif FamNum_opt == "WithinFamilies":
     clusterdict = import_dict(dfile, False)
 
