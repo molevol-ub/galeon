@@ -90,7 +90,10 @@ Tested software versions:
 - iqtree2  v2.1.3
 - python 3.11, 3.12
 - R v4.1.2, v4.2.3
+- pandoc v2.9.2
 
+**Known issues**
+- pandoc v3.1.13 works but the resulting report has a bit altered visualization. Conda Galeon environment uses pandoc v2.9.2.
 
 ### 1.4. Install GALEON
 
