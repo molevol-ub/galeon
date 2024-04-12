@@ -100,6 +100,7 @@ Tested software versions:
 ```
 # 1-Download the software
 git clone https://github.com/molevol-ub/galeon.git
+cd galeon
 
 # 2-Make the binaries executable
 chmod +x GALEON_masterScripts/bin/*
@@ -254,7 +255,7 @@ Run the following command to estimate the g parameter based on the inputs. No in
 
 - `-n NUM` Gene family size (number of genes)
 - `-s NUM` Genome size (in Mb units)
-- `-g NUM` g value (in Kb units): more that one can be tested
+- `-g NUM` g value (in Kb units): more than one can be tested
 - `-outdir DIRNAME` Output directory, set by default to *g_estimation_Results_Directory*.
 
 **Help message**
