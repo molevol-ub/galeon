@@ -26,9 +26,67 @@ V1: Initial release
 
 ## 1. Installation and prerequisites
 
-GALEON is distributed as a set of scripts that can be called from Galeon_masterScripts folder, but do not require any specific installation or compilation step. However, the pipeline does require the following python modules, R packages, as well as some external software.
+GALEON is distributed as a set of scripts that can be called from Galeon_masterScripts folder, but do not require any specific installation or compilation step. However, the pipeline does require several python modules, R packages, as well as a couple of external software. All of them are listed in Section 1.2, 1.3.
 
-### 1.1. Python Packages
+It is highly recommened to install the conda Galeon environment that provides all of the required python packages as well as some of the external programs, specifically pandoc and mafft.
+
+### 1.1. Install GALEON
+
+```
+# 1-Download the software
+git clone https://github.com/molevol-ub/galeon.git
+
+# 2-Make the binaries executable
+chmod +x GALEON_masterScripts/bin/*
+
+# 3-Activate conda and install the Galeon conda environment
+conda activate
+conda env create -f GaleonEnv.yml
+
+# 4-Activate the environment
+conda activate Galeon
+
+# 5-Run the configuration script
+# this will add a header like this “#!/home/user/miniconda3/envs/Galeon/bin/python” to the python scripts
+python Configure.py YOURPATH_to/GALEON_masterScripts
+
+```
+
+**Dependencies installation checkpoint**
+
+Once all the packages have been installed, run the following command to check that all the dependencies are available and accessible. 
+
+```
+# 6-Enter to the GALEON_masterScripts directory and run the following script
+cd GALEON_masterScripts
+python Scripts/Check_installed_packages_and_PythonEnv.py 
+```
+
+If you encounter any errors related to the software (bedtools, mafft, iqtree2, FastTree), check the help message to add the path to your own installation
+
+```
+python Scripts/Check_installed_packages_and_PythonEnv.py -h
+```
+
+**Export GALEON to PATH**
+
+GALEON scripts should be preferably added to PATH to have general access.
+
+```
+# 7-Export the path_to_GALEON to PATH
+nano ~/.bashrc
+
+# add this line: export PATH=YOURPATH_to/GALEON_masterScripts:$PATH
+# save and exit
+# run
+source ~/.bashrc
+
+# 8-Check the accessibility to the Galeon control script
+which GALEON_ControlScript.py
+# now it should output: YOURPATH_to/GALEON_ControlScript.py
+```
+
+### 1.2. Python Packages
 It is highly recommended to use conda since all the python packages will be easily installed with the Galeon conda environment (see Section 1.4), as well as some of the required software : mafft and newick_utils. Alternatively, you may install them separately using `pip`, consult the appropriate documentation for each of them.
 
 ```
@@ -53,7 +111,7 @@ sys
 time
 ```
 
-### 1.2. R Packages
+### 1.3. R Packages
 
 Make sure to have R installed, as well as two additional R packages: `rmarkdown` and `DT`, which are needed to create the final Report in HTML format. These packages can be installed as follows directly from the R terminal.
 
@@ -71,12 +129,11 @@ R
 >library("DT")
 ```
 
-### 1.3. Additional software
+### 1.4. Additional software
 
 The following programs must be installed and available from command line: **pandoc**, **mafft**, **bedtools**, **FastTree** and **iqtree2**. 
 
-We provide a `bin` directory with binaries of `bedtools`, `FastTree` and `iqtree2`. If the Galeon conda environment will be created, `pandoc`, `mafft` and `newick_utils` should be available upon environment activation. Alternatively, check the corresponding documentation for installation instructions.
-
+We provide a `bin` directory with binaries of `bedtools`, `FastTree` and `iqtree2`. If the Galeon conda environment is created, `pandoc`, `mafft` and `newick_utils` should be available upon environment activation. Alternatively, check the corresponding documentation for installation instructions.
 
 **Notes**:
 - **FastTree** - By default, GALEON uses FastTree to infer the phylogeny among gene family copies. http://www.microbesonline.org/fasttree/
@@ -87,7 +144,7 @@ Tested software versions:
 - Mafft v7.3.10
 - bedtools v2.30.0
 - FastTree v2.1.11
-- iqtree2  v2.1.3
+- iqtree2 v2.1.3
 - python 3.11, 3.12
 - R v4.1.2, v4.2.3
 - pandoc v2.9.2
