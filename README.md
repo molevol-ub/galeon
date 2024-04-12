@@ -358,7 +358,7 @@ The table that contains:
 <br>
 
 ### 3.2. Gene cluster identification (*mode: clusterfinder*)
-In this mode the pipeline analyzes one (or several) gene families to identify clusters of genes in the genome. 
+In this mode the pipeline analyzes one (or several) gene families' data to identify clusters of genes in the genome. 
 
 **Help message**
 ```
@@ -366,6 +366,9 @@ GALEON_ControlScript.py gestimate -h
 ```
 
 #### 3.2.1. One family analysis using physical distances
+
+In this case, coordinates files are going to be analyzed to get pairwise distances between genes and arrange them in a distance matrix. This matrix will then be scanned to identify gene clusters. Finally, the distance matrix will be displayed as a heatmap, with any identified clusters represented by black square shapes.
+
 **Inputs**
 
 - More than one families can be analyzed at the same time
@@ -477,6 +480,9 @@ clusterfinder_Results_Directory/
 <br>
 
 #### 3.2.2. One family analysis using physical and evolutionary distances
+
+Coordinates files will be processed as in Section 3.2.1. However, now additio to coordinate files, proteins are included as either raw files or as multiple sequence aligments (MSA). Similar to Section 3.2.1., the main idea is to obtain a matrix of evolutionary distances that will , 
+
 **Inputs**
 
 - More than one families can be analyzed at the same time
