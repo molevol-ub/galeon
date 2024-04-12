@@ -35,6 +35,7 @@ It is highly recommened to install the conda Galeon environment that provides al
 ```
 # 1-Download the software
 git clone https://github.com/molevol-ub/galeon.git
+cd galeon
 
 # 2-Make the binaries executable
 chmod +x GALEON_masterScripts/bin/*
