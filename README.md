@@ -153,17 +153,17 @@ Tested software versions:
 - pandoc v2.9.2
 
 **Known issues**
-- pandoc v3.1.13 works but the resulting report has a bit altered visualization. Conda Galeon environment uses pandoc v2.9.2.
+- pandoc v3.1.13 works but the resulting report shows some non-optimal visualization. Conda Galeon environment uses pandoc v2.9.2.
 
 ## 2. Input data
-**Warning**: Please be careful while preparing the inputs, follow precisely the below instructions. Input file names and formats are mandatory.
+**Warning**: Please be careful while preparing the inputs, we recommend to carefully read and follow the below instructions. Input file name structure and formats are mandatory.
 
 GALEON uses three types of files for each gene family:
-- Annotation files: with the coordinates of the genes.
-- Proteins (or MSA): in FASTA format. Needed for evolutionary distances computation.
-- Chromosome/Scaffold sizes file. Needed for the summary plots and final report.
+- 2.1 - Annotation files containing the coordinates of the genes.
+- 2.2 - Proteins (or MSA) in FASTA format. Needed for evolutionary distances computation.
+- 2.3 - Chromosome/Scaffold sizes file. Needed for the summary plots and final report.
 
-### 2.1. Annotation files format
+### 2.1. Annotation files
 
 - Input coordinate file format: *GFF3*, *BED1*, *BED2* (check the formats below)
 - Input coordinates file name: **{FAMILYNAME}_fam.{FORMAT}**
@@ -175,9 +175,9 @@ GALEON uses three types of files for each gene family:
 All the input coordinate files MUST be provided in the same file format.
 
 #### 2.1.1. GFF3 format
-- 9 tab separated columns. Only five of them will be used: `scaffold`, `feature` `start`, `end` and `attribute`.
-- Make sure that the "gene" is present in the `feature` column.
-- Gene names are inferred from the `attribute` column.
+- It contains 9 tab separated columns, from which the following will be used in Galeon: `scaffold`, `feature` `start`, `end` and `attribute`.
+- Make sure that "gene" is present in the `feature` column.
+- Gene names are inferred from the `attribute` column (ID).
 - The header is shown to clarify the meaning of each field but it is not required.
 
 | scaffold | source | feature | start | end | score | strand | frame | attribute |
@@ -193,8 +193,8 @@ All the input coordinate files MUST be provided in the same file format.
 | Scaffold_14804_HRSCAF_18385 | AnnotGFF | CDS | 47277448 | 47277864 | 0.63 | + | 0 | ID=g10332.t1.CDS1;Parent=g10332.t1;blastphmmer;annot;Pos:1-139 |
 
 #### 2.1.2. BED2 format
-- 4 tab separated columns
-- This provides directly the coordinates and the gene IDs.
+- A file containing 4 tab separated columns.
+- It provides directly the coordinates and the gene IDs.
 
 | Scaffold ID | start | end | attribute |
 | :-------------: | :-------------: | :-------------: | :-------------: |
@@ -204,7 +204,7 @@ All the input coordinate files MUST be provided in the same file format.
 
 
 #### 2.1.3. BED1 format
-- 3 tab separated columns
+- File with 3 tab separated columns.
 - This format does not include gene IDs. Gene names will be given by the gene order. Consider this example annotation file name: `GR_fam.bed1`. The genes will be named as *GR_0*, *GR_1*, etc.
 
 
@@ -216,10 +216,10 @@ All the input coordinate files MUST be provided in the same file format.
 | Scaffold_14804_HRSCAF_18385 | 51844347 | 51844998 |
 | Scaffold_14804_HRSCAF_18385 | 52310537 | 52311098 |
 
-**NOTE**: This format might be of use when there is some kind of problem related with the gene names format. Then, the user may run some tests to check whether the input gene family is organized in cluster.
+**NOTE**: This format might be useful when there is some kind of problem related with the gene names format. Then, the user may run some tests to check whether the input gene family is organized in cluster.
 
 
-### 2.2. Proteins and MSA files format
+### 2.2. Proteins or MSA file
 To compute the evolutionary distances, you will need to provide either the proteins of your gene family of interest or the corresponding MSA in FASTA format.
 
 - Input proteins FASTA and MSA format: **{FAMILYNAME}_fam.{FORMAT}**
@@ -230,12 +230,12 @@ To compute the evolutionary distances, you will need to provide either the prote
 **NOTES**:
 
 - Protein names MUST coincide with the gene name of the input GFF3 or BED2 file.
-- If raw protein data is provided, *mafft* will align them.
-- If pre-computed MSA data is provided, it will be used directly to run *FastTree* or *iqtree* and get the evo. distances.
+- If raw protein data is provided, our pipeline will use *mafft* to align them.
+- If pre-computed MSA data is provided, it will be used directly to run *FastTree* or *iqtree* and get the evolutionary distances.
 - BED1 format does not contain the gene name information, so BED2 format should be used instead.
  
 
-### 2.3. Chromosome/Scaffold sizes file
+### 2.3. Chromosome/Scaffold size file
 This is used mainly as a guide to filter the output results and summarise the findings focusing on the main scaffolds (those corresponding to chromosomes) or a subset of scaffolds of choice (for example: the ten largest scaffolds or a list of scaffolds of interest).
 
 - Input file name: **ChrSizes.txt**
@@ -251,8 +251,8 @@ This is used mainly as a guide to filter the output results and summarise the fi
 
 ## 3. Running GALEON
 
-### 3.1. Estimate g parameter (*mode: gestimate*)
-In this mode, the pipeline estimates the expected number of genes found in a number of bases, as well as the number of genes expected across the g input values and the probability of finding 2 or more genes in a window of g size (i.e.: 100 Kb), which would be considered as a cluster in the following analyses (**Section 3.2.**).
+### 3.1. Estimate *g* parameter (*mode: gestimate*)
+In this mode, the pipeline estimates the expected number of genes found in a number of bases, as well as the number of genes expected across the *g* input values and the probability of finding 2 or more genes in a window of g size (i.e.: 100 Kb), which would be considered as a cluster in the following analyses (**Section 3.2.**).
 
 Run the following command to estimate the g parameter based on the inputs. No input files are required here.
 
