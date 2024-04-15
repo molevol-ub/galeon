@@ -689,7 +689,7 @@ GALEON_SummaryFiles.py -fam IR -clust 2_OneFam_PhysDistOnly_GFF3/ -coords GFFs -
 GALEON_Report.py -clust 2_OneFam_PhysDistOnly_GFF3/ -ssize ChrSizes.txt -echo False
 ```
 
-### 4.3. Test 3. Single family analysis using physical and evolutionary distances (using the proteins sequences)
+### 4.3. Test 3. Single family analysis using physical and evolutionary distances (using the protein sequences)
 - Input directory with annotation files: `-a GFFs`
 - Input g value: `-g 100,200`
 - Enable the usage of Proteins: `-e enabled`
