@@ -312,7 +312,7 @@ GALEON_ControlScript.py gestimate -h
 
 #### 3.2.1. One family analysis using physical distances
 
-In this case, coordinates files are going to be analyzed to get pairwise distances between genes and arrange them in a distance matrix. This matrix will then be scanned to identify gene clusters. Finally, the distance matrix will be displayed as a heatmap, with any identified clusters represented by black square shapes.
+In this case, coordinates files are going to be analyzed to get pairwise distances between genes and arrange them in a distance matrix. This matrix will then be scanned to identify gene clusters. Finally, the distance matrix will be displayed as a heatmap with all the identified clusters (if any) represented by black square shapes.
 
 **Inputs**
 
@@ -326,6 +326,8 @@ In this case, coordinates files are going to be analyzed to get pairwise distanc
 ```
 
 **Commands**
+
+Follow the instruction to run the analysis, generate the plots and create a final portable HTML report which will provide an overview of all the obtained results at a glance.
 
 **Step 1)** Find clusters, independently for each input gene family using the coordinates files.
 
@@ -426,11 +428,12 @@ clusterfinder_Results_Directory/
 
 #### 3.2.2. One family analysis using physical and evolutionary distances
 
-Coordinates files will be processed as in Section 3.2.1. However, now additio to coordinate files, proteins are included as either raw files or as multiple sequence aligments (MSA). Similar to Section 3.2.1., the main idea is to obtain a matrix of evolutionary distances that will , 
+Coordinates files will be processed as described in Section 3.2.1 to obtain the matrices and identify the clusters. However, in addition to coordinate files, proteins will be included to compute evolutionary distances. These distances will then be merged with the physical distance matrix by replacing the upper semi-matrix values. This "merged" matrix will be displayed as a heatmap, with all the identified clusters (if any) represented by black square shapes.
 
 **Inputs**
 
 - More than one families can be analyzed at the same time
+- Provide the protein data in FASTA format, either as raw proteins or multiple sequence alignment (MSA). Plesae, use only ONE format.
 
 ```
 # How your input annotation directory "GFFs/" and protein directory "Proteins/" should look
@@ -443,6 +446,8 @@ Coordinates files will be processed as in Section 3.2.1. However, now additio to
 ```
 
 **Commands**
+
+Follow the instruction to run the analysis, generate the plots and create a final portable HTML report which will provide an overview of all the obtained results at a glance.
 
 **Step 1)** Find clusters using the input coordinates and protein files 
 
