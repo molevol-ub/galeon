@@ -17,7 +17,7 @@
 
 **Table 3. Gene family membership**
 
--This table contains information detailed at gene level, specifically, gene coordinates and membership (singleton or clustered).
+-This table contains detailed information at gene level, specifically, gene coordinates and membership (singleton or clustered).
 
 </br>
 
