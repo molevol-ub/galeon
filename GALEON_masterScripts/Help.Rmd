@@ -1,13 +1,19 @@
 #### <span style="color: #98817B;"> **One family analysis**</span>
 ##### <span style="color: #98817B;"> **Summary tables**</span>
 
-**Table 1. Gene family cluster organization**
+**Table 1. Genome-wide organization of gene family clusters**
 
--This table informs about how many genes are organized in clusters (*Clustered* category) or are not (*Singleton* category) in each scaffold.
+-This table informs about how many genes are organized in clusters (*Clustered* category) or are not (*Singleton* category) in the entire genome. Note that all the scaffolds are considered here.
 
 </br>
 
-**Table 2. Gene family cluster sizes**
+**Table 2. Gene family cluster organization per scaffold**
+
+-This table informs about how many genes are organized in clusters (*Clustered* category) or are not (*Singleton* category) in each (selected) scaffold.
+
+</br>
+
+**Table 3. Gene family cluster sizes**
 
 -This table contains a more explicit information about the size of each cluster in each scaffold. 
 
@@ -15,7 +21,7 @@
 
 </br>
 
-**Table 3. Gene family membership**
+**Table 4. Gene family membership**
 
 -This table contains detailed information at gene level, specifically, gene coordinates and membership (singleton or clustered).
 
@@ -23,7 +29,7 @@
 
 (**Additional tables**) If proteins are provided:
 
-**Table 4. Cst index at genome level**
+**Table 5. Cst index at genome level**
 
 -Evolutionary indexes measured across the entire genome
 
@@ -39,13 +45,13 @@ $$
 
 </br>
 
-**Table 5. Mann-Whitney test results**
+**Table 6. Mann-Whitney test results**
 
 - **Cst** index measured for each scaffold in the genome
 
 </br>
 
-**Table 6. Mann-Whitney test raw data**
+**Table 7. Mann-Whitney test raw data**
 
 -Raw data used for Mann-Whitney test.
 
@@ -55,37 +61,49 @@ $$
 ##### <span style="color: #98817B;"> **Summary tables**</span>
 **Table 1. Two gene families cluster organization**
 
-- This table appears only when there are clusters formed by members of both families. If so, this information is excluded from *Tables 2-5*.
+- This table appears only when there are clusters formed by members of both families. If so, this information is excluded from *Tables 2-4*. Otherwise, the output tables in this analysis will be named as *Tables 1-3*.
 
 </br>
 
-**Table 2. FAM1 gene family cluster organization**
+**Table 2a. Genome-wide organization of FAM1 gene family clusters**
 
 - Same definition as *Table 1.* from *One family analysis* section. 
 
 </br>
 
-**Table 3. FAM1 Gene family cluster sizes**
+**Table 2b. FAM1 gene family cluster organization**
 
 - Same definition as *Table 2.* from *One family analysis* section. 
 
 </br>
 
-**Table 4. FAM2 gene family cluster organization**
-
-- Same definition as *Table 1.* from *One family analysis* section. 
-
-</br>
-
-**Table 5. FAM2 Gene family cluster sizes**
-
-- Same definition as *Table 2.* from *One family analysis* section. 
-
-</br>
-
-**Table 6. FAM1 and FAM2 gene families membership**
+**Table 2c. FAM1 Gene family cluster sizes**
 
 - Same definition as *Table 3.* from *One family analysis* section. 
+
+</br>
+
+**Table 3a. Genome-wide organization of FAM2 gene family clusters**
+
+- Same definition as *Table 1.* from *One family analysis* section. 
+
+</br>
+
+**Table 3b. FAM2 gene family cluster organization**
+
+- Same definition as *Table 2.* from *One family analysis* section. 
+
+</br>
+
+**Table 3c. FAM2 Gene family cluster sizes**
+
+- Same definition as *Table 3.* from *One family analysis* section. 
+
+</br>
+
+**Table 4. FAM1 and FAM2 gene families membership**
+
+- Same definition as *Table 4.* from *One family analysis* section. 
 
 </br>
 
