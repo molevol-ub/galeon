@@ -1,3 +1,4 @@
+#!/home/vadim/miniconda3/envs/Galeon/bin/python
 import os, re, subprocess, shutil, argparse
 import pandas as pd
 
@@ -400,7 +401,7 @@ def write_2_figures(i_dict, i_fam, i_gvalue, i_echo, o_file):
     print("\n\n", file=o_file)
 
 def find_famfile(i_filelist, i_opt):
-    if i_opt == 6:
+    if i_opt == 8:
         outpattern = []
         outfile = None
 
@@ -418,7 +419,7 @@ def find_famfile(i_filelist, i_opt):
             return outpattern[0], outfile
         else:
             return None, None
-    elif i_opt == 5:
+    elif i_opt == 7:
         outfile = None
         outpattern = set()
         
@@ -435,106 +436,147 @@ def find_famfile(i_filelist, i_opt):
             return list(outpattern), outfile
         else:
             raise ValueError("Unknown error")
+    else:
+        emsg = f"Unknown 'i_opt' value: {i_opt}"
+        raise ValueError(emsg)
     
     
 # Sort summary tables by name
 def sort_tables(ilist, i_opt=None):
-    ilist_genome = [i for i in ilist if "GeneOrganizationGenome" in i]
-    ilist = [i for i in ilist if "GeneOrganizationGenome" not in i]
+    # ilist = [i for i in ilist if "GeneOrganizationGenome" not in i]
 
     if i_opt == None:
-        D = {0 : "", 1 : "", 2 : ""}
-        Dtitles = {0 : "**Table 1. Gene family cluster organization **", \
-                   1 : "**Table 2. Gene family cluster sizes **", \
-                   2 : "**Table 3. Gene family membership**"}
+        D = {0 : "", 1 : "", 2 : "", 3 : ""}
+        Dtitles = {0 : "**Table 1. Genome-wide organization of gene family clusters**", \
+                   1 : "**Table 2. Gene family cluster organization per scaffold**", \
+                   2 : "**Table 3. Gene family cluster sizes**", \
+                   3 : "**Table 4. Gene family membership**"}
 
         for yi in ilist:
-            if "GeneOrganizationS" in yi:
+            if "GeneOrganizationGenome" in yi:
                 D[0] = yi
 
-            elif "ClusterSizes" in yi:
+            elif "GeneOrganizationSummary" in yi:
                 D[1] = yi
 
-            elif "GeneLocation" in yi:
+            elif "ClusterSizes" in yi:
                 D[2] = yi
+
+            elif "GeneLocation" in yi:
+                D[3] = yi
 
         return D, Dtitles
     
     elif i_opt == "TwoFam":
-        if len(ilist) == 6:
-            TwoFam_hintname, TwoFamSumfile  = find_famfile(ilist, 6)
+        if len(ilist) == 8:
+            TwoFam_hintname, TwoFamSumfile  = find_famfile(ilist, 8)
 
             if TwoFam_hintname == None: # checkpoint
                 raise ValueError("Something is wrong, two family sum files not found")
             
             D = {0 : TwoFamSumfile, 1 : "", 2 : "",
-                 3 : "", 4 : "", 5 : ""}
+                 3 : "", 4 : "", 5 : "", 6 : "", 7 : ""}
             Dtitles = {0 : "**Table 1. Two gene families cluster organization **", \
-                       1 : "**Table 2. Gene family cluster organization **", \
-                       2 : "**Table 3. Gene family cluster sizes **", \
-                       3 : "**Table 4. Gene family cluster organization **", \
-                       4 : "**Table 5. Gene family cluster sizes **", \
-                       5 : "**Table 6. All gene families membership **"}
+                       1 : "**Table 2a. Genome-wide organization of Gene family clusters**", \
+                       2 : "**Table 2b. Gene family cluster organization per scaffold**", \
+                       3 : "**Table 2c. Gene family cluster sizes **", \
+                       4 : "**Table 3a. Genome-wide organization of Gene family clusters**", \
+                       5 : "**Table 3b. Gene family cluster organization per scaffold**", \
+                       6 : "**Table 3c. Gene family cluster sizes **", \
+                       7 : "**Table 4. All gene families membership **"}
             
             # Get family names from hint
             temp = TwoFam_hintname.split("_family_")[0].split(".")
             fam1, fam2 = [*temp]
             
             for yi in ilist:
-                if "GeneOrganizationS" in yi and os.path.basename(yi).startswith(f"{fam1}_"):
-                    D[1] = yi
-                    Dtitles[1] = Dtitles[1].replace("Gene family", f"{fam1} gene family")
+                if "GeneOrganizationG" in yi and os.path.basename(yi).startswith(f"{fam1}_"):
+                    didx = 1 # dict index
+                    D[didx] = yi
+                    Dtitles[didx] = Dtitles[didx].replace("Gene family", f"{fam1} gene family")
+                    
+                elif "GeneOrganizationG" in yi and os.path.basename(yi).startswith(f"{fam2}_"):
+                    didx = 4 # dict index
+                    D[didx] = yi
+                    Dtitles[didx] = Dtitles[didx].replace("Gene family", f"{fam2} gene family")
+
+                elif "GeneOrganizationS" in yi and os.path.basename(yi).startswith(f"{fam1}_"):
+                    didx = 2 # dict index
+                    D[didx] = yi
+                    Dtitles[didx] = Dtitles[didx].replace("Gene family", f"{fam1} gene family")
                     
                 elif "GeneOrganizationS" in yi and os.path.basename(yi).startswith(f"{fam2}_"):
-                    D[3] = yi
-                    Dtitles[3] = Dtitles[3].replace("Gene family", f"{fam2} gene family")
+                    didx = 5 # dict index
+                    D[didx] = yi
+                    Dtitles[didx] = Dtitles[didx].replace("Gene family", f"{fam2} gene family")
                     
                 elif "ClusterSizes" in yi and os.path.basename(yi).startswith(f"{fam1}_"):
-                    D[2] = yi
-                    Dtitles[2] = Dtitles[2].replace("Gene family", f"{fam1} gene family")
+                    didx = 3 # dict index
+                    D[didx] = yi
+                    Dtitles[didx] = Dtitles[didx].replace("Gene family", f"{fam1} gene family")
 
                 elif "ClusterSizes" in yi and os.path.basename(yi).startswith(f"{fam2}_"):
-                    D[4] = yi
-                    Dtitles[4] = Dtitles[4].replace("Gene family", f"{fam2} gene family")
+                    didx = 6 # dict index
+                    D[didx] = yi
+                    Dtitles[didx] = Dtitles[didx].replace("Gene family", f"{fam2} gene family")
                     
                 elif "GeneLocation" in yi:
-                    D[5] = yi
-                    Dtitles[5] = Dtitles[5].replace("All gene families", f"{fam1} and {fam2} gene families")
+                    didx = 7 # dict index
+                    D[didx] = yi
+                    Dtitles[didx] = Dtitles[didx].replace("All gene families", f"{fam1} and {fam2} gene families")
 
             return D, Dtitles
         
-        elif len(ilist) == 5:
-            Fams_hintname, FamSumfile  = find_famfile(ilist, 5)
+        elif len(ilist) == 7:
+            Fams_hintname, FamSumfile  = find_famfile(ilist, 7)
             fam1, fam2 = [*Fams_hintname]
             
             D = {0 : "", 1 : "", 2 : "",
-                 3 : "", 4 : ""}
-            Dtitles = {0 : "**Table 1. Gene family cluster organization **", \
-                       1 : "**Table 2. Gene family cluster sizes **", \
-                       2 : "**Table 3. Gene family cluster organization **", \
-                       3 : "**Table 4. Gene family cluster sizes **", \
-                       4 : "**Table 5. All gene families membership **"}
+                 3 : "", 4 : "", 5 : "", 6 : ""}
+
+            Dtitles = {0 : "**Table 1a. Genome-wide organization of Gene family clusters**", \
+                       1 : "**Table 1b. Gene family cluster organization per scaffold**", \
+                       2 : "**Table 1c. Gene family cluster sizes **", \
+                       3 : "**Table 2a. Genome-wide organization of Gene family clusters**", \
+                       4 : "**Table 2b. Gene family cluster organization per scaffold**", \
+                       5 : "**Table 2c. Gene family cluster sizes **", \
+                       6 : "**Table 3. All gene families membership **"}
 
             for yi in ilist:
-                if "GeneOrganizationS" in yi and os.path.basename(yi).startswith(f"{fam1}_"):
-                    D[0] = yi
-                    Dtitles[0] = Dtitles[0].replace("Gene family", f"{fam1} gene family")
+                if "GeneOrganizationG" in yi and os.path.basename(yi).startswith(f"{fam1}_"):
+                    didx = 0 # dict index
+                    D[didx] = yi
+                    Dtitles[didx] = Dtitles[didx].replace("Gene family", f"{fam1} gene family")
+                    
+                elif "GeneOrganizationG" in yi and os.path.basename(yi).startswith(f"{fam2}_"):
+                    didx = 3 # dict index
+                    D[didx] = yi
+                    Dtitles[didx] = Dtitles[didx].replace("Gene family", f"{fam2} gene family")
+
+                elif "GeneOrganizationS" in yi and os.path.basename(yi).startswith(f"{fam1}_"):
+                    didx = 1 # dict index
+                    D[didx] = yi
+                    Dtitles[didx] = Dtitles[didx].replace("Gene family", f"{fam1} gene family")
                     
                 elif "GeneOrganizationS" in yi and os.path.basename(yi).startswith(f"{fam2}_"):
-                    D[2] = yi
-                    Dtitles[2] = Dtitles[2].replace("Gene family", f"{fam2} gene family")
+                    didx = 4 # dict index
+                    D[didx] = yi
+                    Dtitles[didx] = Dtitles[didx].replace("Gene family", f"{fam2} gene family")
                     
                 elif "ClusterSizes" in yi and os.path.basename(yi).startswith(f"{fam1}_"):
-                    D[1] = yi
-                    Dtitles[1] = Dtitles[1].replace("Gene family", f"{fam1} gene family")
+                    didx = 2 # dict index
+                    D[didx] = yi
+                    Dtitles[didx] = Dtitles[didx].replace("Gene family", f"{fam1} gene family")
 
                 elif "ClusterSizes" in yi and os.path.basename(yi).startswith(f"{fam2}_"):
-                    D[3] = yi
-                    Dtitles[3] = Dtitles[3].replace("Gene family", f"{fam2} gene family")
+                    didx = 5 # dict index
+                    D[didx] = yi
+                    Dtitles[didx] = Dtitles[didx].replace("Gene family", f"{fam2} gene family")
                     
                 elif "GeneLocation" in yi:
-                    D[4] = FamSumfile
-                    Dtitles[4] = Dtitles[4].replace("All gene families", f"{fam1} and {fam2} gene families")
+                    didx = 6 # dict index
+                    D[didx] = yi
+                    Dtitles[didx] = Dtitles[didx].replace("All gene families", f"{fam1} and {fam2} gene families")
                     
             return D, Dtitles
         else:
@@ -834,13 +876,13 @@ def CreateReport(i_dict, iFamily, igval, o_file, i_opt=None):
 
 
     if MannWhitney_results == True:
-        print("**Table 4. Cst index at genome level**", file=ReportFile, end="\n")
+        print("**Table 5. Cst index at genome level**", file=ReportFile, end="\n")
         write_table(i_dict["Cst glob stats"], ReportFile, 2, echo_paths)
 
-        print("**Table 5. Mann-Whitney test results**", file=ReportFile, end="\n")
+        print("**Table 6. Mann-Whitney test results**", file=ReportFile, end="\n")
         write_table(i_dict["MW results"], ReportFile, 2, echo_paths)
         
-        print("**Table 6. Mann-Whitney test raw data**", file=ReportFile, end="\n")
+        print("**Table 7. Mann-Whitney test raw data**", file=ReportFile, end="\n")
         write_table(i_dict["MW raw data"], ReportFile, 2, echo_paths)
     
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
