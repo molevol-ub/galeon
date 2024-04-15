@@ -134,11 +134,13 @@ R
 
 The following programs must be installed and available from command line: **pandoc**, **mafft**, **bedtools**, **FastTree** and **iqtree2**. 
 
-We provide a `bin` directory with binaries of `bedtools`, `FastTree` and `iqtree2`. If the Galeon conda environment is created, `pandoc`, `mafft` and `newick_utils` should be available upon environment activation. Alternatively, check the corresponding documentation for installation instructions.
+We provide a `bin` directory with binaries of `bedtools`, `FastTree` and `iqtree2`. If the Galeon conda environment is created, `pandoc`, `mafft` and `newick_utils` should be available upon environment activation. 
 
 **Notes**:
 - **FastTree** - By default, GALEON uses FastTree to infer the phylogeny among gene family copies. http://www.microbesonline.org/fasttree/
 - **Iqtree** - IqTree can be used instead of FastTree to reconstruct the gene family phylogeny: http://www.iqtree.org/
+
+Alternatively, check the corresponding documentation for installation instructions.
 
 Tested software versions:
 
@@ -152,63 +154,6 @@ Tested software versions:
 
 **Known issues**
 - pandoc v3.1.13 works but the resulting report has a bit altered visualization. Conda Galeon environment uses pandoc v2.9.2.
-
-### 1.4. Install GALEON
-
-```
-# 1-Download the software
-git clone https://github.com/molevol-ub/galeon.git
-cd galeon
-
-# 2-Make the binaries executable
-chmod +x GALEON_masterScripts/bin/*
-
-# 3-Activate conda and install the Galeon conda environment
-conda activate
-conda env create -f GaleonEnv.yml
-
-# 4-Activate the environment
-conda activate Galeon
-
-# 5-Run the configuration script
-# this will add a header like this “#!/home/user/miniconda3/envs/Galeon/bin/python” to the python scripts
-python Configure.py YOURPATH_to/GALEON_masterScripts
-
-```
-
-**Dependencies installation checkpoint**
-
-Once all the packages have been installed, run the following command to check that all the dependencies are available and accessible. 
-
-```
-# 6-Enter to the GALEON_masterScripts directory and run the following script
-cd GALEON_masterScripts
-python Scripts/Check_installed_packages_and_PythonEnv.py 
-```
-
-If you encounter any errors related to the software (bedtools, mafft, iqtree2, FastTree), check the help message to add the path to your own installation
-
-```
-python Scripts/Check_installed_packages_and_PythonEnv.py -h
-```
-
-**Export GALEON to PATH**
-
-GALEON scripts should be preferably added to PATH to have general access.
-
-```
-# 7-Export the path_to_GALEON to PATH
-nano ~/.bashrc
-
-# add this line: export PATH=YOURPATH_to/GALEON_masterScripts:$PATH
-# save and exit
-# run
-source ~/.bashrc
-
-# 8-Check the accessibility to the Galeon control script
-which GALEON_ControlScript.py
-# now it should output: YOURPATH_to/GALEON_ControlScript.py
-```
 
 ## 2. Input data
 **Warning**: Please be careful while preparing the inputs, follow precisely the below instructions. Input file names and formats are mandatory.
