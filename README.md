@@ -310,7 +310,7 @@ In this mode the pipeline analyzes one (or several) gene families' data to ident
 GALEON_ControlScript.py gestimate -h
 ```
 
-#### 3.2.1. One family analysis using physical distances
+#### 3.2.1. Single family analysis using physical distances
 
 In this case, coordinates files are going to be analyzed to get pairwise distances between genes and arrange them in a distance matrix. This matrix will then be scanned to identify gene clusters. Finally, the distance matrix will be displayed as a heatmap with all the identified clusters (if any) represented by black square shapes.
 
@@ -426,7 +426,7 @@ clusterfinder_Results_Directory/
 
 <br>
 
-#### 3.2.2. One family analysis using physical and evolutionary distances
+#### 3.2.2. Single family analysis using physical and evolutionary distances
 
 Coordinates files will be processed as described in Section 3.2.1 to obtain the matrices and identify the clusters. However, in addition to coordinate files, proteins will be included to compute evolutionary distances. These distances will then be merged with the physical distance matrix by replacing the upper semi-matrix values. This "merged" matrix will be displayed as a heatmap, with all the identified clusters (if any) represented by black square shapes.
 
@@ -641,8 +641,8 @@ clusterfinder_Results_Directory/
 
 ## 4. Example dataset
 
-Severals tests are available in [Example_data](https://github.com/molevol-ub/galeon/tree/main/Example_data) directory. You enter to each *test* directory and run the commands described below. All the example are solved, check this file [Solved_examples.tar.gz](https://github.com/molevol-ub/galeon/blob/main/GALEON_compressed_file/Solved_examples.tar.gz)
-- Remember to have the Galeon conda environment activated before running the commands.
+Several test datasets are available in [Example_data](https://github.com/molevol-ub/galeon/tree/main/Example_data) directory. You can enter to each *test* directory and run the commands described below. The output files for each example are also provided in the file [Solved_examples.tar.gz](https://github.com/molevol-ub/galeon/blob/main/GALEON_compressed_file/Solved_examples.tar.gz)
+- Remember to have the Galeon conda environment activated (or alternativelly all the dependencies installed) before running the commands.
 
 
 ### 4.1. Test 1. Estimate g parameter
@@ -664,7 +664,7 @@ GALEON_ControlScript.py gestimate -n 134 -s 1354 -g 150,200,300,400
 
 - Check the output directory "g_estimation_Results_Directory"
 
-### 4.2. Test 2. One family analysis using physical distances
+### 4.2. Test 2. Single family analysis using physical distances
 
 - Input directory with annotation files: `-a GFFs`
 - Input g value: `-g 100,200`
@@ -689,7 +689,7 @@ GALEON_SummaryFiles.py -fam IR -clust 2_OneFam_PhysDistOnly_GFF3/ -coords GFFs -
 GALEON_Report.py -clust 2_OneFam_PhysDistOnly_GFF3/ -ssize ChrSizes.txt -echo False
 ```
 
-### 4.3. Test 3. One family analysis using physical and evolutionary distances (use Proteins)
+### 4.3. Test 3. Single family analysis using physical and evolutionary distances (using the proteins sequences)
 - Input directory with annotation files: `-a GFFs`
 - Input g value: `-g 100,200`
 - Enable the usage of Proteins: `-e enabled`
@@ -718,7 +718,7 @@ GALEON_SummaryFiles.py -fam IR -clust 3_OneFam_PhysEvoDistances_GFF3/ -coords GF
 GALEON_Report.py -clust 3_OneFam_PhysEvoDistances_GFF3/ -plots Plots -ssize ChrSizes.txt -echo False
 ```
 
-### 4.4. Test 4. One family analysis using physical and evolutionary distances (use MSA)
+### 4.4. Test 4. Single family analysis using physical and evolutionary distances (using a protein MSA)
 - Input directory with annotation files: `-a GFFs`
 - Input g value: `-g 100,200`
 - Enable the usage of Proteins: `-e enabled`
