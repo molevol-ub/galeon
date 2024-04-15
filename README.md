@@ -26,7 +26,7 @@ V1: Initial release
 
 ## 1. Installation and prerequisites
 
-GALEON is distributed as a set of scripts that can be called from Galeon_masterScripts folder, but do not require any specific installation or compilation step. However, the pipeline does require several python modules, R packages, as well as a couple of external software. All of them are listed in Section 1.2, 1.3.
+GALEON is distributed as a set of scripts that can be called from Galeon_masterScripts folder, but do not require any specific installation or compilation step. However, the pipeline does require several python modules, R packages, as well as external software. All of them are listed in Section 1.2, 1.3.
 
 It is highly recommened to install the conda Galeon environment that provides all of the required python packages as well as some of the external programs, specifically pandoc and mafft.
 
@@ -88,7 +88,7 @@ which GALEON_ControlScript.py
 ```
 
 ### 1.2. Python Packages
-It is highly recommended to use conda since all the python packages will be easily installed with the Galeon conda environment (see Section 1.4), as well as some of the required software : mafft and newick_utils. Alternatively, you may install them separately using `pip`, consult the appropriate documentation for each of them.
+It is highly recommended to use conda since all the python packages will be easily installed with the Galeon conda environment (see Section 1.1), as well as some of the required software: mafft and newick_utils. Alternatively, you may install them separately using `pip`, consult the appropriate documentation for each of them.
 
 ```
 argparse
@@ -771,7 +771,7 @@ GALEON_Report.py -clust 5_TwoFamJointAnalysis_GFF3/ -ssize ChrSizes.txt -echo Fa
 
 ## 5. Citation
 
-Vadim Pisarenco, Joel Vizueta, Julio Rozas. GALEON . Submitted. 2023.
+Vadim Pisarenco, Joel Vizueta, Julio Rozas. GALEON . Submitted. 2024.
 
 
 ## 6. Troubleshooting
