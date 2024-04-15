@@ -3,13 +3,13 @@
 
 **Table 1. Gene family cluster organization**
 
--This tables informs about how many genes are organized in clusters (*Clustered* category) or are not (*Singleton* category) in each scaffold.
+-This table informs about how many genes are organized in clusters (*Clustered* category) or are not (*Singleton* category) in each scaffold.
 
 </br>
 
 **Table 2. Gene family cluster sizes**
 
--This tables contains a more explicit information about the size of each cluster in each scaffold. 
+-This table contains a more explicit information about the size of each cluster in each scaffold. 
 
 - **Note:** clusters are labeled in this format "*#ClusterNUM*" (i.e. Cluster1) while singletons are labeled using this one "*#SNUM*" (i.e. #S1)
 
@@ -17,7 +17,7 @@
 
 **Table 3. Gene family membership**
 
--This tables contains information detailed at gene level, specifically, gene coordinates and membership (singleton or clustered).
+-This table contains information detailed at gene level, specifically, gene coordinates and membership (singleton or clustered).
 
 </br>
 
