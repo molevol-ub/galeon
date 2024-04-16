@@ -1,3 +1,4 @@
+#!/home/vadim/miniconda3/envs/Galeon/bin/python
 import argparse, ast, subprocess, os, shutil
 
 temp = subprocess.run("which GALEON_ControlScript.py", shell=True, capture_output=True, text=True).stdout.strip()
@@ -690,7 +691,7 @@ if config["mode"] == "clusterfinder":
                                         EvoDistUse_opt,
                                         str(g_val), 
                                         FamName, PMatrix_dir, FamilyNum,
-                                        HColorScaleOpt, HSquareFrameColor, HSquareFrameColor2, HSquareFrameColor3, HCmap1, HCmap2]))
+                                        HColorScaleOpt, HSquareFrameColor, HSquareFrameColor2, HSquareFrameColor3, HCmap1, HCmap2, LegendScaleUnit, Scale2_decimals]))
 
                         Dparam = {"S24 script name: ": S24_script,
                                         "Evo. Distances Usage: ": EvoDistUse_opt,
@@ -699,7 +700,9 @@ if config["mode"] == "clusterfinder":
                                         "Physical Matrix directory: ": PMatrix_dir,
                                         "Color scale option: ": HColorScaleOpt, 
                                         "Square frame color 1: "  : HSquareFrameColor,
-                                        "Color map 1: " : HCmap1}
+                                        "Color map 1: " : HCmap1,
+                                        "Legend scale units: ": LegendScaleUnit,
+                                        "Phys. dist. legend scale decimals: ": Scale2_decimals}
 
                         # Print input parameteres to S24 script
                         for Dk, Dvalue in Dparam.items():
@@ -710,7 +713,7 @@ if config["mode"] == "clusterfinder":
                                         EvoDistUse_opt,
                                         str(g_val), 
                                         FamName, PMatrix_dir, FamilyNum, 
-                                        HColorScaleOpt, HSquareFrameColor, HSquareFrameColor2, HSquareFrameColor3, HCmap1, HCmap2],
+                                        HColorScaleOpt, HSquareFrameColor, HSquareFrameColor2, HSquareFrameColor3, HCmap1, HCmap2, LegendScaleUnit, Scale2_decimals],
                                         stdout=l4)
                     
             # #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -830,7 +833,7 @@ if config["mode"] == "clusterfinder":
                                         str(g_val), 
                                         FamName, PMatrix_dir,
                                         FamilyNum, HColorScaleOpt, 
-                                        HSquareFrameColor, HSquareFrameColor2, HSquareFrameColor3, HCmap1, HCmap2]))
+                                        HSquareFrameColor, HSquareFrameColor2, HSquareFrameColor3, HCmap1, HCmap2, LegendScaleUnit, Scale2_decimals]))
 
                         Dparam = {"S24 script name: ": S24_script,
                                         "Evo. Distances Usage: ": EvoDistUse_opt,
@@ -842,7 +845,9 @@ if config["mode"] == "clusterfinder":
                                         "Square frame color 2: "  : HSquareFrameColor2,
                                         "Square frame color 3: "  : HSquareFrameColor3,
                                         "Color map 1: " : HCmap1,
-                                        "Color map 2: " : HCmap2}
+                                        "Color map 2: " : HCmap2,
+                                        "Legend scale units: ": LegendScaleUnit,
+                                        "Phys. dist. legend scale decimals: ": Scale2_decimals}
                         
                         # Print input parameteres to S24 script
                         for Dk, Dvalue in Dparam.items():
@@ -854,7 +859,7 @@ if config["mode"] == "clusterfinder":
                                         EvoDistUse_opt,
                                         str(g_val), 
                                         FamName, PMatrix_dir, FamilyNum, HColorScaleOpt,
-                                        HSquareFrameColor, HSquareFrameColor2, HSquareFrameColor3, HCmap1, HCmap2], 
+                                        HSquareFrameColor, HSquareFrameColor2, HSquareFrameColor3, HCmap1, HCmap2, LegendScaleUnit, Scale2_decimals], 
                                         stdout=l4)
                     else:
                         raise ValueError()

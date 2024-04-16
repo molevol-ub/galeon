@@ -3,7 +3,11 @@
 
 **Table 1. Genome-wide organization of gene family clusters**
 
--This table informs about how many genes are organized in clusters (*Clustered* category) or are not (*Singleton* category) in the entire genome. Note that all the scaffolds are considered here.
+-This table informs about how many genes are organized in clusters (*Clustered* category) or are not (*Singleton* category) in the entire genome. Note that all the scaffolds are considered here. 
+
+-Two additional categories will appear if there are overlapping clusters. In this case you may consider to use/try a different g value.
+  - *Repeated genes* - the total number of genes that are found in more than one cluster. 
+  - *Overlapping clusters* - the total number of clusters that are partially overlapped.
 
 </br>
 
