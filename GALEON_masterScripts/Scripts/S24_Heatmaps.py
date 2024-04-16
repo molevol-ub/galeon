@@ -1,3 +1,4 @@
+#!/home/vadim/miniconda3/envs/Galeon/bin/python
 import os, ast, sys, shutil
 import pandas as pd
 import numpy as np
@@ -59,6 +60,9 @@ elif evo_mode == "disabled":
     Colormap_2 = sys.argv[11] # "viridis_r" 
 
     scale_value = 1_000_000 # units: "1 Mb"
+
+    legend_scaleunits = sys.argv[12] # "default" or "auto"
+    legend_physdist_decimals = int(sys.argv[13]) # "int"
 
 if ColorMap_option == "one":
     i_CMAP_list = [Colormap_1, Colormap_1]
@@ -413,7 +417,7 @@ def ParseInputMatrix(i_matrixfile, i_matrixlocation):
     return Merged_df, P_colnames, EmptyCanvas, PlotOptionsHint
 
 
-def Plot_and_Save_PhysDistOnly(i_matrixname, i_canvas, i_df, i_clusterdict, i_phys_threshold, 
+def Plot_and_Save_PhysDistOnly(i_matrixname, i_canvas, i_df, i_clusterdict, i_phys_threshold, i_autoUnitsScale, i_PhysScale_decimals,
                                 o_directory, i_cmap, i_dfmaxvalue, i_pad=0.5, i_square_color_1="black", i_square_color_2="blue", i_square_color_3="red",
                                 i_FamNum_opt="WithinFamilies", i_FilteredClusterDict=None, i_df_annot=False, dpi_param=200):
     
@@ -428,7 +432,41 @@ def Plot_and_Save_PhysDistOnly(i_matrixname, i_canvas, i_df, i_clusterdict, i_ph
 
     cAx2.set(xlabel=None)
 
-    if i_dfmaxvalue > 0.1:
+    if i_autoUnitsScale == "default":
+        if i_dfmaxvalue > 0.1:
+            #::::# Create heatmaps
+            smap44 = sns.heatmap(i_df, \
+                    mask=mask1, \
+                    annot = i_df_annot, \
+                    square = True, \
+                    ax=i_canvas, cbar_ax=cAx2, \
+                    cmap=i_cmap, \
+                    cbar_kws={'ticks' : i_phys_threshold, 'format': CustomTicker_default()})
+
+            smap45 = sns.heatmap(i_df, \
+                    mask=mask2, \
+                    annot = i_df_annot, \
+                    # square = True, \
+                    ax=smap44, cbar=False, \
+                    cmap=i_cmap)
+        else:
+            #::::# Create heatmaps
+            smap44 = sns.heatmap(i_df, \
+                    mask=mask1, \
+                    annot = i_df_annot, \
+                    square = True, \
+                    ax=i_canvas, cbar_ax=cAx2, \
+                    cmap=i_cmap, \
+                    cbar_kws={'format': CustomTicker_special()})
+
+            smap45 = sns.heatmap(i_df, \
+                    mask=mask2, \
+                    annot = i_df_annot, \
+                    # square = True, \
+                    ax=smap44, cbar=False, \
+                    cmap=i_cmap)
+
+    elif i_autoUnitsScale == "auto":
         #::::# Create heatmaps
         smap44 = sns.heatmap(i_df, \
                 mask=mask1, \
@@ -436,31 +474,16 @@ def Plot_and_Save_PhysDistOnly(i_matrixname, i_canvas, i_df, i_clusterdict, i_ph
                 square = True, \
                 ax=i_canvas, cbar_ax=cAx2, \
                 cmap=i_cmap, \
-                cbar_kws={'ticks' : i_phys_threshold, 'format': CustomTicker_default()})
+                cbar_kws={'format': CustomTicker_auto(decimals=i_PhysScale_decimals)})
 
         smap45 = sns.heatmap(i_df, \
                 mask=mask2, \
                 annot = i_df_annot, \
-                # square = True, \
                 ax=smap44, cbar=False, \
                 cmap=i_cmap)
     else:
-        #::::# Create heatmaps
-        smap44 = sns.heatmap(i_df, \
-                mask=mask1, \
-                annot = i_df_annot, \
-                square = True, \
-                ax=i_canvas, cbar_ax=cAx2, \
-                cmap=i_cmap, \
-                cbar_kws={'format': CustomTicker_special()})
-
-        smap45 = sns.heatmap(i_df, \
-                mask=mask2, \
-                annot = i_df_annot, \
-                # square = True, \
-                ax=smap44, cbar=False, \
-                cmap=i_cmap)
-
+        raise ValueError("Unknown 'i_autoUnitsScale' value. Choose from ['default', 'auto']")
+    
     # Add rectangles to the heatmap
     # millorar això
     i_matrixname = i_matrixname.replace(".merged.matrix", ".matrix")
@@ -804,9 +827,9 @@ for scffile, clusterinfo in clusterdict.items():
             
         ### Plot the physical distances dataframe
         if plothint == "Normal":
-            Plot_and_Save_PhysDistOnly(scffile, A1, newdf, clusterdict, z_phys_ln, ClustInfo_dir, i_CMAP_list[0], dfmax_value, 0.5, square_color_1)
+            Plot_and_Save_PhysDistOnly(scffile, A1, newdf, clusterdict, z_phys_ln, legend_scaleunits, legend_physdist_decimals, ClustInfo_dir, i_CMAP_list[0], dfmax_value, 0.5, square_color_1)
         elif plothint == "Special":
-            Plot_and_Save_PhysDistOnly(scffile, A1, newdf, clusterdict, z_phys_ln, ClustInfo_dir, i_CMAP_list[0], dfmax_value, 0.1, square_color_1)
+            Plot_and_Save_PhysDistOnly(scffile, A1, newdf, clusterdict, z_phys_ln, legend_scaleunits, legend_physdist_decimals, ClustInfo_dir, i_CMAP_list[0], dfmax_value, 0.1, square_color_1)
 
         ### Plot the physical distances + evolutionary distances
             
@@ -878,15 +901,15 @@ for scffile, clusterinfo in clusterdict.items():
         ### Plot the dataframe
         if FamNum_opt == "BetweenFamilies":
             if plothint == "Normal":
-                Plot_and_Save_PhysDistOnly(scffile, A1, newdf, clusterdict, z_phys_ln, ClustInfo_dir, i_CMAP_list[0], dfmax_value, 0.5, square_color_1, square_color_2, square_color_3, FamNum_opt, clusterdict_filtered)
+                Plot_and_Save_PhysDistOnly(scffile, A1, newdf, clusterdict, z_phys_ln, legend_scaleunits, legend_physdist_decimals, ClustInfo_dir, i_CMAP_list[0], dfmax_value, 0.5, square_color_1, square_color_2, square_color_3, FamNum_opt, clusterdict_filtered)
             elif plothint == "Special":
-                Plot_and_Save_PhysDistOnly(scffile, A1, newdf, clusterdict, z_phys_ln, ClustInfo_dir, i_CMAP_list[0], dfmax_value, 0.1, square_color_1, square_color_2, square_color_3, FamNum_opt, clusterdict_filtered)
+                Plot_and_Save_PhysDistOnly(scffile, A1, newdf, clusterdict, z_phys_ln, legend_scaleunits, legend_physdist_decimals, ClustInfo_dir, i_CMAP_list[0], dfmax_value, 0.1, square_color_1, square_color_2, square_color_3, FamNum_opt, clusterdict_filtered)
         
         elif FamNum_opt == "WithinFamilies":
             if plothint == "Normal":
-                Plot_and_Save_PhysDistOnly(scffile, A1, newdf, clusterdict, z_phys_ln, ClustInfo_dir, i_CMAP_list[0], dfmax_value, 0.5, square_color_1, square_color_2, square_color_3, FamNum_opt, None)
+                Plot_and_Save_PhysDistOnly(scffile, A1, newdf, clusterdict, z_phys_ln, legend_scaleunits, legend_physdist_decimals, ClustInfo_dir, i_CMAP_list[0], dfmax_value, 0.5, square_color_1, square_color_2, square_color_3, FamNum_opt, None)
             elif plothint == "Special":
-                Plot_and_Save_PhysDistOnly(scffile, A1, newdf, clusterdict, z_phys_ln, ClustInfo_dir, i_CMAP_list[0], dfmax_value, 0.1, square_color_1, square_color_2, square_color_3, FamNum_opt, None)
+                Plot_and_Save_PhysDistOnly(scffile, A1, newdf, clusterdict, z_phys_ln, legend_scaleunits, legend_physdist_decimals, ClustInfo_dir, i_CMAP_list[0], dfmax_value, 0.1, square_color_1, square_color_2, square_color_3, FamNum_opt, None)
 
     else:
         emsg = f"Unknown 'evo_mode' parameter: {evo_mode}"

@@ -1,5 +1,7 @@
+#!/home/vadim/miniconda3/envs/Galeon/bin/python
 import pandas as pd
 import os, ast, sys
+from collections import Counter
 
 ''' Inputs '''
 # Input coordinates file '''
@@ -34,7 +36,7 @@ for i in [".gff3", ".bed1", ".bed2"]:
     if i in CoordsFilePATH:
         CoordsFileFormat = i.replace(".","")
         
-# checkpoint
+# checkpoint 1
 if CoordsFileFormat == None:
     raise ValueError("Input Coordinate File has an unknown format")
 else:
@@ -64,6 +66,31 @@ def extract_features(i_scfname, i_list):
     return outrecords
 
 
+def check_ovlap_genes(i_DF_ClustInfo):
+    # Check for the presence of repeated genes
+    temp = dict(Counter(i_DF_ClustInfo["GeneID"]))
+    tempvalues = temp.values()
+    repeated_genes = [k for k,v in temp.items() if v != 1]
+    
+    # get the list of overlapping clusters (corresponding to the repeated genes)
+    ovlap_clustlist = []
+
+    for k,v in i_DF_ClustInfo.groupby("GeneID"):
+        if len(v["ClusterID"].unique()) != 1:
+            temp = v["ClusterID"].unique()
+            print(k, temp)
+
+            for ii in temp:
+                if ii not in ovlap_clustlist:
+                    ovlap_clustlist.append(ii)
+    
+    # Export results
+    if max(tempvalues) > 1:
+        print(f"Warning! {len(repeated_genes)} Repeated geneIDs and {len(ovlap_clustlist)} Overlapping clusters were detected, this suggests the presence of overlapping clusters. The script will continue but we recommend to check the input data and consider trying a different g value")
+        return True, repeated_genes, ovlap_clustlist # This will be considered in the Checkpoint 2
+    else:
+        return False, repeated_genes, ovlap_clustlist # This will be considered in the Checkpoint 2
+
 ''' Parse the input cluster dictionary '''
 def ParseClusterDict(i_dict):
     # Save here all the records from the dictionary file
@@ -89,7 +116,7 @@ def ParseClusterDict(i_dict):
     return outDF
 
 DF_ClustInfo = ParseClusterDict(D_Cluster)
-# DF_ClustInfo
+OverlappingGenesStatus, rep_genes, ovlap_clusters = check_ovlap_genes(DF_ClustInfo)
 
 
 # Load the input Coordinate file as dataframe
@@ -132,6 +159,7 @@ else:
 #     DFcoords.columns = ["ScaffoldID", "GeneStart", "GeneEnd", "GeneID", "ClustID"]
 #     DFcoords = DFcoords.drop(["ClustID"], axis=1)
 # DFcoords
+
 
 
 def CreateDF_for_UnclusteredGenes(i_DFClustInfo, i_DFCoords, iTwoFamAnalysis, oTwoFamdict):
@@ -182,10 +210,10 @@ def CreateDF_for_UnclusteredGenes(i_DFClustInfo, i_DFCoords, iTwoFamAnalysis, oT
         outDF.columns = ["ScaffoldID", "ClusterID", "GenesNumber", "GeneID"]
 
         # Add an additional column with modified gene names (FamID + geneID)
-        outDF["GeneID_temp"] = outDF["GeneID"].map(D_TwoFamNames)    
+        outDF["GeneID_temp"] = outDF["GeneID"].map(oTwoFamdict)    
 
         # Do the same with the other input dataframes
-        D_TwoFamNames_r = {v:k for k,v in D_TwoFamNames.items()}
+        D_TwoFamNames_r = {v:k for k,v in oTwoFamdict.items()}
         i_DFClustInfo["GeneID_temp"] = i_DFClustInfo["GeneID"].map(D_TwoFamNames_r)
         i_DFClustInfo.columns = list(i_DFClustInfo.columns[:-2]) + ["GeneID_temp", "GeneID"]
 
@@ -194,9 +222,13 @@ def CreateDF_for_UnclusteredGenes(i_DFClustInfo, i_DFCoords, iTwoFamAnalysis, oT
 # get the information about the unclustered genes
 DF_UnClust = CreateDF_for_UnclusteredGenes(DF_ClustInfo, DFcoords, TwoFamAnalysis, D_TwoFamNames)
 
-# Checkpoint
+# Checkpoint 2
 if DF_ClustInfo.shape[0] + DF_UnClust.shape[0] != DFcoords.shape[0]:
-    raise ValueError("Something is wrong. The sum of clustered+unclustered dataframe sizes, should match the total number of input genes from the Coordinate File")
+    if OverlappingGenesStatus == True:
+        DF_merged = pd.concat([DF_ClustInfo, DF_UnClust])
+    else:
+        emsg = f"Something is wrong. The sum of clustered ({DF_ClustInfo.shape[0]}) + unclustered ({DF_UnClust.shape[0]}) dataframe sizes, should match the total number of input genes from the Coordinate File: ({DFcoords.shape[0]})"
+        raise ValueError(emsg)
 else:
     DF_merged = pd.concat([DF_ClustInfo, DF_UnClust])
 
@@ -211,7 +243,8 @@ elif num_of_columns == 6:
     DF_Final = DF_merged.merge(DFcoords, how='inner', on='GeneID')
     DF_Final = DF_Final.drop(columns=["ScaffoldID_y", "GeneID_temp_y"], axis=1)
     DF_Final.columns = ['ScaffoldID', 'ClusterID', 'GenesNumber', 'GeneID', 'GeneID_original', 'GeneStart', 'GeneEnd', 'FamID']
-
+else:
+    raise ValueError("Unknown error")
 # DF_Final
 
 
@@ -234,7 +267,7 @@ with open(InputChrFile) as f1:
     else:
         raise ValueError("File not found!: Chromosome/Scaffold sizes")
         
-    # Checkpoint
+    # Checkpoint 3
     if len(D_ChrLength) == 0 and len(D_ChrNames) == 0:
         raise ValueError("Error. Both dictionaries are empty!")
     elif len(D_ChrLength) != 0 and len(D_ChrNames) != 0:
@@ -339,8 +372,24 @@ def AddTables(i_DF, o_filename, i_opt=False):
     tempDF = SumDF[["FamID","Category","GenesNumber"]].copy(deep=True)
     temprecs = []
     for k,v in tempDF.groupby("Category"):
-        info = [v["FamID"].unique()[0], k, sum(v["GenesNumber"])]
-        temprecs.append(info)
+        if OverlappingGenesStatus == False:
+            info = [v["FamID"].unique()[0], k, sum(v["GenesNumber"])]
+            temprecs.append(info)
+
+        elif OverlappingGenesStatus == True:
+            if k == "Clustered":
+                info = [v["FamID"].unique()[0], k, sum(v["GenesNumber"])]
+                temprecs.append(info)
+
+                info = [v["FamID"].unique()[0], "Repeated genes", len(rep_genes)]
+                temprecs.append(info)
+
+                info = [v["FamID"].unique()[0], "Overlapping clusters", len(ovlap_clusters)]
+                temprecs.append(info)
+
+            else:
+                info = [v["FamID"].unique()[0], k, sum(v["GenesNumber"])]
+                temprecs.append(info)
 
     SumDF_glob = pd.DataFrame.from_records(temprecs)
     SumDF_glob.columns = ["FamID","Category","GenesNumber"]
@@ -423,7 +472,7 @@ else:
     else:
         DF_oneFam = DF_Final
 
-    # checkpoint: now only clusters formed by one family shoud be present
+    # checkpoint 4: now only clusters formed by one family shoud be present
     for k,v in DF_oneFam.groupby(["ScaffoldID", "ClusterID"]):
         famNum = len(v["FamID"].unique())# num of families present in a give cluster
         if famNum != 1:
