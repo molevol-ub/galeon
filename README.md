@@ -149,6 +149,7 @@ Tested software versions:
 - FastTree v2.1.11
 - iqtree2 v2.1.3
 - python 3.11, 3.12
+- perl v5.32.1
 - R v4.1.2, v4.2.3
 - pandoc v2.9.2
 
@@ -246,6 +247,17 @@ This is used mainly as a guide to filter the output results and summarise the fi
 | Scaffold_15362_HRSCAF_19823 | 317950935 | ChrX |
 | Scaffold_14804_HRSCAF_18385 | 177171321 | Chr1 |
 | Scaffold_14178_HRSCAF_16784 | 176727214 | Chr2 |
+
+If you don't have this file, you can generate by running the following script: `Get_scaffold_length.pl` located in `GALEON_masterScripts/Scripts`. It takes as an input your genome file in FASTA format.
+
+- Input file: YOURgenome.fasa
+- Output file: YOURgenome_scaffold_length_sorted.txt
+
+Command example:
+
+```
+perl GALEON_masterScripts/Scripts YOURgenome.fasta
+```
 
 <br>
 
