@@ -488,7 +488,7 @@ GALEON_ControlScript.py clusterfinder -a GFFs/ -e enabled -p Proteins -pm True
 | Scaffold1 | AnnotGFF | mRNA | 100 | 1000 | . | - | . | ID=ABC.t1;Parent=ABC;annot;Pos:1-409; |
 
 - If your protein ID matches the "gene" ID, use the above commands. 
-- But, if the protein ID matches the "mRNA" ID, then you will need to slightly modify the Galeon command by setting the paramter `-feat mRNA` (by default, it is set to `-feat gene`)
+- But, if the protein ID matches the "mRNA" ID, then you will need to slightly modify the Galeon command by setting the paramter `-feat mRNA` (by default, it is set to `-feat gene`).
 
 ```
 # (modified) Simplest command to run Galeon
