@@ -1,8 +1,8 @@
 name: Galeon
 channels:
-  - conda-forge/label/cf202003
-  - bioconda
   - conda-forge
+  - bioconda
+  - conda-forge/label/cf202003
   - defaults
 dependencies:
   - _libgcc_mutex=0.1=main
@@ -34,6 +34,7 @@ dependencies:
   - libgfortran-ng=11.2.0=h00389a5_1
   - libgfortran5=11.2.0=h1234567_1
   - libgomp=11.2.0=h1234567_1
+  - libnsl=2.0.0=h5eee18b_0
   - libpng=1.6.39=h5eee18b_0
   - libstdcxx-ng=11.2.0=h1234567_1
   - libtiff=4.5.1=h6a678d5_0
@@ -58,6 +59,7 @@ dependencies:
   - packaging=23.2=py312h06a4308_0
   - pandas=2.2.1=py312h526ad5a_0
   - pandoc=2.9.2=0
+  - perl=5.32.1=2_h7f98852_perl5
   - pillow=10.2.0=py312h5eee18b_0
   - pip=23.3.1=py312h06a4308_0
   - pyparsing=3.0.9=py312h06a4308_0

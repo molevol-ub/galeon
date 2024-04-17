@@ -1,10 +1,15 @@
 import os, sys, subprocess
 
-def add_interpreter_path(directory, interpreter_path):
+def add_interpreter_path(directory, interpreter_path, i_language):
+    if i_language == "python":
+        ending = ".py"
+    elif i_language == "perl":
+        ending = ".pl"
+
     for r, d, files in os.walk(directory):
         if len(files) != 0:
             for filename in files:
-                if filename.endswith('.py'):
+                if filename.endswith(ending):
                     filepath = os.path.join(r, filename)
                     with open(filepath, 'r+') as f:
                         lines = f.readlines()
@@ -20,5 +25,8 @@ def add_interpreter_path(directory, interpreter_path):
 
 # Example usage:
 directory = sys.argv[1]
-interpreter_path = subprocess.run("which python", shell=True, capture_output=True, text=True).stdout
-add_interpreter_path(directory, interpreter_path)
+python_interpreter_path = subprocess.run("which python", shell=True, capture_output=True, text=True).stdout
+add_interpreter_path(directory, python_interpreter_path, "python")
+
+perl_interpreter_path = subprocess.run("which perl", shell=True, capture_output=True, text=True).stdout
+add_interpreter_path(directory, perl_interpreter_path, "perl")
