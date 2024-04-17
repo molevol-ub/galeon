@@ -480,6 +480,17 @@ GALEON_ControlScript.py clusterfinder -a GFFs/ -e enabled -p Proteins -pm True
 - `-p DIRNAME` Input directory with Proteins or MSA files (`-p Proteins`)
 - `-o DIRNAME` Output directory name, set by default to `-o clusterfinder_Results_Directory`
 
+**NOTE:** Remember that the Protein and Gene IDs must be equal. For example, let's consider a GFF3 file with a "gene" named "ABC" and "mRNA" named "ABC.t1". If your protein ID matches the "gene" ID, use the above commands. But, if the protein ID matches the "mRNA" ID, then you will need to slighthly modify the Galeon command by setting the paramter `-feat mRNA` (by default, it is set to `-feat gene`)
+
+```
+# (modified) Simplest command to run Galeon
+# Run this...
+GALEON_ControlScript.py clusterfinder -a GFFs/ -e enabled -p Proteins/ -feat mRNA
+
+# (modified) ...or this if the MSA files are already present in the "Proteins/" directory for each of the gene families of interest
+GALEON_ControlScript.py clusterfinder -a GFFs/ -e enabled -p Proteins -pm True -feat mRNA
+```
+
 **Step 2)** Get evolutionary statistics (Cst) and perform the Mann-Whitney test
 ```
 # Get evolutionary statistics (Cst) and perform the Mann-Whitney test
