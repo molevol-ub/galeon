@@ -256,7 +256,7 @@ If you don't have this file, you can generate by running the following script: `
 Command example:
 
 ```
-perl GALEON_masterScripts/Scripts YOURgenome.fasta
+perl GALEON_masterScripts/Scripts/Get_scaffold_length.pl YOURgenome.fasta
 ```
 
 NOTE: The output table will have the above-described 3-column format. Optionally, you can rename the third column by replacing the *Scaffold IDs* with *Scaffold associated names*. Check the [example file](https://github.com/molevol-ub/galeon/blob/main/Example_data/Test_2/ChrSizes.txt).
