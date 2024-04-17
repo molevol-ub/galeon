@@ -6,6 +6,7 @@
 -This table informs about how many genes are organized in clusters (*Clustered* category) or are not (*Singleton* category) in the entire genome. Note that all the scaffolds are considered here. 
 
 -Two additional categories will appear if there are overlapping clusters. In this case you may consider to use/try a different g value.
+
   - *Repeated genes* - the total number of genes that are found in more than one cluster. 
   - *Overlapping clusters* - the total number of clusters that are partially overlapped.
 
@@ -45,7 +46,9 @@ $$
 - **Dt**: the average of the pairwise evolutionary (amino acid replacements per site) distances between gene family copies
 - **Dc**: the average of the pairwise evolutionary distance between copies from within a cluster, averaged across all clusters of the same scaffold (or across the genome)
 
-- More information about the definition evolutionary indexes: [[1](https://doi.org/10.1111/1755-0998.13471)]
+NOTE: overlapping genes are excluded from the computation of evolutionary statistics.
+
+More information about the definition evolutionary indexes: [[1](https://doi.org/10.1111/1755-0998.13471)]
 
 </br>
 
@@ -65,13 +68,16 @@ $$
 ##### <span style="color: #98817B;"> **Summary tables**</span>
 **Table 1. Two gene families cluster organization**
 
-- This table appears only when there are clusters formed by members of both families. If so, this information is excluded from *Tables 2-4*. Otherwise, the output tables in this analysis will be named as *Tables 1-3*.
+- This table appears only when there are clusters formed by members of both families. If so, the information corresponding to those genes is excluded from *Tables 2-4*. 
+- NOTE: If this table is not generated, the below tables (*Tables 2-4*) will be named as *Tables 1-3*.
 
 </br>
 
 **Table 2a. Genome-wide organization of FAM1 gene family clusters**
 
 - Same definition as *Table 1.* from *One family analysis* section. 
+- NOTE 1: Please remember that this table doesn't include the genes of FAM1 that belong to clusters formed by two gene families (*Table 1.* from *Two family joint analysis*) .
+- NOTE 2: If this table is empty and *Table 1.* is present, probably all the genes of FAM1 are clustered with genes of FAM2. Additionally, *Table 2b, 2c* should also be empty.
 
 </br>
 
@@ -90,6 +96,8 @@ $$
 **Table 3a. Genome-wide organization of FAM2 gene family clusters**
 
 - Same definition as *Table 1.* from *One family analysis* section. 
+- NOTE 1: Please remember that this table doesn't include the genes of FAM2 that belong to clusters formed by two gene families (*Table 1.* from *Two family joint analysis*) .
+- NOTE 2: If this table is empty and *Table 1.* is present, probably all the genes of FAM2 are clustered with genes of FAM1. Additionally, *Table 3b, 3c* should also be empty.
 
 </br>
 

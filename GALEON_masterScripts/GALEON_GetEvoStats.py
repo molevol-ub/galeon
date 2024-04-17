@@ -216,6 +216,16 @@ def Get_Dckvalues(o_key, iClustInfo, iDF_EvoDist, o_dict):
         # - list of clustered genes
         Cname, Cgenenum, Cgenelist = iclust[0], iclust[2], iclust[3]
 
+        # Discard overlapping genes (starting with GG#...)
+        discarted_genes = [i for i in Cgenelist if i.startswith("GG#") == True]
+
+        if len(discarted_genes) != 0:
+            Cgenelist = [i for i in Cgenelist if i not in discarted_genes]
+            Cgenenum = Cgenenum - len(discarted_genes)
+
+            for i in discarted_genes:
+                print(f"Overlapping genes labeled as: '{i}', are not considered in evolutionary statistics computation")
+
         # Generate gene combinations
         Cgenecombo = list(combinations(Cgenelist, 2))
 
@@ -417,7 +427,17 @@ def GetStatistics_and_RunMWtest(i_FAMname, i_bedfile, i_evodistfile, i_clusterfi
                 # - number of clustered genes
                 # - list of clustered genes
                 Cname, Cgenenum, Cgenelist = iclust[0], iclust[2], iclust[3]
-                ScafCgenelist += Cgenelist
+
+                # Discart overlapping genes
+                discarted_genes = [i for i in Cgenelist if i.startswith("GG#") == True]
+
+                if len(discarted_genes) != 0:
+                    Cgenelist = [i for i in Cgenelist if i not in discarted_genes]
+                    Cgenenum = Cgenenum - len(discarted_genes)
+                    ScafCgenelist += Cgenelist
+
+                else:
+                    ScafCgenelist += Cgenelist
 
                 # Save for later use
                 for g in Cgenelist:

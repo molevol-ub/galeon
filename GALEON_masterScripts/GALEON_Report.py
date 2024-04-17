@@ -371,7 +371,6 @@ def write_2_figures(i_dict, i_fam, i_gvalue, i_echo, o_file):
         i_echo = "TRUE"
         
     for idx, (kcase, vfigures) in enumerate(i_dict.items()):
-        
         figname = FigName_format(kcase, DF_ChrSize)
         
         if idx == 0:
@@ -579,7 +578,8 @@ def sort_tables(ilist, i_opt=None):
                     
             return D, Dtitles
         else:
-            raise ValueError("Something is wrong, unknown error")
+            emsg = f"Something is wrong, unknown length: {len(ilist)}"
+            raise ValueError(emsg)
     
     else:
         raise ValueError("Unknown 'i_opt'")

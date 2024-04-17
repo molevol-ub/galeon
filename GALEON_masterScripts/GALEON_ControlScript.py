@@ -1,4 +1,3 @@
-#!/home/vadim/miniconda3/envs/Galeon/bin/python
 import argparse, ast, subprocess, os, shutil
 
 temp = subprocess.run("which GALEON_ControlScript.py", shell=True, capture_output=True, text=True).stdout.strip()
@@ -87,7 +86,11 @@ if __name__ == "__main__":
         required = True,
         help = "(REQUIRED). Input directory with annotation files")
     
-    
+    parser_default.add_argument("-feat", "--GenenameFeature",
+        type = str,
+        default="gene",
+        help = "GFF3 feature to 'grep' to get the gene names. It is specially important when using proteins since the protein names must match the gene names")
+
     parser_default.add_argument("-p", "--ProteinDirectory",
         type = str,
         help = "Input directory with protein files (*fasta). (REQUIRED if '--EvolutionaryDistancesUse' is enabled)")
@@ -386,6 +389,9 @@ if config["mode"] == "clusterfinder":
     Annot_dir = config["AnnotationDirectory"]
     Annot_dir = f"{current_dir}/{Annot_dir}"
 
+    # Feature to grep
+    Feature2grep = config["GenenameFeature"]
+
     # Output Physical matrix directory
     PMatrix_dir = config["PhysicalMatricesOutDir"]
     PMatrix_dir = f"{Results_dirname}/{PMatrix_dir}"
@@ -520,13 +526,12 @@ if config["mode"] == "clusterfinder":
             else:
                 pass
 
-            print("## cmd: ", " ".join(["python", S21_script, Annot_dir, Bedtools_dir]))
+            print("## cmd: ", " ".join(["python", S21_script, Annot_dir, Bedtools_dir, Feature2grep]))
 
         #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
             try:
-                temp = subprocess.run(["python", S21_script, Annot_dir, Bedtools_dir], text=True, capture_output=True, check=True)
-                print(temp.stdout)
+                temp = subprocess.run(["python", S21_script, Annot_dir, Bedtools_dir, Feature2grep], text=True, capture_output=True, check=True)
 
                 s21out.write(temp.stdout)
                 s21out.write(temp.stderr)
@@ -655,9 +660,7 @@ if config["mode"] == "clusterfinder":
                                         FamName, PMatrix_dir, 
                                         EMatrix_location, EMatrix_position, EMatrix_separator, LegendScaleUnit, Scale1_decimals, Scale2_decimals,
                                         HColorScaleOpt, HSquareFrameColor, HCmap1, HCmap2],                          
-                                        stdout=l4)
-
-                        
+                                        stdout=l4, check=True)
 
                         # Create scatterplots
                         print_header("sub")
@@ -681,7 +684,7 @@ if config["mode"] == "clusterfinder":
                                         str(g_val), 
                                         FamName, PMatrix_dir, 
                                         "MergedDistances_Dataframes"],                                
-                                        stdout=l5)
+                                        stdout=l5, check=True)
 
                     elif EvoDistUse_opt == "disabled":
 
@@ -714,7 +717,7 @@ if config["mode"] == "clusterfinder":
                                         str(g_val), 
                                         FamName, PMatrix_dir, FamilyNum, 
                                         HColorScaleOpt, HSquareFrameColor, HSquareFrameColor2, HSquareFrameColor3, HCmap1, HCmap2, LegendScaleUnit, Scale2_decimals],
-                                        stdout=l4)
+                                        stdout=l4, check=True)
                     
             # #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -742,12 +745,12 @@ if config["mode"] == "clusterfinder":
             else:
                 pass
 
-            print("## cmd: ", " ".join(["python", S21_script, Annot_dir, Bedtools_dir]))
+            print("## cmd: ", " ".join(["python", S21_script, Annot_dir, Bedtools_dir, Feature2grep]))
 
             try:
                 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-                temp = subprocess.run(["python", S21_script, Annot_dir, Bedtools_dir], text=True, capture_output=True, check=True)
+                temp = subprocess.run(["python", S21_script, Annot_dir, Bedtools_dir, Feature2grep], text=True, capture_output=True, check=True)
                 print(temp.stderr)
                 s21out.write(temp.stdout)
                 s21out.write(temp.stderr)

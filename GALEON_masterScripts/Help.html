@@ -365,10 +365,14 @@ clusters</strong></p>
 in the entire genome. Note that all the scaffolds are considered
 here.</p>
 <p>-Two additional categories will appear if there are overlapping
-clusters. In this case you may consider to use/try a different g value.
-- <em>Repeated genes</em> - the total number of genes that are found in
-more than one cluster. - <em>Overlapping clusters</em> - the total
-number of clusters that are partially overlapped.</p>
+clusters. In this case you may consider to use/try a different g
+value.</p>
+<ul>
+<li><em>Repeated genes</em> - the total number of genes that are found
+in more than one cluster.</li>
+<li><em>Overlapping clusters</em> - the total number of clusters that
+are partially overlapped.</li>
+</ul>
 <p></br></p>
 <p><strong>Table 2. Gene family cluster organization per
 scaffold</strong></p>
@@ -397,16 +401,17 @@ clustered).</p>
 C_{ST} = {D_T - D_C \over D_T}
 \]</span></p>
 <ul>
-<li><p><strong>Cst</strong>: index which measures the proportion of the
-evolutionary distance that is attributable to unclustered genes</p></li>
-<li><p><strong>Dt</strong>: the average of the pairwise evolutionary
-(amino acid replacements per site) distances between gene family
-copies</p></li>
-<li><p><strong>Dc</strong>: the average of the pairwise evolutionary
+<li><strong>Cst</strong>: index which measures the proportion of the
+evolutionary distance that is attributable to unclustered genes</li>
+<li><strong>Dt</strong>: the average of the pairwise evolutionary (amino
+acid replacements per site) distances between gene family copies</li>
+<li><strong>Dc</strong>: the average of the pairwise evolutionary
 distance between copies from within a cluster, averaged across all
-clusters of the same scaffold (or across the genome)</p></li>
-<li><p>More information about the definition evolutionary indexes: [<a href="https://doi.org/10.1111/1755-0998.13471">1</a>]</p></li>
+clusters of the same scaffold (or across the genome)</li>
 </ul>
+<p>NOTE: overlapping genes are excluded from the computation of
+evolutionary statistics.</p>
+<p>More information about the definition evolutionary indexes: [<a href="https://doi.org/10.1111/1755-0998.13471">1</a>]</p>
 <p></br></p>
 <p><strong>Table 6. Mann-Whitney test results</strong></p>
 <ul>
@@ -428,9 +433,10 @@ tables</strong></span></h5>
 <p><strong>Table 1. Two gene families cluster organization</strong></p>
 <ul>
 <li>This table appears only when there are clusters formed by members of
-both families. If so, this information is excluded from <em>Tables
-2-4</em>. Otherwise, the output tables in this analysis will be named as
-<em>Tables 1-3</em>.</li>
+both families. If so, the information corresponding to those genes is
+excluded from <em>Tables 2-4</em>.</li>
+<li>NOTE: If this table is not generated, the below tables (<em>Tables
+2-4</em>) will be named as <em>Tables 1-3</em>.</li>
 </ul>
 <p></br></p>
 <p><strong>Table 2a. Genome-wide organization of FAM1 gene family
@@ -438,6 +444,12 @@ clusters</strong></p>
 <ul>
 <li>Same definition as <em>Table 1.</em> from <em>One family
 analysis</em> section.</li>
+<li>NOTE 1: Please remember that this table doesn’t include the genes of
+FAM1 that belong to clusters formed by two gene families (<em>Table
+1.</em> from <em>Two family joint analysis</em>) .</li>
+<li>NOTE 2: If this table is empty and <em>Table 1.</em> is present,
+probably all the genes of FAM1 are clustered with genes of FAM2.
+Additionally, <em>Table 2b, 2c</em> should also be empty.</li>
 </ul>
 <p></br></p>
 <p><strong>Table 2b. FAM1 gene family cluster organization</strong></p>
@@ -457,6 +469,12 @@ clusters</strong></p>
 <ul>
 <li>Same definition as <em>Table 1.</em> from <em>One family
 analysis</em> section.</li>
+<li>NOTE 1: Please remember that this table doesn’t include the genes of
+FAM2 that belong to clusters formed by two gene families (<em>Table
+1.</em> from <em>Two family joint analysis</em>) .</li>
+<li>NOTE 2: If this table is empty and <em>Table 1.</em> is present,
+probably all the genes of FAM2 are clustered with genes of FAM1.
+Additionally, <em>Table 3b, 3c</em> should also be empty.</li>
 </ul>
 <p></br></p>
 <p><strong>Table 3b. FAM2 gene family cluster organization</strong></p>

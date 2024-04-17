@@ -100,15 +100,6 @@ if GENEFAMILY == "merged":
 else:
     PlotScript = f"{ScriptsDir}/ClusterSize_Figure.py"
 
-# RESULTSdir = sys.argv[1]
-# COORDSdir = sys.argv[2]
-# CHRSizefile = sys.argv[3]
-# GENEFAMILY = sys.argv[4]
-
-
-# In[19]:
-
-
 def load_dict(ifile):
     with open(ifile) as f1:
         temp = f1.read()
@@ -134,9 +125,6 @@ def CheckClusterData(i_file):
         return D_clust
 
 
-# In[20]:
-
-
 PlotsOutDir = f"{GENEFAMILY}_fam"
 
 if os.path.exists(PlotsOutDir) == False:
@@ -146,9 +134,6 @@ else:
     shutil.rmtree(PlotsOutDir)
     os.mkdir(PlotsOutDir)
     
-# In[21]:
-
-
 # Find cluster dictionaries
 ClusterDictList = []
 for r, d, f in os.walk(RESULTSdir):
@@ -172,9 +157,6 @@ for r, d, f in os.walk(RESULTSdir):
 if len(ClusterDictList) == 0:
     emsg = "No Cluster dictionary was found"
     raise ValueError(emsg)
-
-
-# In[22]:
 
 
 ''' Find the input coordinates file '''
@@ -205,18 +187,12 @@ else:
 CoordsFile = f"{COORDSdir}/{CoordsFile}"
 
 
-# In[23]:
-
-
 ''' Check for the presence of ChrSizes file '''
 if os.path.exists(CHRSizefile):
     pass
 else:
     emsg = f"Chromosome/Scaffold sizes file '{CHRSizefile}' doesn't exist"
     raise ValueError(emsg)
-
-
-# In[24]:
 
 
 ''' Run Create DataFrame script '''
