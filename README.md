@@ -480,7 +480,15 @@ GALEON_ControlScript.py clusterfinder -a GFFs/ -e enabled -p Proteins -pm True
 - `-p DIRNAME` Input directory with Proteins or MSA files (`-p Proteins`)
 - `-o DIRNAME` Output directory name, set by default to `-o clusterfinder_Results_Directory`
 
-**NOTE:** Remember that the Protein and Gene IDs must be equal. For example, let's consider a GFF3 file with a "gene" named "ABC" and "mRNA" named "ABC.t1". If your protein ID matches the "gene" ID, use the above commands. But, if the protein ID matches the "mRNA" ID, then you will need to slighthly modify the Galeon command by setting the paramter `-feat mRNA` (by default, it is set to `-feat gene`)
+**NOTE:** Remember that the Protein and Gene IDs must be equal. For example, let's consider a GFF3 file with a "gene" named "ABC" and "mRNA" named "ABC.t1". 
+
+| scaffold | source | feature | start | end | score | strand | frame | attribute |
+| :-------------: | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: | ------------- |
+| Scaffold1 | AnnotGFF | gene | 100 | 1000 | . | - | . | ID=ABC;annot;Pos:1-409; |
+| Scaffold1 | AnnotGFF | mRNA | 100 | 1000 | . | - | . | ID=ABC.t1;Parent=ABC;annot;Pos:1-409; |
+
+- If your protein ID matches the "gene" ID, use the above commands. 
+- But, if the protein ID matches the "mRNA" ID, then you will need to slightly modify the Galeon command by setting the paramter `-feat mRNA` (by default, it is set to `-feat gene`)
 
 ```
 # (modified) Simplest command to run Galeon
