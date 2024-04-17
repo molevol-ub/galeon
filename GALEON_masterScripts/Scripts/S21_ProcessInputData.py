@@ -7,6 +7,7 @@ from operator import attrgetter
 
 GFF_dir = sys.argv[1] # "GFFs"
 bedtoolsPATH = sys.argv[2] # PATH to bedtools
+Feat2Grep = sys.argv[3] # Freature2Grep
 
 overlapcases_numset = set([0])
 
@@ -236,12 +237,12 @@ def CheckBedtools(i_binarypath=""):
 CheckBedtools(bedtoolsPATH)
 
 # F4: Grep 'gene' entries
-def grep_entries(i_file, o_file, i_fileformat):
+def grep_entries(i_file, o_file, i_fileformat, i_featname=None):
 
 	if i_fileformat == "gff3":
-		grep_cmd = f"grep -P '\\tgene\\t' {i_file} > {o_file}"
-		sortcluster_cmd = f"grep -P '\\tgene\\t' {i_file} | cut -f1,4,5,9 | sort -k1,1 -k2,2n | bedtools cluster -i - > {o_file}.bedclust\n"
-		grep_count = f"grep -cP '\\tgene\\t' {o_file}"
+		grep_cmd = f"grep -P '\\t{i_featname}\\t' {i_file} > {o_file}"
+		sortcluster_cmd = f"grep -P '\\t{i_featname}\\t' {i_file} | cut -f1,4,5,9 | sort -k1,1 -k2,2n | bedtools cluster -i - > {o_file}.bedclust\n"
+		grep_count = f"grep -cP '\\t{i_featname}\\t' {o_file}"
 
 		subprocess.run(grep_cmd, shell=True, text=True)
 		subprocess.run(sortcluster_cmd, shell=True, text=True)
@@ -469,7 +470,7 @@ if annotfiles_format == "gff3":
 		temp_file = f"{GFF_dir}/{temp_file}"
 
 		# Grep genes, sort and cluster
-		temp_file = grep_entries(coord_file, temp_file, annotfiles_format)
+		temp_file = grep_entries(coord_file, temp_file, annotfiles_format, Feat2Grep)
 		out_tempfiles.append(temp_file)
 
 

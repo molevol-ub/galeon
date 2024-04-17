@@ -1,4 +1,3 @@
-#!/home/vadim/miniconda3/envs/Galeon/bin/python
 import os, ast, sys, shutil
 import pandas as pd
 import numpy as np
@@ -302,17 +301,20 @@ def Merge_distances(i_Phys_Df, i_Evo_Df, i_scaleval, i_substitution, o_file):
         print("Gene1", "Gene2", "PhysicalDistance", "EvolutionaryDistance", sep="\t", end="\n", file=D_outfile)
 
         for i_gpair in Pgene_comb:
-            Gene1, Gene2 = i_gpair[0], i_gpair[1]
-            
-            # Get values: Phys dist and Evo dist
-            G1G2_physdist = i_Phys_Df.loc[Gene2,Gene1]
-            G1G2_evodist = i_Evo_Df.loc[Gene1,Gene2]
+            try:
+                Gene1, Gene2 = i_gpair[0], i_gpair[1]
+                
+                # Get values: Phys dist and Evo dist
+                G1G2_physdist = i_Phys_Df.loc[Gene2,Gene1]
+                G1G2_evodist = i_Evo_Df.loc[Gene1,Gene2]
 
-            # Replace phys dist value by evo value
-            p_df_copy.at[Gene2,Gene1] = G1G2_evodist
-            
-            print(Gene1, Gene2, G1G2_physdist, G1G2_evodist, sep="\t", end="\n", file=D_outfile)
-            # print(Gene1, Gene2, G1G2_physdist, G1G2_evodist)
+                # Replace phys dist value by evo value
+                p_df_copy.at[Gene2,Gene1] = G1G2_evodist
+                
+                print(Gene1, Gene2, G1G2_physdist, G1G2_evodist, sep="\t", end="\n", file=D_outfile)
+                # print(Gene1, Gene2, G1G2_physdist, G1G2_evodist)
+            except KeyError as e:
+                sys.exit(f"! Key Error: {e}. Consider to check if your protein names match the gene names")
 
     if i_substitution == "Lower":
 

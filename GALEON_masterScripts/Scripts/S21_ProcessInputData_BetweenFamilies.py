@@ -8,8 +8,7 @@ from operator import attrgetter
 GFF_dir = sys.argv[1] # "GFFs"
 GFF_mergedir = f"{GFF_dir}/merged_dir"
 bedtoolsPATH = sys.argv[2] # PATH to bedtools
-
-# bash_cmds = "sort_merge.sh"
+Feat2Grep = sys.argv[3] # Freature2Grep
 
 overlapcases_numset = set([0])
 
@@ -237,12 +236,12 @@ def CheckBedtools(i_binarypath=""):
 CheckBedtools(bedtoolsPATH)
 
 # F4: Grep 'gene' entries
-def Grep_and_BedCluster(i_file, o_file, i_format):
+def Grep_and_BedCluster(i_file, o_file, i_format, i_featname=None):
 	
 	if i_format == "gff3":
 		# grep_cmd = f"grep -P '\\tgene\\t' {i_file} > {o_file}"
-		sortcluster_cmd = f"grep -P '\\tgene\\t' {i_file} | cut -f1,4,5,9,10 | sort -k1,1 -k2,2n | {bedtoolsPATH} cluster -i - > {o_file}.bedclust\n"
-		grep_count = f"grep -cP '\\tgene\\t' {o_file}"
+		sortcluster_cmd = f"grep -P '\\t{i_featname}\\t' {i_file} | cut -f1,4,5,9,10 | sort -k1,1 -k2,2n | {bedtoolsPATH} cluster -i - > {o_file}.bedclust\n"
+		grep_count = f"grep -cP '\\t{i_featname}\\t' {o_file}"
 
 		# subprocess.run(grep_cmd, shell=True, text=True)
 		subprocess.run(sortcluster_cmd, shell=True, text=True)
@@ -590,7 +589,7 @@ if annotfiles_format == "gff3":
 		temp_file = f"{GFF_mergedir}/{temp_file}"
 		# out_gff = f"{GFF_sorted_dir}/{out_gff_temp}"
 
-		temp_file = Grep_and_BedCluster(coord_file, temp_file, annotfiles_format)
+		temp_file = Grep_and_BedCluster(coord_file, temp_file, annotfiles_format, Feat2Grep)
 	# 	# bashcmd_file.write(bashcmd)
 		# print(temp_file)
 		out_tempfiles.append(temp_file)

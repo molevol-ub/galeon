@@ -1,4 +1,3 @@
-#!/home/vadim/miniconda3/envs/Galeon/bin/python
 import pandas as pd
 import os, ast, sys
 from collections import Counter
@@ -314,7 +313,7 @@ def Twofam_composition(i_famlist, i_genelist):
     twofam_clustinfo = f"{sum(tlist)} ({tlist[0]}, {tlist[1]})"
     return twofam_clustinfo
 
-def AddTables(i_DF, o_filename, i_opt=False):
+def AddTables(i_DF, o_filename, i_opt=False, i_emptyDF=False):
 
     # drop some columns
     if i_opt == True:
@@ -354,15 +353,20 @@ def AddTables(i_DF, o_filename, i_opt=False):
 
     # Summary DF
     SumDF = pd.DataFrame.from_records(outlist)
-    if i_opt == True:
-        SumDF.columns = ["ScaffoldID", "ScfLength", "ScfName", "Category", "GenesNumber", "FamID"]
-        SumDF = SumDF.reindex(columns=["FamID", "ScaffoldID", "ScfLength", "ScfName", "Category", "GenesNumber"])
-    else:
-        SumDF.columns = ["ScaffoldID", "ScfLength", "ScfName", "Category", "GenesNumber", "FamID"]
-        SumDF = SumDF.reindex(columns=["FamID", "ScaffoldID", "ScfLength", "ScfName", "Category", "GenesNumber"])
+
+    SumDF.columns = ["ScaffoldID", "ScfLength", "ScfName", "Category", "GenesNumber", "FamID"]
+    SumDF = SumDF.reindex(columns=["FamID", "ScaffoldID", "ScfLength", "ScfName", "Category", "GenesNumber"])
+
+    # if i_opt == True:
+    #     SumDF.columns = ["ScaffoldID", "ScfLength", "ScfName", "Category", "GenesNumber", "FamID"]
+    #     SumDF = SumDF.reindex(columns=["FamID", "ScaffoldID", "ScfLength", "ScfName", "Category", "GenesNumber"])
+    # else:
+    #     SumDF.columns = ["ScaffoldID", "ScfLength", "ScfName", "Category", "GenesNumber", "FamID"]
+    #     SumDF = SumDF.reindex(columns=["FamID", "ScaffoldID", "ScfLength", "ScfName", "Category", "GenesNumber"])
+
     SumDF = SumDF.sort_values(by=["ScfLength","Category"], ascending=False)
 
-    # Export the table with cluster sizes
+    # Export the table with gene organization info
     o_file = o_filename.replace("GeneLocation", "GeneOrganizationSummary")
     SumDF.to_csv(o_file, index=None, sep="\t")
 
@@ -426,13 +430,14 @@ else:
 
     for k,v in DF_Final.groupby(["ScaffoldID", "ClusterID"]):
         if len(v["FamID"].unique()) != 1:
+            famnames_sorted = sorted(v["FamID"].unique())
             iScfID = k[0]
             iScfLen = v["ScfLength"].unique()[0]
             iChrID = v["ScfName"].unique()[0]
             iClusterID = k[1]
             iClustSize = v["GenesNumber"].unique()[0]
             iClusterComposition = Twofam_composition(v["FamID"].unique(), v["GeneID"].to_list())
-            iFamName = " and ".join(v["FamID"].unique())
+            iFamName = " and ".join(famnames_sorted)
             twofamID = ".".join(v["FamID"].unique())
             
             info = [iScfID, iScfLen, iChrID, iClusterID, iClustSize, iClusterComposition, iFamName]
@@ -482,11 +487,44 @@ else:
     #### --- end ---
 
     ####
-    famlist =  list(DF_oneFam["FamID"].unique())
+    famlist =  list(DF_Final["FamID"].unique())
     for ifam in famlist:
         tempDF = DF_oneFam[DF_oneFam["FamID"] == ifam].copy(deep=True)
+
         filename = os.path.basename(OutFile).replace("merged_family",f"{ifam}_family")
         OutFile3 = f"{dirname}/{filename}"
-        AddTables(tempDF, OutFile3, TwoFamAnalysis)
 
+        if len(tempDF) != 0:
+            AddTables(tempDF, OutFile3, TwoFamAnalysis)
+
+        else:
+            # Export empty tables
+            
+            columnlist = tempDF.columns
+            x = ["-"]*(len(columnlist)-1)
+            x.insert(0,[ifam])
+
+            eDF = pd.DataFrame.from_records(x).T
+            eDF.columns = columnlist
+
+            ####
+            tempDF_E1 = eDF.drop(columns = ["GeneID", "GeneStart", "GeneEnd", "GeneID_original"])
+            o_file = OutFile3.replace("GeneLocation", "ClusterSizes")
+            tempDF_E1.to_csv(o_file, index=None, sep="\t")
+
+            ####
+            x = ["-"]*5
+            x.insert(0,[ifam])
+            eDF2 = pd.DataFrame.from_records(x).T
+            eDF2.columns = ["FamID", "ScaffoldID", "ScfLength", "ScfName", "Category", "GenesNumber"]
+            o_file = OutFile3.replace("GeneLocation", "GeneOrganizationSummary")
+            eDF2.to_csv(o_file, index=None, sep="\t")
+
+            ####
+            x = ["-"]*2
+            x.insert(0,[ifam])
+            eDF3 = pd.DataFrame.from_records(x).T
+            eDF3.columns = ["FamID","Category","GenesNumber"]
+            o_file = OutFile3.replace("GeneLocation", "GeneOrganizationGenomeSummary")
+            eDF3.to_csv(o_file, index=None, sep="\t")            
     ### --- end ---

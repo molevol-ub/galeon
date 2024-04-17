@@ -70,7 +70,7 @@ with open(dfile) as d:
     
 # Create a new one with each gene pair set as a 'key' and each cluster ID set as 'value'
 for matrixID, cinfo in D_clust.items():
-    ScfID = matrixID.split(".")[-2]
+    ScfID = matrixID.split("temp_matrices.")[-1].split(".matrix")[0]
     D_Cluster_Info[ScfID] = {}
 
     for ClusterCase in cinfo:
@@ -89,21 +89,16 @@ for matrixID, cinfo in D_clust.items():
             D_Cluster_Info[ScfID][hintID] = ClusterID 
             D_Cluster_Info[ScfID][hintID_r] = ClusterID
 
-
-
 # List to store all the dataframes
 df_list = []
 
 # TSV file
 for f in tsv_files:
-    
     # Path to input tsv file
     path_to_file = f"{DistDir}/{f}"
     
     temp = f.split("_matrices.")[1]
-    ScfID = temp.split(".matrix.merged")[0]
-    ScfID = ScfID.split(".")[0]
-    # print(ScfID)
+    ScfID = temp.split(".matrix.")[0]
     
     # Load file as dataframe
     out_headers = []
@@ -213,6 +208,7 @@ def Scf_Scatter_Plot(i_df, display_legend_opt):
                                data=i_df, hue="ClusterID", ax=A1, \
                                alpha=0.9, s = 12, palette=mypalette, \
                                clip_on=True)
+
     # sns_plot = sns.scatterplot(x="phys", y="evo", data=i_df, hue="clusters", palette="rainbow", ax=A1, clip_on=True)
     A1.set_xlabel('Physical distances (bp)')
 #     A1.set_ylabel('Evolutionary distances (aa. subst/position)')
@@ -243,18 +239,24 @@ def Scf_Scatter_Plot(i_df, display_legend_opt):
 df_list_updated = []
 
 for matrixID, cinfo in D_clust.items():
-    # print(matrixID)
     
-    temp = matrixID.split(".")
-    temp2 = ".".join(temp[:-1])
-    
-    scatter_plot_name = FamPlot_dir + "/" + ".".join(temp) + f".PhysicalEvolutionaryDist_Scatterplot_{g_threshold_shortID}g.svg"
-    scatter_plot_name2 = FamPlot_dir + "/" + ".".join(temp) + f".PhysicalEvolutionaryDist_Scatterplot_{g_threshold_shortID}g.pdf"
-    
-    ScfID = temp[-2]
-    
+    temp = matrixID.split(".matrix")
+    # scatter_plot_name = FamPlot_dir + "/" + ".".join(temp) + f".PhysicalEvolutionaryDist_Scatterplot_{g_threshold_shortID}g.svg"
+    # scatter_plot_name2 = FamPlot_dir + "/" + ".".join(temp) + f".PhysicalEvolutionaryDist_Scatterplot_{g_threshold_shortID}g.pdf"
+
+    ScfID = temp[0].split("temp_matrices.")[-1]
+
+    scatter_plot_name = f'{FamPlot_dir}/{temp[0]}.matrix.PhysicalEvolutionaryDist_Scatterplot_{g_threshold_shortID}g.svg'
+    scatter_plot_name2 = f'{FamPlot_dir}/{temp[0]}.matrix.PhysicalEvolutionaryDist_Scatterplot_{g_threshold_shortID}g.pdf'
+
     # Create a scatter plot for each scaffold
     t_df = df_glob.loc[df_glob["ScfID"] == ScfID].copy() # Select scaffold specific data
+
+    print(t_df)
+    if len(t_df) == 0:
+        emsg = f"Empty dataframe for this scaffold: {ScfID}"
+        sys.exit(emsg)
+
     t_plot, t_df_updated = Scf_Scatter_Plot(t_df, False) # Plot the graph
     df_list_updated.append(t_df_updated)
     
