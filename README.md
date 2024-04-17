@@ -248,7 +248,7 @@ This is used mainly as a guide to filter the output results and summarise the fi
 | Scaffold_14804_HRSCAF_18385 | 177171321 | Chr1 |
 | Scaffold_14178_HRSCAF_16784 | 176727214 | Chr2 |
 
-If you don't have this file, you can generate by running the following script: `Get_scaffold_length.pl` located in `GALEON_masterScripts/Scripts`. It takes as an input your genome file in FASTA format.
+If you don't have this file, you can generate by running the following script: `Get_scaffold_length.pl` located in `GALEON_masterScripts/Scripts`. It takes as an input your genome file in FASTA format. 
 
 - Input file: YOURgenome.fasa
 - Output file: YOURgenome_scaffold_length_sorted.txt
@@ -258,6 +258,8 @@ Command example:
 ```
 perl GALEON_masterScripts/Scripts YOURgenome.fasta
 ```
+
+NOTE: The output table will have the above-described 3-column format. Optionally, you can rename the third column by replacing the *Scaffold IDs* with *Scaffold associated names*. Check the [example file](https://github.com/molevol-ub/galeon/blob/main/Example_data/Test_2/ChrSizes.txt).
 
 <br>
 
