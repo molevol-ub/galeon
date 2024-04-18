@@ -535,34 +535,41 @@ Galeon results directory, example tree-like representation for two gene families
 
 ```
 clusterfinder_Results_Directory/
-├── GR_fam.GlobScatterPlot_1.0g.pdf # Physical vs Evo. distance scatter plot considering at genome level, that is, considering all the genes of the input gene family
-├── GR_fam.GlobScatterPlot_1.0g.svg
-├── IR_fam.GlobScatterPlot_1.0g.pdf
-├── IR_fam.GlobScatterPlot_1.0g.svg
+│
+├── MannWhitney_StatisticsResults
+│    ├── GR_fam_GlobalStats_value.1.0g.txt
+│    └── GR_fam_MannWhitney.results.brief.1.0g.tsv
 │
 ├── MergedDistances_Dataframes
-│   ├── GR_fam.IntermediateFiles
-│   ├── GR_fam.merged.matrices # Physical + Evolutionary distance matrices
-│   ├── GR_fam.plots_1.0g # Physical + Evolutionary distance Heatmaps and Scatterplots in svg and pdf format
-│   ├── IR_fam.IntermediateFiles
-│   ├── IR_fam.merged.matrices
-│   └── IR_fam.plots_1.0g
-│           
-├── PhysicalDist_Matrices 
-│   ├── GR_fam.gff3.temp_matrices  # Physical distance matrices, *matrix (in bp units)
-│   ├── GR_fam.gff3.temp_matrices_1.0g # Heatmaps in svg and pdf format
-│   ├── IR_fam.gff3.temp_matrices
-│   └── IR_fam.gff3.temp_matrices_1.0g
+│    ├── GR_fam.IntermediateFiles/
+│    ├── GR_fam.merged.matrices/ # Physical + Evolutionary distance matrices
+│    ├── GR_fam.plots_1.0g/ # Physical + Evolutionary distance Heatmaps and Scatterplots in svg and pdf format
+│    │
+│    ├── IR_fam.IntermediateFiles/
+│    ├── IR_fam.merged.matrices/
+│    ├── IR_fam.plots_1.0g/
+│    │
+│    ├── GR_fam.GlobScatterPlot_1.0g.pdf # Physical vs Evo. distance scatter plot considering at genome level, that is, considering all the genes of the input gene family
+│    ├── GR_fam.GlobScatterPlot_1.0g.svg
+│    ├── IR_fam.GlobScatterPlot_1.0g.pdf
+│    └── IR_fam.GlobScatterPlot_1.0g.svg
+│
+├── PhysicalDist_Matrices
+│    ├── GR_fam.gff3.temp_matrices/  # Physical distance matrices, *matrix (in bp units)
+│    ├── GR_fam.gff3.temp_matrices_1.0g/ # Heatmaps in svg and pdf format
+│    │
+│    ├── IR_fam.gff3.temp_matrices/
+│    └── IR_fam.gff3.temp_matrices_1.0g/
 │
 ├── Plots # same content as in "Section 3.2.1"
-│   ├── GR_fam
-│   │   ├── IndividualPlots_1.0g
-│   │   └── SummaryPlots_1.0g
-│   └── IR_fam
-│       ├── IndividualPlots_1.0g
-│       └── SummaryPlots_1.0g
+│    ├── GR_fam
+│    │   ├── IndividualPlots_1.0g/
+│    │   └── SummaryPlots_1.0g/
+│    └── IR_fam
+│        ├── IndividualPlots_1.0g/
+│        └── SummaryPlots_1.0g/
 │
-└── Reports # same content as in "Section 3.2.1"
+└── Reports/ # same content as in "Section 3.2.1"
     ├── GR_fam_1.0g_Report.html
     └── IR_fam_1.0g_Report.html
 
