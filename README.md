@@ -250,7 +250,7 @@ This is used mainly as a guide to filter the output results and summarise the fi
 
 If you don't have this file, you can generate by running the following script: `Get_scaffold_length.pl` located in `GALEON_masterScripts/Scripts`. It takes as an input your genome file in FASTA format. 
 
-- Input file: YOURgenome.fasa
+- Input file: YOURgenome.fasta
 - Output file: YOURgenome_scaffold_length_sorted.txt
 
 Command example:
