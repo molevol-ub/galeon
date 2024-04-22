@@ -396,10 +396,10 @@ Galeon results directory content
 - **Plots** directory
     - This directory contains summary plots with cluster size distribution at genome level (dir.: `SummaryPlots_100.0g`) and individual scaffold level (dir.: `IndividualPlots_100.0g`)
     - Also, it contains some summary tables.
-        - `X_family_ClusterSizes.table.1.0g.tsv` - This tables contains a more explicit information about the size of each cluster in each scaffold.
-        - `X_family_GeneLocation.table.1.0g.tsv` - This tables contains information detailed at gene level, specifically, gene coordinates and membership (singleton or clustered).
-        - `X_family_GeneOrganizationGenomeSummary.table.1.0g.tsv` - This tables informs about how many genes are organized in clusters (Clustered category) or are not (Singleton category) at genome level.
-        - `X_family_GeneOrganizationSummary.table.1.0g.tsv` - This tables informs about how many genes are organized in clusters (Clustered category) or are not (Singleton category) in each scaffold.
+        - `X_family_ClusterSizes.table.100.0g.tsv` - This tables contains a more explicit information about the size of each cluster in each scaffold.
+        - `X_family_GeneLocation.table.100.0g.tsv` - This tables contains information detailed at gene level, specifically, gene coordinates and membership (singleton or clustered).
+        - `X_family_GeneOrganizationGenomeSummary.table.100.0g.tsv` - This tables informs about how many genes are organized in clusters (Clustered category) or are not (Singleton category) at genome level.
+        - `X_family_GeneOrganizationSummary.table.100.0g.tsv` - This tables informs about how many genes are organized in clusters (Clustered category) or are not (Singleton category) in each scaffold.
 
 - **Reports** directory
     - This directory contains html reports, one for each family and g value.
@@ -417,18 +417,18 @@ clusterfinder_Results_Directory/
 |
 ├── Plots # Contains summary tables and plots for each input family
 │   ├── GR_fam
-│   │   ├── GR_family_ClusterSizes.table.1.0g.tsv
-│   │   ├── GR_family_GeneLocation.table.1.0g.tsv
-│   │   ├── GR_family_GeneOrganizationGenomeSummary.table.1.0g.tsv
-│   │   ├── GR_family_GeneOrganizationSummary.table.1.0g.tsv
+│   │   ├── GR_family_ClusterSizes.table.100.0g.tsv
+│   │   ├── GR_family_GeneLocation.table.100.0g.tsv
+│   │   ├── GR_family_GeneOrganizationGenomeSummary.table.100.0g.tsv
+│   │   ├── GR_family_GeneOrganizationSummary.table.100.0g.tsv
 │   │   |
 │   │   ├── IndividualPlots_100.0g 
 │   │   └── SummaryPlots_100.0g
 │   └── IR_fam
-│   │   ├── IR_family_ClusterSizes.table.1.0g.tsv
-│   │   ├── IR_family_GeneLocation.table.1.0g.tsv
-│   │   ├── IR_family_GeneOrganizationGenomeSummary.table.1.0g.tsv
-│   │   ├── IR_family_GeneOrganizationSummary.table.1.0g.tsv
+│   │   ├── IR_family_ClusterSizes.table.100.0g.tsv
+│   │   ├── IR_family_GeneLocation.table.100.0g.tsv
+│   │   ├── IR_family_GeneOrganizationGenomeSummary.table.100.0g.tsv
+│   │   ├── IR_family_GeneOrganizationSummary.table.100.0g.tsv
 │   │   |
 │   │   ├── IndividualPlots_100.0g
 │   └── └── SummaryPlots_100.0g
@@ -537,8 +537,8 @@ Galeon results directory, example tree-like representation for two gene families
 clusterfinder_Results_Directory/
 │
 ├── MannWhitney_StatisticsResults
-│    ├── GR_fam_GlobalStats_value.1.0g.txt
-│    └── GR_fam_MannWhitney.results.brief.1.0g.tsv
+│    ├── GR_fam_GlobalStats_value.100.0g.txt
+│    └── GR_fam_MannWhitney.results.brief.100.0g.tsv
 │
 ├── MergedDistances_Dataframes
 │    ├── GR_fam.IntermediateFiles/
@@ -629,11 +629,11 @@ Galeon results directory content
         - `X.Y` - plots for clusters of X and Y gene family members (when members both families belong to the same cluster).
         - `merged` - plots for clusters of X and Y gene family considered as one.
     - Also, it contains some summary tables.
-        - `X_family_ClusterSizes.table.1.0g.tsv` - This tables contains a more explicit information about the size of each cluster in each scaffold.
-        - `merged_family_GeneLocation.table.1.0g.tsv` - This tables contains information detailed at gene level of both families, specifically, gene coordinates and membership (singleton or clustered).
-        - `X_family_GeneOrganizationGenomeSummary.table.1.0g.tsv` - This tables informs about how many genes are organized in clusters (Clustered category) or are not (Singleton category) at genome level.
-        - `X_family_GeneOrganizationSummary.table.1.0g.tsv` - This tables informs about how many genes are organized in clusters (Clustered category) or are not (Singleton category) in each scaffold.
-        - `X.Y_family_GeneOrganizationSummary.table.1.0g.tsv` - This tables informs about how many genes of both families are jointly organized in clusters (Clustered category) or are not (Singleton category) in each scaffold. This file appears only when there are clusters formed by members of both families. Otherwise, it is absent.
+        - `X_family_ClusterSizes.table.100.0g.tsv` - This tables contains a more explicit information about the size of each cluster in each scaffold.
+        - `merged_family_GeneLocation.table.100.0g.tsv` - This tables contains information detailed at gene level of both families, specifically, gene coordinates and membership (singleton or clustered).
+        - `X_family_GeneOrganizationGenomeSummary.table.100.0g.tsv` - This tables informs about how many genes are organized in clusters (Clustered category) or are not (Singleton category) at genome level.
+        - `X_family_GeneOrganizationSummary.table.100.0g.tsv` - This tables informs about how many genes are organized in clusters (Clustered category) or are not (Singleton category) in each scaffold.
+        - `X.Y_family_GeneOrganizationSummary.table.100.0g.tsv` - This tables informs about how many genes of both families are jointly organized in clusters (Clustered category) or are not (Singleton category) in each scaffold. This file appears only when there are clusters formed by members of both families. Otherwise, it is absent.
 
 - **Reports** directory
     - This directory contains html reports, one for each family and g value.
@@ -648,17 +648,17 @@ clusterfinder_Results_Directory/
 │
 ├── Plots
 │   └── merged_fam # summary tables and plots
-│       ├── GR_family_ClusterSizes.table.1.0g.tsv
-│       ├── GR_family_GeneOrganizationGenomeSummary.table.1.0g.tsv
-│       ├── GR_family_GeneOrganizationSummary.table.1.0g.tsv
+│       ├── GR_family_ClusterSizes.table.100.0g.tsv
+│       ├── GR_family_GeneOrganizationGenomeSummary.table.100.0g.tsv
+│       ├── GR_family_GeneOrganizationSummary.table.100.0g.tsv
 │       │
-│       ├── IR_family_ClusterSizes.table.1.0g.tsv
-│       ├── IR_family_GeneOrganizationGenomeSummary.table.1.0g.tsv
-│       ├── IR_family_GeneOrganizationSummary.table.1.0g.tsv
+│       ├── IR_family_ClusterSizes.table.100.0g.tsv
+│       ├── IR_family_GeneOrganizationGenomeSummary.table.100.0g.tsv
+│       ├── IR_family_GeneOrganizationSummary.table.100.0g.tsv
 │       │
-│       ├── GR.IR_family_GeneOrganizationSummary.table.1.0g.tsv
+│       ├── GR.IR_family_GeneOrganizationSummary.table.100.0g.tsv
 │       │
-│       ├── merged_family_GeneLocation.table.1.0g.tsv
+│       ├── merged_family_GeneLocation.table.100.0g.tsv
 │       │
 │       ├── IndividualPlots_100.0g
 │       │   ├── GR # Gr family clusters' size distribution
