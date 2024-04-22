@@ -233,6 +233,7 @@ def Get_Dckvalues(o_key, iClustInfo, iDF_EvoDist, o_dict):
         Cevodists = [iDF_EvoDist.loc[j[0],j[1]] for j in Cgenecombo]
 
         # Compute Dck for each cluster
+        # print("##**", o_key, Cgenenum, Cevodists)
         Dck_value = Dck_fx(Cgenenum, Cevodists)
         # print("Dck = ", Dck_value)
         
@@ -374,6 +375,7 @@ def GetStatistics_and_RunMWtest(i_FAMname, i_bedfile, i_evodistfile, i_clusterfi
     # Get Dck values
 
     for ScafKey, cvalues in D_clusters.items():
+        #print("##**",ScafKey)
         Get_Dckvalues(ScafKey, cvalues, DF_EvoDist, D_clust_Dck)
 
     ''' Get all the Dck values and calculate the DC statistic '''
@@ -552,7 +554,7 @@ def GetStatistics_and_RunMWtest(i_FAMname, i_bedfile, i_evodistfile, i_clusterfi
     # Group by Scaffold
     DF_MWdata_gb = DF_MWdata.groupby("ScaffoldID")
     for s, sinfo in DF_MWdata_gb:
-
+        # print("---",s)
         # Empty dict
         temp_dict = {"Clustered" : 0, "NotClustered" : 0}
 
@@ -563,11 +565,21 @@ def GetStatistics_and_RunMWtest(i_FAMname, i_bedfile, i_evodistfile, i_clusterfi
         # Get counts
         C_count = temp_dict["Clustered"]
         NC_count = temp_dict["NotClustered"]
+        # print("---",temp_dict)
 
         if C_count == 0 or NC_count == 0:
             # print("---",s, temp_dict)
             # MW test not possible
-            pass
+            wmsg = f"Warning! Mann-Whitney test not possible in this scaffold. Clustered count: {C_count}, NotClustered count: {NC_count}"
+            # print(wmsg)
+
+        elif C_count == 0 and NC_count == 0:
+            # print("---",s, temp_dict)
+            # MW test not possible
+            emsg = f"Error!. Something is wrong, no genes at all in this scaffold? Clustered count: {C_count}, NotClustered count: {NC_count}"
+            # raise ValueError(emsg)
+            sys.exit(emsg)
+
         else:
             # MW test possible
             # print("+++",s, temp_dict)
@@ -591,6 +603,8 @@ def GetStatistics_and_RunMWtest(i_FAMname, i_bedfile, i_evodistfile, i_clusterfi
             MW_test_results.append(MWresults)
 
     # Create a dataframe
+    if len(MW_test_results) == 0:
+        MW_test_results = [["-"]*11]
     DF_MWresults = pd.DataFrame.from_records(MW_test_results)
     DF_MWresults.columns = ["ScaffoldID", "ClusteredData", "NotClusteredData", "U1_Statistic", "U2_Statistic", "pvalue", "z_score", "MW_value", "variance_value", "stdev_value", "significance"]
     DF_MWresults["FamID"] = i_FAMname
@@ -613,13 +627,15 @@ def GetStatistics_and_RunMWtest(i_FAMname, i_bedfile, i_evodistfile, i_clusterfi
 
     DF_MWdata.to_csv(f"{MWoutdir}/{i_FAMname}_MannWhitney.rawdata.{i_gvhint}.csv", sep="\t", index=None)
 
+    #print("##**", dict(Counter(DF_MWdata["ScaffoldID"])))
+    #print("##**", dict(Counter(DF_MWdata[DF_MWdata["ScaffoldID"] == "CM021177.1"]["GenePair_status"])))
     # MW results
     DF_MWresults.to_csv(f"{MWoutdir}/{i_FAMname}_MannWhitney.results.extended.{i_gvhint}.tsv", sep="\t", index=None)
     
     # MW results (the most important columns (for the report))
     DF_MWresults_brief = DF_MWresults.drop(columns=["U1_Statistic", "U2_Statistic", "z_score", "MW_value", "variance_value", "stdev_value", "DT1", "DT2", "DC"])
     DF_MWresults_brief = DF_MWresults_brief.reindex(columns=["FamID", "ScaffoldID","ClusteredData", "NotClusteredData", "Cst", "pvalue", "significance"])
-    DF_MWresults_brief.columns = ["FamID", "ScaffoldID", "ClusteredGenes", "NotClusteredGenes", "Cst", "pvalue", "significance"]
+    # DF_MWresults_brief.columns = ["FamID", "ScaffoldID", "ClusteredGenes", "NotClusteredGenes", "Cst", "pvalue", "significance"]
     DF_MWresults_brief.to_csv(f"{MWoutdir}/{i_FAMname}_MannWhitney.results.brief.{i_gvhint}.tsv", sep="\t", index=None)
     
     return CstGlob_stat, DT2glob, DCglob, D_clust_Dck, DF_MWresults
