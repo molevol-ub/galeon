@@ -394,7 +394,7 @@ Galeon results directory content
     - This directory containts pairwise physical distance matrices (`*matrix`) between genes of a given Gene Family, in each scaffold.
     - Also, physical distance heatmaps are present in svg and pdf format.
 - **Plots** directory
-    - This directory contains summary plots with cluster size distribution at genome level (dir.: `SummaryPlots_1.0g`) and individual scaffold level (dir.: `IndividualPlots_1.0g`)
+    - This directory contains summary plots with cluster size distribution at genome level (dir.: `SummaryPlots_100.0g`) and individual scaffold level (dir.: `IndividualPlots_100.0g`)
     - Also, it contains some summary tables.
         - `X_family_ClusterSizes.table.1.0g.tsv` - This tables contains a more explicit information about the size of each cluster in each scaffold.
         - `X_family_GeneLocation.table.1.0g.tsv` - This tables contains information detailed at gene level, specifically, gene coordinates and membership (singleton or clustered).
@@ -412,8 +412,8 @@ clusterfinder_Results_Directory/
 ├── PhysicalDist_Matrices
 │   ├── GR_fam.gff3.temp_matrices # Physical distance matrices, *matrix (in bp units)
 │   ├── IR_fam.gff3.temp_matrices 
-│   ├── GR_fam.gff3.temp_matrices_1.0g # Heatmaps in svg and pdf format
-│   └── IR_fam.gff3.temp_matrices_1.0g
+│   ├── GR_fam.gff3.temp_matrices_100.0g # Heatmaps in svg and pdf format
+│   └── IR_fam.gff3.temp_matrices_100.0g
 |
 ├── Plots # Contains summary tables and plots for each input family
 │   ├── GR_fam
@@ -422,20 +422,20 @@ clusterfinder_Results_Directory/
 │   │   ├── GR_family_GeneOrganizationGenomeSummary.table.1.0g.tsv
 │   │   ├── GR_family_GeneOrganizationSummary.table.1.0g.tsv
 │   │   |
-│   │   ├── IndividualPlots_1.0g 
-│   │   └── SummaryPlots_1.0g
+│   │   ├── IndividualPlots_100.0g 
+│   │   └── SummaryPlots_100.0g
 │   └── IR_fam
 │   │   ├── IR_family_ClusterSizes.table.1.0g.tsv
 │   │   ├── IR_family_GeneLocation.table.1.0g.tsv
 │   │   ├── IR_family_GeneOrganizationGenomeSummary.table.1.0g.tsv
 │   │   ├── IR_family_GeneOrganizationSummary.table.1.0g.tsv
 │   │   |
-│   │   ├── IndividualPlots_1.0g
-│   └── └── SummaryPlots_1.0g
+│   │   ├── IndividualPlots_100.0g
+│   └── └── SummaryPlots_100.0g
 |
 └── Reports # One report for each family and tested g value.
-    ├── GR_fam_1.0g_Report.html
-    └── IR_fam_1.0g_Report.html
+    ├── GR_fam_100.0g_Report.html
+    └── IR_fam_100.0g_Report.html
 ```
 
 <br>
@@ -543,35 +543,35 @@ clusterfinder_Results_Directory/
 ├── MergedDistances_Dataframes
 │    ├── GR_fam.IntermediateFiles/
 │    ├── GR_fam.merged.matrices/ # Physical + Evolutionary distance matrices
-│    ├── GR_fam.plots_1.0g/ # Physical + Evolutionary distance Heatmaps and Scatterplots in svg and pdf format
+│    ├── GR_fam.plots_100.0g/ # Physical + Evolutionary distance Heatmaps and Scatterplots in svg and pdf format
 │    │
 │    ├── IR_fam.IntermediateFiles/
 │    ├── IR_fam.merged.matrices/
-│    ├── IR_fam.plots_1.0g/
+│    ├── IR_fam.plots_100.0g/
 │    │
-│    ├── GR_fam.GlobScatterPlot_1.0g.pdf # Physical vs Evo. distance scatter plot considering at genome level, that is, considering all the genes of the input gene family
-│    ├── GR_fam.GlobScatterPlot_1.0g.svg
-│    ├── IR_fam.GlobScatterPlot_1.0g.pdf
-│    └── IR_fam.GlobScatterPlot_1.0g.svg
+│    ├── GR_fam.GlobScatterPlot_100.0g.pdf # Physical vs Evo. distance scatter plot considering at genome level, that is, considering all the genes of the input gene family
+│    ├── GR_fam.GlobScatterPlot_100.0g.svg
+│    ├── IR_fam.GlobScatterPlot_100.0g.pdf
+│    └── IR_fam.GlobScatterPlot_100.0g.svg
 │
 ├── PhysicalDist_Matrices
 │    ├── GR_fam.gff3.temp_matrices/  # Physical distance matrices, *matrix (in bp units)
-│    ├── GR_fam.gff3.temp_matrices_1.0g/ # Heatmaps in svg and pdf format
+│    ├── GR_fam.gff3.temp_matrices_100.0g/ # Heatmaps in svg and pdf format
 │    │
 │    ├── IR_fam.gff3.temp_matrices/
-│    └── IR_fam.gff3.temp_matrices_1.0g/
+│    └── IR_fam.gff3.temp_matrices_100.0g/
 │
 ├── Plots # same content as in "Section 3.2.1"
 │    ├── GR_fam
-│    │   ├── IndividualPlots_1.0g/
-│    │   └── SummaryPlots_1.0g/
+│    │   ├── IndividualPlots_100.0g/
+│    │   └── SummaryPlots_100.0g/
 │    └── IR_fam
-│        ├── IndividualPlots_1.0g/
-│        └── SummaryPlots_1.0g/
+│        ├── IndividualPlots_100.0g/
+│        └── SummaryPlots_100.0g/
 │
 └── Reports/ # same content as in "Section 3.2.1"
-    ├── GR_fam_1.0g_Report.html
-    └── IR_fam_1.0g_Report.html
+    ├── GR_fam_100.0g_Report.html
+    └── IR_fam_100.0g_Report.html
 
 ```
 
@@ -622,7 +622,7 @@ Galeon results directory content
     - This directory containts pairwise physical distance matrices (`*matrix`) between genes of a given Gene Family, in each scaffold.
     - Also, physical distance heatmaps are present in svg and pdf format.
 - **Plots** directory
-    - This directory contains summary plots with cluster size distribution at genome level (dir.: `SummaryPlots_1.0g`) and individual scaffold level (dir.: `IndividualPlots_1.0g`)
+    - This directory contains summary plots with cluster size distribution at genome level (dir.: `SummaryPlots_100.0g`) and individual scaffold level (dir.: `IndividualPlots_100.0g`)
     - Since now we are interested in the joint analysis of two families (let's name them X and Y), the output summary plots are presented in 4 subdirectories:
         - `X` - plots for clusters of X gene family
         - `Y` - plots for clusters of Y gene family
@@ -644,7 +644,7 @@ Galeon results directory, example tree-like representation for two gene families
 clusterfinder_Results_Directory/
 ├── PhysicalDist_Matrices
 │   ├── merged_fam.gff3.temp_matrices # contains matrices *matrix
-│   └── merged_fam.gff3.temp_matrices_1.0g # physical distance plots in svg and pdf format
+│   └── merged_fam.gff3.temp_matrices_100.0g # physical distance plots in svg and pdf format
 │
 ├── Plots
 │   └── merged_fam # summary tables and plots
@@ -660,20 +660,20 @@ clusterfinder_Results_Directory/
 │       │
 │       ├── merged_family_GeneLocation.table.1.0g.tsv
 │       │
-│       ├── IndividualPlots_1.0g
+│       ├── IndividualPlots_100.0g
 │       │   ├── GR # Gr family clusters' size distribution
 │       │   ├── GR.IR # Two family clusters size distribution
 │       │   ├── IR # Gr family clusters' size distribution
 │       │   └── merged # All clusters' size distribution
-│       └── SummaryPlots_1.0g
+│       └── SummaryPlots_100.0g
 │           ├── GR
 │           ├── GR.IR
 │           ├── IR
 │           └── merged
 │           
 └── Reports
-    ├── merged_fam_1.0g_Report.html
-    └── merged_fam_1.0g_Report.Rmd
+    ├── merged_fam_100.0g_Report.html
+    └── merged_fam_100.0g_Report.Rmd
 ```
 
 <br>
