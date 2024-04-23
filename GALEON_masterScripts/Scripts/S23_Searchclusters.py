@@ -332,7 +332,7 @@ def process_matrices(i_matrix_list, o_explicitfile, o_shortfile, o_overlapfile, 
             print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
             print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
             print(g_param, g_param*1e3)
-            npmatrix_t = npmatrix_t/(g_param*1e3) # Ex: input g value = 100 (kb) => Matrix must be divided by 100*1e3 = 100_000 value (bp units)
+            npmatrix_t = npmatrix_t/(g_param*1e3) # Ex: input 100 g value = 100 kb => Matrix must be divided by 100*1e3 = 100_000 value (bp units) # update (22 Abril 2024)
 
 
             print("## (0) ## Matrix pre-processing  ###########")
@@ -525,7 +525,8 @@ for subfolder in wkd_dirlist:
     print("## INPUT directory: ",subfolder)
 
     # Create a specific directory for each the test g_value 
-    gparam_shortID = str(g_param_value / 100) # g param short ID
+    # gparam_shortID = str(g_param_value / 100) # g param short ID
+    gparam_shortID = str(g_param_value) # g param short ID (update, 22 Abril 2024)
     subfoldername = "/".join(subfolder.split("/")[0:])
 
     gparam_specific_dir = f"{subfoldername}_{gparam_shortID}g"

@@ -16,7 +16,7 @@ outfile = paste(outdir, outfile, sep="/")
 ## Edit the variables and run all code
 # number_genes <- 3357 # Specify here the number of genes from your gene family (i.e.: 411)
 # genome_size <- 3592 # (Mb) Specify here the genome size in Mb (i.e: 1365.69 Mb here)
-# g <- 100 # (Kb) Specify the maximum distance between two copies of a given family to consider that they are clustered in a unit of Kb (i.e.: 100Kb)
+# g <- 100 # (kb) Specify the maximum distance between two copies of a given family to consider that they are clustered in a unit of kb (i.e.: 100 kb)
 ## Several g values can be provided as such: "100,200,300"
 
 #### FUNCTIONS ####
@@ -49,9 +49,9 @@ estimate_g <- function(i_number_genes, i_genome_size, i_gval) {
   genes_per_mb <- i_number_genes/i_genome_size
   # cat ("- ", genes_per_mb, "genes are expected to be found each Mb \n")
   genes_per_kb <- (i_number_genes/1000)/i_genome_size
-  # cat ("- ", genes_per_kb, "genes are expected to be found each Kb \n")
+  # cat ("- ", genes_per_kb, "genes are expected to be found each kb \n")
   genes_per_g <- (i_number_genes/(1000/i_gval))/i_genome_size
-  # cat ("- ", genes_per_g, "genes are expected to be found each", i_gval,"Kb, specified as g \n")
+  # cat ("- ", genes_per_g, "genes are expected to be found each", i_gval,"kb, specified as g \n")
 
   p <- 1 - ppois(1, lambda = genes_per_g)
   # cat ("The probability of finding by chance two (or more) genes in a", i_gval, "kb stretch is p =", p, " (Poisson distribution, λ =", genes_per_g, ") ### \n " )
@@ -71,7 +71,7 @@ if (length(g) == 1) { # If only one g value is provided
   info_list = estimate_g(number_genes, genome_size, g)
   info_df <- data.frame(matrix(ncol=7, nrow=0))
   info_df <- rbind(info_df, info_list)
-  colnames(info_df) <- c("g value", "Exp. 1 gene each X Mb", "Exp. genes / Mb", "Exp. Genes / Kb", "Exp. Genes/g value",  "P(X>=2) / g value", "Poisson's λ")
+  colnames(info_df) <- c("g value", "Exp. 1 gene each X Mb", "Exp. genes / Mb", "Exp. Genes / kb", "Exp. Genes/g value",  "P(X>=2) / g value", "Poisson's λ")
   
   # 
   
@@ -94,7 +94,7 @@ if (length(g) == 1) { # If only one g value is provided
   }
   
   info_df <- as.data.frame(do.call(rbind, info_list))
-  colnames(info_df) <- c("g value", "Exp. 1 gene each X Mb", "Exp. genes / Mb", "Exp. Genes / Kb", "Exp. Genes/g value",  "P(X>=2) / g value ", "Poisson's λ")
+  colnames(info_df) <- c("g value", "Exp. 1 gene each X Mb", "Exp. genes / Mb", "Exp. Genes / kb", "Exp. Genes/g value",  "P(X>=2) / g value ", "Poisson's λ")
 
 } else {
   print("Unknown error, check the inputs")

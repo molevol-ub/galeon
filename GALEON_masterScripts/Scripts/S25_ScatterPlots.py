@@ -13,7 +13,8 @@ from matplotlib.ticker import MaxNLocator
 ''' Input Parameteres '''
 # input g value
 g_threshold = sys.argv[1] # 100 # arg 4
-g_threshold_shortID = float(g_threshold) / 100
+# g_threshold_shortID = float(g_threshold) / 100
+g_threshold_shortID = float(g_threshold) # update (22 Abril 2024)
 
 
 # Family physical matrices dirname

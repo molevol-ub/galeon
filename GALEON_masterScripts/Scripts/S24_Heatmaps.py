@@ -17,7 +17,8 @@ evo_mode= sys.argv[1]
 
 if evo_mode == "enabled":
     g_threshold = sys.argv[2] # Ex: 100
-    g_threshold_shortID = float(g_threshold) / 100
+    # g_threshold_shortID = float(g_threshold) / 100
+    g_threshold_shortID = float(g_threshold) # update (22 Abril 2024)
     genefamily = sys.argv[3] # "GR_fam.gff3_matrices" 
 
     wkd_temp = sys.argv[4] # "../PhysicalDist_Matrices/"
@@ -43,7 +44,8 @@ if evo_mode == "enabled":
 
 elif evo_mode == "disabled":
     g_threshold = sys.argv[2] # Ex: 100
-    g_threshold_shortID = float(g_threshold) / 100
+    # g_threshold_shortID = float(g_threshold) / 100
+    g_threshold_shortID = float(g_threshold) # update (22 Abril 2024)
     genefamily = sys.argv[3] # "GR_fam.gff3_matrices" 
     
     wkd_temp = sys.argv[4] # "../PhysicalDist_Matrices/"
