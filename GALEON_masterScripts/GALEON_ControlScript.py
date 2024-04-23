@@ -590,7 +590,7 @@ if config["mode"] == "clusterfinder":
         for g_val in g_values_list:
             g_val = float(g_val)
 
-            print(f"\n=> Input g = {g_val}\n")
+            print(f"\n=> Input g = {g_val} kb\n")
             
             log_file_3 = f"{Log_dirname}/S23.g={g_val}kb.log"
             
@@ -800,7 +800,7 @@ if config["mode"] == "clusterfinder":
         for g_val in g_values_list:
             g_val = float(g_val)
 
-            print(f"\n=> Input g = {g_val}\n")
+            print(f"\n=> Input g = {g_val} kb\n")
             
             log_file_3 = f"{Log_dirname}/S23.g={g_val}kb.TwoFam.log"
             
