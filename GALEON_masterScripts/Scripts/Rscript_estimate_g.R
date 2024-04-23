@@ -44,7 +44,7 @@ estimate_g <- function(i_number_genes, i_genome_size, i_gval) {
   
   # Code
   mb_per_gene <- i_genome_size/i_number_genes
-  mb_per_gene <- round(mb_per_gene, 2)
+  mb_per_gene <- round(mb_per_gene, 5)
   # cat ("We would expect to find one gene each", mb_per_gene, "Mb \n")
   genes_per_mb <- i_number_genes/i_genome_size
   # cat ("- ", genes_per_mb, "genes are expected to be found each Mb \n")
