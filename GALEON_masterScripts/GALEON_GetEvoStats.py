@@ -1,3 +1,4 @@
+#!/home/vadim/miniconda3/envs/Galeon/bin/python
 import ast, math, shutil, os, sys, argparse
 from collections import Counter
 import pandas as pd
@@ -411,6 +412,7 @@ def GetStatistics_and_RunMWtest(i_FAMname, i_bedfile, i_evodistfile, i_clusterfi
 
     # Cst glob
     CstGlob_stat = (DT2glob - DCglob)/DT2glob
+    glob_Tempdict = {"Clustered" : 0, "NotClustered" : 0}
 
     ''' DT1 Statistic - considering all the clusters in a given scaffold '''
     D_ScfClustFamGenes = {}
@@ -548,19 +550,75 @@ def GetStatistics_and_RunMWtest(i_FAMname, i_bedfile, i_evodistfile, i_clusterfi
     DF_MWdata = pd.DataFrame.from_records(MW_info)
     DF_MWdata.columns = ["ScaffoldID", "Gene1ID", "Gene2ID", "Gene1_status", "Gene2_status", "GenePair_status", "EvoDist"]
 
+    ##############
+    ''' Run Mann-Whitney test '''
+    gMW_test_results = []
+
+    # Globally, considering all the genes
+    glob_Tempdict = dict(Counter(DF_MWdata["GenePair_status"]))
+    gC_count = glob_Tempdict["Clustered"]
+    gNC_count = glob_Tempdict["NotClustered"]
+
+
+    if gC_count == 0 or gNC_count == 0:
+        # MW test not possible
+        wmsg = f"Warning! Mann-Whitney test not possible in this scaffold. Clustered count: {gC_count}, NotClustered count: {gNC_count}"
+
+    elif gC_count == 0 and gNC_count == 0:
+        # MW test not possible
+        emsg = f"Error!. Something is wrong, no genes at all in this scaffold? Clustered count: {gC_count}, NotClustered count: {gNC_count}"
+        sys.exit(emsg)
+
+    else:
+        # MW test possible
+
+        gNCvalues = DF_MWdata[DF_MWdata["GenePair_status"] == "NotClustered"]["EvoDist"]
+        gCvalues = DF_MWdata[DF_MWdata["GenePair_status"] == "Clustered"]["EvoDist"]
+
+        # Run MW test
+        MWresults = Run_MannWhiteneyU(gCvalues, gNCvalues)
+        pvalue = MWresults[2]
+        glob_pvalue = pvalue
+
+        # Add Scaffold name
+        MWresults.insert(0, "Global")
+
+        # Add info about the sample size of "(Not)Clustered" points
+        MWresults.insert(1, gC_count)
+        MWresults.insert(2, gNC_count)
+
+        # Add significance status
+        globsigf_Stat = sigf_status(pvalue)
+        MWresults.append(globsigf_Stat)
+
+        # print("Glob",glob_Tempdict, i_FAMname, i_gvhint, gC_count, gNC_count)
+        gMW_test_results.append(MWresults)
+
+    # Create a dataframe
+    if len(gMW_test_results) == 0:
+        gMW_test_results = [["-"]*11]
+    gDF_MWresults = pd.DataFrame.from_records(gMW_test_results)
+    gDF_MWresults.columns = ["ScaffoldID", "ClusteredData", "NotClusteredData", "U1_Statistic", "U2_Statistic", "pvalue", "z_score", "MW_value", "variance_value", "stdev_value", "significance"]
+    gDF_MWresults["FamID"] = i_FAMname
+
+    gDF_MWresults.to_csv(f"{MWoutdir}/{i_FAMname}_MannWhitney.results.Global.{i_gvhint}.tsv", sep="\t", index=None)
+    ##############
+
+    ##############
     ''' Run Mann-Whitney test '''
     MW_test_results = []
 
     # Group by Scaffold
     DF_MWdata_gb = DF_MWdata.groupby("ScaffoldID")
     for s, sinfo in DF_MWdata_gb:
-        # print("---",s)
         # Empty dict
         temp_dict = {"Clustered" : 0, "NotClustered" : 0}
 
         # Fill it with count of gene pair status
         D_genepairstat = dict(Counter(sinfo["GenePair_status"]))
         temp_dict.update(D_genepairstat)
+
+        # print(s,temp_dict)
 
         # Get counts
         C_count = temp_dict["Clustered"]
@@ -601,7 +659,8 @@ def GetStatistics_and_RunMWtest(i_FAMname, i_bedfile, i_evodistfile, i_clusterfi
             # Add significance status
             MWresults.append(sigf_status(pvalue))
             MW_test_results.append(MWresults)
-
+    ##############
+    
     # Create a dataframe
     if len(MW_test_results) == 0:
         MW_test_results = [["-"]*11]
@@ -638,7 +697,7 @@ def GetStatistics_and_RunMWtest(i_FAMname, i_bedfile, i_evodistfile, i_clusterfi
     # DF_MWresults_brief.columns = ["FamID", "ScaffoldID", "ClusteredGenes", "NotClusteredGenes", "Cst", "pvalue", "significance"]
     DF_MWresults_brief.to_csv(f"{MWoutdir}/{i_FAMname}_MannWhitney.results.brief.{i_gvhint}.tsv", sep="\t", index=None)
     
-    return CstGlob_stat, DT2glob, DCglob, D_clust_Dck, DF_MWresults
+    return CstGlob_stat, DT2glob, DCglob, glob_pvalue, globsigf_Stat #D_clust_Dck, DF_MWresults
 
 # Get files
 for kFAMILY, v in D_INPUTfiles.items():
@@ -650,11 +709,12 @@ for kFAMILY, v in D_INPUTfiles.items():
             gvalue_hint = get_gvalueID(ClusterDictfile)
     
             with open(f"{MWoutdir}/{kFAMILY}_GlobalStats_value.{gvalue_hint}.txt", "w") as o1:
-                CstGlob_value, DT2glob_value, DCglob_value, b, c = GetStatistics_and_RunMWtest(kFAMILY, BEDfile, EvoDistfile, ClusterDictfile, gvalue_hint)
+                CstGlob_value, DT2glob_value, DCglob_value, glob_pv, glob_sigf = GetStatistics_and_RunMWtest(kFAMILY, BEDfile, EvoDistfile, ClusterDictfile, gvalue_hint)
                 print("FamID", "Statistic", "Value", sep="\t", end="\n", file=o1)
                 print(kFAMILY, "Cst glob", CstGlob_value, sep="\t", end="\n", file=o1)
                 print(kFAMILY, "Dt glob", DT2glob_value, sep="\t", end="\n", file=o1)
                 print(kFAMILY, "Dc glob", DCglob_value, sep="\t", end="\n", file=o1)
+                print(kFAMILY, "p-value", f"{glob_pv} {glob_sigf}", sep="\t", end="\n", file=o1)
     else:
         BEDfile, EvoDistfile, ClusterDict_list, OvlapFile = v['BEDfile'], v['EvoDistfile'], v['ClusterDictfile'], v['OverlappingGenesFile']
 
@@ -663,14 +723,12 @@ for kFAMILY, v in D_INPUTfiles.items():
             gvalue_hint = get_gvalueID(ClusterDictfile)
 
             with open(f"{MWoutdir}/{kFAMILY}_GlobalStats_value.{gvalue_hint}.txt", "w") as o1:
-                CstGlob_value, DT2glob_value, DCglob_value, b, c = GetStatistics_and_RunMWtest(kFAMILY, BEDfile, EvoDistfile, ClusterDictfile, gvalue_hint, OvlapFile)        
+                CstGlob_value, DT2glob_value, DCglob_value, glob_pv, glob_sigf = GetStatistics_and_RunMWtest(kFAMILY, BEDfile, EvoDistfile, ClusterDictfile, gvalue_hint, OvlapFile)        
                 print("FamID", "Statistic", "Value", sep="\t", end="\n", file=o1)
                 print(kFAMILY, "Cst glob", CstGlob_value, sep="\t", end="\n", file=o1)
                 print(kFAMILY, "Dt glob", DT2glob_value, sep="\t", end="\n", file=o1)
                 print(kFAMILY, "Dc glob", DCglob_value, sep="\t", end="\n", file=o1)
-
-
-# In[ ]:
+                print(kFAMILY, "p-value", f"{glob_pv} {glob_sigf}", sep="\t", end="\n", file=o1)
 
 shutil.move(MWoutdir, clusterfinder_dir)
 
