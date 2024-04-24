@@ -1,3 +1,4 @@
+#!/home/vadim/miniconda3/envs/Galeon/bin/perl
 use strict;
 use warnings;
 
@@ -49,7 +50,8 @@ foreach my $key (sort keys %fasta){
 #close Res;
 close Rest;
 
-system ("sort -n -r -k 2 $out\_scaffold_length.txt > $out\_scaffold_length_sorted.txt");
+# system ("sort -n -r -k 2 $out\_scaffold_length.txt > $out\_scaffold_length_sorted.txt");
+system ("sort -n -r -k 2 $out\_scaffold_length.txt > ChrSizes.txt"); # update 24 Abril 2024
 system ("rm $out\_scaffold_length.txt");
 
 my $n = 1;
