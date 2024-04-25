@@ -309,12 +309,12 @@ Logs_gestimate_mode/
 The table that contains:
 
 1. column: **g value** - input g value
-2. column: **Exp. 1 gene each X Mb** - 1 gene, expected to be found each "X" Mb
-3. column: **Exp. genes / Mb** - # of genes, expected to be found each Mb
-4. column: **Exp. Genes / Kb** - # of genes, expected to be found each 1 Kb
+2. column: **Mb per gene family member** - 1 gene, expected to be found each "X" Mb
+3. column: **Expected genes per Mb** - # of genes, expected to be found each Mb
+4. column: **Exp. genes per g value** - # of genes, expected to be found each 1 Kb
 5. column: **Exp. Genes/g value** - # of genes, expected to be found each "g" Kb
-6. column: **P(X>=2) / g value** - The probability of finding by chance two (or more) genes in a "g" kb stretch
-7. column: **Poisson's λ**
+6. column: **P(X>=2) in g kb** - The probability of finding by chance two (or more) genes in a "g" kb stretch
+7. column: **Poisson's lambda**
 
 <br>
 
