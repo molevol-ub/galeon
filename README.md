@@ -64,7 +64,8 @@ python Scripts/Check_installed_packages_and_PythonEnv.py
 ```
 
 If you encounter any errors related to the software (bedtools, mafft, iqtree2, FastTree), check the help message to add the path to your own installation. 
-In addition, **note** that `R` and two R packages, `rmarkdown` and `DT`, need to be installed (see 1.3 to install them). 
+
+**In addition, note** that `R` and two R packages, `rmarkdown` and `DT`, need to be installed (see 1.3 to install them). 
 
 ```
 python Scripts/Check_installed_packages_and_PythonEnv.py -h
