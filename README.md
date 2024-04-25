@@ -481,7 +481,7 @@ GALEON_ControlScript.py clusterfinder -a GFFs/ -e enabled -p Proteins -pm True
 - `-e enabled|disabled` Enabled the use of proteins (`-e enabled`)
 - `-p DIRNAME` Input directory with Proteins or MSA files (`-p Proteins`)
 - `-o DIRNAME` Output directory name, set by default to `-o clusterfinder_Results_Directory`
-- `-feat gene|mRNA` ID used in the protein sequences that matches the gff3. The gene id is read by default (`-feat gene`) 
+- `-feat gene|mRNA` ID used in the protein sequences that matches the gff3. The gene id is read by default (`-feat mRNA`) 
 
 **NOTE:** Remember that the Protein and Gene IDs must be equal. For example, let's consider a GFF3 file with a "gene" named "ABC" and "mRNA" named "ABC.t1". 
 
@@ -490,13 +490,13 @@ GALEON_ControlScript.py clusterfinder -a GFFs/ -e enabled -p Proteins -pm True
 | Scaffold1 | AnnotGFF | gene | 100 | 1000 | . | - | . | ID=ABC;annot;Pos:1-409; |
 | Scaffold1 | AnnotGFF | mRNA | 100 | 1000 | . | - | . | ID=ABC.t1;Parent=ABC;annot;Pos:1-409; |
 
-- If your protein ID matches the "gene" ID, use the above commands. 
-- But, if the protein ID matches the "mRNA" ID, then you will need to set the paramter `-feat mRNA` (by default, it is set to `-feat gene`).
+- If your protein ID matches the "mRNA" ID, use the above commands. 
+- But, if the protein ID matches the "gene" ID, then you will need to set the paramter `-feat gene` (by default, it is set to `-feat mRNA`).
 
 ```
 # (modified) Simplest command to run Galeon
 # Run this...
-GALEON_ControlScript.py clusterfinder -a GFFs/ -e enabled -p Proteins/ -feat mRNA
+GALEON_ControlScript.py clusterfinder -a GFFs/ -e enabled -p Proteins/ -feat gene
 
 # (modified) ...or this if the MSA files are already present in the "Proteins/" directory for each of the gene families of interest
 GALEON_ControlScript.py clusterfinder -a GFFs/ -e enabled -p Proteins -pm True -feat mRNA
