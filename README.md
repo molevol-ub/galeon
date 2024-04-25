@@ -63,7 +63,8 @@ cd GALEON_masterScripts
 python Scripts/Check_installed_packages_and_PythonEnv.py 
 ```
 
-If you encounter any errors related to the software (bedtools, mafft, iqtree2, FastTree), check the help message to add the path to your own installation
+If you encounter any errors related to the software (bedtools, mafft, iqtree2, FastTree), check the help message to add the path to your own installation. 
+In addition, **note** that `R` and two R packages, `rmarkdown` and `DT`, need to be installed (see 1.3 to install them). 
 
 ```
 python Scripts/Check_installed_packages_and_PythonEnv.py -h
@@ -396,10 +397,10 @@ Galeon results directory content
 - **Plots** directory
     - This directory contains summary plots with cluster size distribution at genome level (dir.: `SummaryPlots_100.0g`) and individual scaffold level (dir.: `IndividualPlots_100.0g`)
     - Also, it contains some summary tables.
-        - `X_family_ClusterSizes.table.100.0g.tsv` - This tables contains a more explicit information about the size of each cluster in each scaffold.
-        - `X_family_GeneLocation.table.100.0g.tsv` - This tables contains information detailed at gene level, specifically, gene coordinates and membership (singleton or clustered).
-        - `X_family_GeneOrganizationGenomeSummary.table.100.0g.tsv` - This tables informs about how many genes are organized in clusters (Clustered category) or are not (Singleton category) at genome level.
-        - `X_family_GeneOrganizationSummary.table.100.0g.tsv` - This tables informs about how many genes are organized in clusters (Clustered category) or are not (Singleton category) in each scaffold.
+        - `X_family_ClusterSizes.table.100.0g.tsv` - This table contains a more explicit information about the size of each cluster in each scaffold.
+        - `X_family_GeneLocation.table.100.0g.tsv` - It contains information detailed at gene level, specifically, gene coordinates and membership (singleton or clustered).
+        - `X_family_GeneOrganizationGenomeSummary.table.100.0g.tsv` - Table with the number of genes organized in clusters (Clustered) or not (Singleton category) at the genome level.
+        - `X_family_GeneOrganizationSummary.table.100.0g.tsv` - This table informs about how many genes are organized in clusters (Clustered) or are physically isolated (Singleton category) for each scaffold.
 
 - **Reports** directory
     - This directory contains html reports, one for each family and g value.
@@ -479,6 +480,7 @@ GALEON_ControlScript.py clusterfinder -a GFFs/ -e enabled -p Proteins -pm True
 - `-e enabled|disabled` Enabled the use of proteins (`-e enabled`)
 - `-p DIRNAME` Input directory with Proteins or MSA files (`-p Proteins`)
 - `-o DIRNAME` Output directory name, set by default to `-o clusterfinder_Results_Directory`
+- `-feat gene|mRNA` ID used in the protein sequences that matches the gff3. The gene id is read by default (`-feat gene`) 
 
 **NOTE:** Remember that the Protein and Gene IDs must be equal. For example, let's consider a GFF3 file with a "gene" named "ABC" and "mRNA" named "ABC.t1". 
 
@@ -488,7 +490,7 @@ GALEON_ControlScript.py clusterfinder -a GFFs/ -e enabled -p Proteins -pm True
 | Scaffold1 | AnnotGFF | mRNA | 100 | 1000 | . | - | . | ID=ABC.t1;Parent=ABC;annot;Pos:1-409; |
 
 - If your protein ID matches the "gene" ID, use the above commands. 
-- But, if the protein ID matches the "mRNA" ID, then you will need to slightly modify the Galeon command by setting the paramter `-feat mRNA` (by default, it is set to `-feat gene`).
+- But, if the protein ID matches the "mRNA" ID, then you will need to set the paramter `-feat mRNA` (by default, it is set to `-feat gene`).
 
 ```
 # (modified) Simplest command to run Galeon
@@ -525,8 +527,8 @@ GALEON_Report.py -clust clusterfinder_Results_Directory/ -ssize ChrSizes.txt -ec
 
 Galeon results directory content
 - **MergedDistances_Dataframes** directory.
-    - This directory containts pairwise physical + evolutionary distance files (`*matrix` and `*distance.tsv`) between genes of a given Gene Family, in each scaffold.
-    - Also, it contains physical + evolutionary distance heatmaps and scatterplots in svg and pdf format at a genome level (representing the entire gene family) as well as for each scaffold (showing each one separately).
+    - This directory containts pairwise physical and evolutionary distance files (`*matrix` and `*distance.tsv`) between genes of a given Gene Family, in each scaffold.
+    - Also, it contains physical and evolutionary distance heatmaps and scatterplots in svg and pdf format at a genome level (representing the entire gene family) as well as for each scaffold (showing each one separately).
 - **PhysicalDist_Matrices** directory. Same as in Section 3.2.1.
 - **Plots** directory. Same as in Section 3.2.1.
 - **Reports** directory. Same as in Section 3.2.1.
@@ -576,11 +578,11 @@ clusterfinder_Results_Directory/
 ```
 
 #### 3.2.3. Joint family analysis
-Find clusters between two input families using the coordinates from the input files. ONLY two families can be analysed at once, note that Proteins cannot be used in this mode.
+Find clusters between two input families using the coordinates from the input files. Note that only two families can be analyzed at once, and protein sequences cannot be used in this mode.
 
 **Inputs**
 
-- Only two families are allowed and can be analyzed at the same time.
+- Add the two gene family gff3 files that will be analyzed.
 
 ```
 # How your input annotation directory "GFFs/" should look
@@ -614,7 +616,7 @@ GALEON_SummaryFiles.py -fam merged -clust clusterfinder_Results_Directory/ -coor
 GALEON_Report.py -clust clusterfinder_Results_Directory/ -ssize ChrSizes.txt -echo False
 ```
 
-Note how the `-coord` parameter is specified here (`-coord GFFs/merged_dir`), it is a bit different because you must add "merged_dir" at the end of the command.
+**Note** how the `-coord` parameter is specified here (`-coord GFFs/merged_dir`), it is a bit different because you must add "merged_dir" at the end of the command.
 
 Galeon results directory content
 
@@ -811,7 +813,7 @@ GALEON_Report.py -clust 5_TwoFamJointAnalysis_GFF3/ -ssize ChrSizes.txt -echo Fa
 
 ## 5. Citation
 
-Vadim Pisarenco, Joel Vizueta, Julio Rozas. GALEON . Submitted. 2024.
+Vadim Pisarenco, Joel Vizueta, Julio Rozas. GALEON: A Comprehensive Bioinformatic Tool to Analyse and Visualise Gene Clusters in Complete Genomes. Submitted. 2024. https://www.biorxiv.org/content/10.1101/2024.04.15.589673v1
 
 
 ## 6. Troubleshooting
