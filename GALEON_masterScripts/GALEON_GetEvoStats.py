@@ -1,4 +1,3 @@
-#!/home/vadim/miniconda3/envs/Galeon/bin/python
 import ast, math, shutil, os, sys, argparse
 from collections import Counter
 import pandas as pd
