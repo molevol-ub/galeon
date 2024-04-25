@@ -88,7 +88,7 @@ if __name__ == "__main__":
     
     parser_default.add_argument("-feat", "--GenenameFeature",
         type = str,
-        default="gene",
+        default="mRNA",
         help = "GFF3 feature to 'grep' to get the gene names. It is specially important when using proteins since the protein names must match the gene names")
 
     parser_default.add_argument("-p", "--ProteinDirectory",
