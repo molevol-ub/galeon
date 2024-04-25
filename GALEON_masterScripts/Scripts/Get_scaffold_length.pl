@@ -1,4 +1,3 @@
-#!/home/vadim/miniconda3/envs/Galeon/bin/perl
 use strict;
 use warnings;
 
