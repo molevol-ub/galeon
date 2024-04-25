@@ -499,7 +499,7 @@ GALEON_ControlScript.py clusterfinder -a GFFs/ -e enabled -p Proteins -pm True
 GALEON_ControlScript.py clusterfinder -a GFFs/ -e enabled -p Proteins/ -feat gene
 
 # (modified) ...or this if the MSA files are already present in the "Proteins/" directory for each of the gene families of interest
-GALEON_ControlScript.py clusterfinder -a GFFs/ -e enabled -p Proteins -pm True -feat mRNA
+GALEON_ControlScript.py clusterfinder -a GFFs/ -e enabled -p Proteins -pm True -feat gene
 ```
 
 **Step 2)** Get evolutionary statistics (Cst) and perform the Mann-Whitney test
