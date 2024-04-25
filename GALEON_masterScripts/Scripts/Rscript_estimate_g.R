@@ -71,7 +71,7 @@ if (length(g) == 1) { # If only one g value is provided
   info_list = estimate_g(number_genes, genome_size, g)
   info_df <- data.frame(matrix(ncol=7, nrow=0))
   info_df <- rbind(info_df, info_list)
-  colnames(info_df) <- c("g value", "Exp. 1 gene each X Mb", "Exp. genes / Mb", "Exp. Genes / kb", "Exp. Genes/g value",  "P(X>=2) / g value", "Poisson's λ")
+  colnames(info_df) <- c("g value (kb)", "Mb per gene family member", "Expected genes per Mb", "Exp. genes per kb", "Exp. genes per g value",  "P(X>=2) in g kb", "Poisson's lambda")
   
   # 
   
