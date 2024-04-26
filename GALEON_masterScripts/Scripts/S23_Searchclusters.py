@@ -1,3 +1,4 @@
+#!/home/vadim/miniconda3/envs/Galeon/bin/python
 import sys, os, time, shutil
 import pandas as pd
 import copy as cp
@@ -34,8 +35,6 @@ def CL_criteria(g_parameter, num_of_genes):
     # num_of_genes => maximum number of genes that may form a cluster (the largest theoretical cluster will include all the genes from a given scaffold)
     # els clústers més grans. Es pot posar qualsevol valor
     
-    g_parameter = g_parameter / 100
-
     Cl_dict = {}
     gnum_range = list(range(num_of_genes+1))
 
@@ -328,11 +327,13 @@ def process_matrices(i_matrix_list, o_explicitfile, o_shortfile, o_overlapfile, 
             pdmatrix.drop(col_name,axis=1,inplace=True)
             npmatrix = pdmatrix.to_numpy()
             npmatrix_t = npmatrix.transpose()
+
             print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
             print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
             print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
-            print(g_param, g_param*1e3)
-            npmatrix_t = npmatrix_t/(g_param*1e3) # Ex: input 100 g value = 100 kb => Matrix must be divided by 100*1e3 = 100_000 value (bp units) # update (22 Abril 2024)
+            print(f"{g_param}kb, {g_param*1e3}bp")
+            # npmatrix_t = npmatrix_t/(g_param*1e3) # Ex: input 100 g value = 100 kb => Matrix must be divided by 100*1e3 = 100_000 value (bp units) # update (22 Abril 2024)
+            npmatrix_t = npmatrix_t/1e3 # Ex: input 100 g value = 100 kb => Matrix (in bp) must be divided by 1e3 => now is scaled to kb # update (26 Abril 2024)
 
 
             print("## (0) ## Matrix pre-processing  ###########")
@@ -343,7 +344,6 @@ def process_matrices(i_matrix_list, o_explicitfile, o_shortfile, o_overlapfile, 
 
             print(f"## - Clustering criteria: CL = {g_param} ; Gene number: {genenumber} by default ## ")
             mx_Cl = CL_criteria(g_param, genenumber) ### arguments ### default: 1 (1g), total number of genes in a scaffold (thus, the largest scaffold should include all the genes at most)
-
 
             print("## (1) ## Detection of potential Clusters ###########")
 
