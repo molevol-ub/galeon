@@ -1,4 +1,3 @@
-#!/home/vadim/miniconda3/envs/Galeon/bin/python
 import sys, os, time, shutil
 import pandas as pd
 import copy as cp
