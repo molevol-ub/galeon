@@ -88,7 +88,7 @@ if __name__ == "__main__":
     
     parser_default.add_argument("-feat", "--GenenameFeature",
         type = str,
-        default="mRNA",
+        default="gene",
         help = "GFF3 feature to 'grep' to get the gene names. It is specially important when using proteins since the protein names must match the gene names")
 
     parser_default.add_argument("-p", "--ProteinDirectory",
@@ -427,6 +427,11 @@ if config["mode"] == "clusterfinder":
 
     # Set the parameters for the Evo. Dist. computation
     Tree_Soft = config["EvoTreeSoft"]
+    if Tree_Soft == "iqtree":
+        Tree_SoftName = Tree_Soft + "2"
+    elif Tree_Soft == "FastTree":
+        Tree_SoftName = Tree_Soft
+
     g_values_data = config["gValue"]
 
     # Start...
@@ -455,8 +460,8 @@ if config["mode"] == "clusterfinder":
                 print("\n")
 
             
-            if os.path.exists(f"{Binaries_dir}/{Tree_Soft}"):
-                if os.access(f"{Binaries_dir}/{Tree_Soft}", os.X_OK):
+            if os.path.exists(f"{Binaries_dir}/{Tree_SoftName}"):
+                if os.access(f"{Binaries_dir}/{Tree_SoftName}", os.X_OK):
                     try:
                         #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                         if Input_prot_msa == "False":
@@ -478,11 +483,11 @@ if config["mode"] == "clusterfinder":
                         # raise ValueError(e.stdout)
                         raise ValueError(e.stderr)
                 else:
-                    emsg = f"Error! Tree Inference Software: '{Binaries_dir}/{Tree_Soft}' is not executable. Make it executable with 'chmod +x'"
+                    emsg = f"Error! Tree Inference Software: '{Binaries_dir}/{Tree_SoftName}' is not executable. Make it executable with 'chmod +x'"
                     raise ValueError(emsg)
 
             else:
-                emsg = f"Error! Tree Inference Software: '{Binaries_dir}/{Tree_Soft}' doesn't exist"
+                emsg = f"Error! Tree Inference Software: '{Binaries_dir}/{Tree_SoftName}' doesn't exist"
                 raise ValueError(emsg)
 
         
