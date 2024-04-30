@@ -443,6 +443,7 @@ def Plot_and_Save_PhysDistOnly(i_matrixname, i_canvas, i_df, i_clusterdict, i_ph
                     mask=mask1, \
                     annot = i_df_annot, \
                     square = True, \
+                    robust = True, \
                     ax=i_canvas, cbar_ax=cAx2, \
                     cmap=i_cmap, \
                     cbar_kws={'ticks' : i_phys_threshold, 'format': CustomTicker_default()})
@@ -450,6 +451,7 @@ def Plot_and_Save_PhysDistOnly(i_matrixname, i_canvas, i_df, i_clusterdict, i_ph
             smap45 = sns.heatmap(i_df, \
                     mask=mask2, \
                     annot = i_df_annot, \
+                    robust = True, \
                     # square = True, \
                     ax=smap44, cbar=False, \
                     cmap=i_cmap)
@@ -459,12 +461,14 @@ def Plot_and_Save_PhysDistOnly(i_matrixname, i_canvas, i_df, i_clusterdict, i_ph
                     mask=mask1, \
                     annot = i_df_annot, \
                     square = True, \
+                    robust = True, \
                     ax=i_canvas, cbar_ax=cAx2, \
                     cmap=i_cmap, \
                     cbar_kws={'format': CustomTicker_special()})
 
             smap45 = sns.heatmap(i_df, \
                     mask=mask2, \
+                    robust = True, \
                     annot = i_df_annot, \
                     # square = True, \
                     ax=smap44, cbar=False, \
@@ -476,12 +480,14 @@ def Plot_and_Save_PhysDistOnly(i_matrixname, i_canvas, i_df, i_clusterdict, i_ph
                 mask=mask1, \
                 annot = i_df_annot, \
                 square = True, \
+                robust = True, \
                 ax=i_canvas, cbar_ax=cAx2, \
                 cmap=i_cmap, \
                 cbar_kws={'format': CustomTicker_auto(decimals=i_PhysScale_decimals)})
 
         smap45 = sns.heatmap(i_df, \
                 mask=mask2, \
+                robust = True, \
                 annot = i_df_annot, \
                 ax=smap44, cbar=False, \
                 cmap=i_cmap)
@@ -592,6 +598,7 @@ def Plot_and_Save_PhysEvoDist(i_matrixname, i_canvas, i_df1, i_df2, iPcolnames, 
         smap44 = sns.heatmap(i_df1, \
                 mask=mask1, \
                 annot = i_df1_annot, \
+                robust = True, \
                 square = True, \
                 ax=i_canvas, cbar_ax=cAx2, \
                 cmap=i_cmap1, \
@@ -600,25 +607,27 @@ def Plot_and_Save_PhysEvoDist(i_matrixname, i_canvas, i_df1, i_df2, iPcolnames, 
         smap45 = sns.heatmap(i_df2, \
                 mask=mask2, \
                 annot = i_df2_annot, \
+                robust = True, \
                 # square = True, \
                 ax=smap44, cbar_ax=cAx3, \
                 cmap=i_cmap2, \
                 cbar_kws={'ticks' : i_evo_threshold, 'format': CustomTicker_default(), \
                             'orientation' : 'horizontal'})
 
-    elif i_autoUnitsScale == "auto":
+    elif i_autoUnitsScale == "auto": # update 30 abril
         smap44 = sns.heatmap(i_df1, \
                 mask=mask1, \
                 annot = i_df1_annot, \
                 square = True, \
+                robust = True, \
                 ax=i_canvas, cbar_ax=cAx2, \
                 cmap=i_cmap1, \
                 cbar_kws={'format': CustomTicker_auto(decimals=i_Scale1_decimals)})
 
         smap45 = sns.heatmap(i_df2, \
                 mask=mask2, \
+                robust = True,
                 annot = i_df2_annot, \
-                # square = True, \
                 ax=smap44, cbar_ax=cAx3, \
                 cmap=i_cmap2, \
                 cbar_kws={'format': CustomTicker_auto(decimals=i_Scale2_decimals), \
