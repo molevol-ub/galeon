@@ -1,0 +1,2 @@
+# Find gene clusters between GR (gustatory receptors) and IR (ionotropic receptors) gene families.
+# Run Galeon with one g value: 100kb
