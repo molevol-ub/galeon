@@ -63,7 +63,7 @@ cd GALEON_masterScripts
 python Scripts/Check_installed_packages_and_PythonEnv.py 
 ```
 
-If you encounter any errors related to the software (bedtools, mafft, iqtree2, FastTree), check the help message to add the path to your own installation. 
+If you encounter any errors related to the software (bedtools, mafft, iqtree2), check the help message to add the path to your own installation. 
 
 **In addition, note** that `R` and two R packages, `rmarkdown` and `DT`, need to be installed (see 1.3 to install them). 
 
@@ -134,13 +134,12 @@ R
 
 ### 1.4. Additional software
 
-The following programs must be installed and available from command line: **pandoc**, **mafft**, **bedtools**, **FastTree** and **iqtree2**. 
+The following programs must be installed and available from command line: **pandoc**, **mafft**, **bedtools** and **iqtree2**. 
 
-We provide a `bin` directory with binaries of `bedtools`, `FastTree` and `iqtree2`. If the Galeon conda environment is created, `pandoc`, `mafft` and `newick_utils` should be available upon environment activation. 
+We provide a `bin` directory with binaries of `bedtools` and `iqtree2`. If the Galeon conda environment is created, `pandoc`, `mafft` and `newick_utils` should be available upon environment activation. 
 
 **Notes**:
-- **FastTree** - By default, GALEON uses FastTree to infer the phylogeny among gene family copies. http://www.microbesonline.org/fasttree/
-- **Iqtree** - IqTree can be used instead of FastTree to reconstruct the gene family phylogeny: http://www.iqtree.org/
+- **Iqtree** - To reconstruct the gene family phylogeny, [IqTree](http://www.iqtree.org/) can be run using with default presets or using "--fast" option in order to perform a fast tree search (resembling the FastTree method).
 
 Alternatively, check the corresponding documentation for installation instructions.
 
@@ -148,7 +147,6 @@ Tested software versions:
 
 - Mafft v7.3.10
 - bedtools v2.30.0
-- FastTree v2.1.11
 - iqtree2 v2.1.3
 - python 3.11, 3.12
 - perl v5.32.1
@@ -234,7 +232,7 @@ To compute the evolutionary distances, you will need to provide either the prote
 
 - Protein names MUST coincide with the gene name of the input GFF3 or BED2 file.
 - If raw protein data is provided, our pipeline will use *mafft* to align them.
-- If pre-computed MSA data is provided, it will be used directly to run *FastTree* or *iqtree* and get the evolutionary distances.
+- If pre-computed MSA data is provided, it will be used directly to run *iqtree* and get the evolutionary distances.
 - BED1 format does not contain the gene name information, so BED2 format should be used instead.
  
 
