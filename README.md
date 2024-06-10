@@ -141,7 +141,7 @@ We provide a `bin` directory with binaries of `bedtools` and `iqtree2`. If the G
 **Notes**:
 - **Iqtree** - To reconstruct the gene family phylogeny, [IqTree](http://www.iqtree.org/) can be run using with default presets or using '--fast' option in order to perform a fast tree search (resembling the FastTree method).
     - By default, GALEON runs iqtree with '--fast' option (`-t iqtree-fast`)
-    - Alternatively, for more accurate tree search run GALEON changing the `-t` parameter (`-t iqtree`)
+    - For more accurate tree search run GALEON changing the `-t` parameter (`-t iqtree`)
 
 Alternatively, check the corresponding documentation for installation instructions.
 
