@@ -331,7 +331,7 @@ def Glob_Scatter_Plot(i_df, display_legend_opt):
     print(mypalette)
     sns_plot = sns.scatterplot(x="PhysicalDistance", y="EvolutionaryDistance", \
                                data=i_df, hue="Scf_hint", ax=A1, \
-                               alpha=1, s = 12, palette=mypalette, \
+                               alpha=1, s = 25, palette=mypalette, \
                                clip_on=True)
     # sns_plot = sns.scatterplot(x="phys", y="evo", data=i_df, hue="clusters", palette="rainbow", ax=A1, clip_on=True)
     A1.set_xlabel('Physical distances (bp)')

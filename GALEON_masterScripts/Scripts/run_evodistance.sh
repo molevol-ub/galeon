@@ -14,7 +14,7 @@ SCRIPTPATH=$(dirname "$SCRIPT")
 
 PROTFILE=''
 ALNMETHOD=mafft-linsi
-TREEMETHOD=FastTree
+TREEMETHOD=iqtree-fast
 BINFOLDER="$SCRIPTPATH/bin"
 OUTPUT=Output
 
@@ -24,7 +24,7 @@ function usage {
 	echo "  $(basename $0)"
 	echo "      -p Input protein fasta file"
 	echo "      -m Program to conduct the multiple sequence alignment. Specify 'mafft-linsi' or 'mafft', mafft-linsi is more accurate but slow for hundreds of protein sequences (Default=$ALNMETHOD)"	
-	echo "      -t Program to infer the phylogenetic tree across the input proteins. Specify 'FastTree' or 'iqtree' (Default=$TREEMETHOD)"
+	echo "      -t Program to infer the phylogenetic tree across the input proteins. Specify 'FastTree', 'iqtree-fast' or 'iqtree' (Default=$TREEMETHOD)"
 	echo "      -b PATH to bin folder containing the required programs (Default=$BINFOLDER)"
 	echo "      -o Prefix for the generated output files (Default=$OUTPUT)"
 	echo
@@ -146,12 +146,27 @@ if [ $TREEMETHOD == "FastTree" ] ; then
 
 	FastTree $OUTPUT".aln" > ${OUTPUT}.$TREEMETHOD".nwk"
 
+elif [ $TREEMETHOD == "iqtree-fast" ] ; then
+
+	if ! command -v iqtree2 &> /dev/null
+	then
+		echo -e "Cannot find iqtree2 binary, make sure to export the path";
+		usage
+		exit 1;
+	fi
+
+	echo " - Input alignment file: '${OUTPUT}.aln'"
+	echo " - Output treefile file: '${OUTPUT}.${TREEMETHOD}.nwk'"
+
+	iqtree2 --fast -s $OUTPUT".aln" -m MFP --prefix $OUTPUT
+	mv $OUTPUT".treefile" ${OUTPUT}.$TREEMETHOD".nwk"
+
 elif [ $TREEMETHOD == "iqtree" ] ; then
 	
 #	if [[ ! -f iqtree2 ]] ; then
 	if ! command -v iqtree2 &> /dev/null
 	then		
-		echo -e "Cannot find FastTree binary, make sure to export the path";
+		echo -e "Cannot find iqtree2 binary, make sure to export the path";
 		usage
 		exit 1;
 	fi
@@ -163,7 +178,7 @@ elif [ $TREEMETHOD == "iqtree" ] ; then
 	mv $OUTPUT".treefile" ${OUTPUT}.$TREEMETHOD".nwk"
 
 else
-	echo -e "\nERROR, no recognized tree program was detected. Please specify 'FastTree' or 'iqtree' in -t option\n"
+	echo -e "\nERROR, no recognized tree program was detected. Please specify 'FastTree', 'iqtree-fast' or 'iqtree' in -t option\n"
 	exit 1;
 fi
 

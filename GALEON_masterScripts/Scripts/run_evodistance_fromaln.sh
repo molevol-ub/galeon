@@ -13,7 +13,7 @@ SCRIPT=$(realpath "$0")
 SCRIPTPATH=$(dirname "$SCRIPT")
 
 PROTFILE=''
-TREEMETHOD=FastTree
+TREEMETHOD=iqtree-fast
 BINFOLDER="$SCRIPTPATH/bin"
 OUTPUT=Output
 
@@ -22,7 +22,7 @@ function usage {
 	echo "Usage:"
 	echo "  $(basename $0)"
 	echo "      -pm Input protein multiple sequence alignment fasta file"
-	echo "      -t Program to infer the phylogenetic tree across the input proteins. Specify 'FastTree' or 'iqtree' (Default=$TREEMETHOD)"
+	echo "      -t Program to infer the phylogenetic tree across the input proteins. Specify 'FastTree', 'iqtree-fast' or 'iqtree' (Default=$TREEMETHOD)"
 	echo "      -b PATH to bin folder containing the required programs (Default=$BINFOLDER)"
 	echo "      -o Prefix for the generated output files (Default=$OUTPUT)"
 	echo
@@ -104,7 +104,7 @@ elif [ $TREEMETHOD == "iqtree" ] ; then
 #	if [[ ! -f iqtree2 ]] ; then
 	if ! command -v iqtree2 &> /dev/null
 	then		
-		echo -e "Cannot find FastTree binary, make sure to export the path";
+		echo -e "Cannot find iqtree2 binary, make sure to export the path";
 		usage
 		exit 1;
 	fi
@@ -115,8 +115,23 @@ elif [ $TREEMETHOD == "iqtree" ] ; then
 	iqtree2 -s $PROTFILE -m MFP --prefix $OUTPUT
 	mv $OUTPUT".treefile" ${OUTPUT}.$TREEMETHOD".nwk"
 
+elif [ $TREEMETHOD == "iqtree-fast" ] ; then
+
+	if ! command -v iqtree2 &> /dev/null
+	then
+		echo -e "Cannot find iqtree2 binary, make sure to export the path";
+		usage
+		exit 1;
+	fi
+
+	echo " - Input alignment file: '${PROTFILE}'"
+	echo " - Output treefile file: '${PROTFILE}.${TREEMETHOD}.nwk'"
+
+	iqtree2 --fast -s $OUTPUT".aln" -m MFP --prefix $OUTPUT
+	mv $OUTPUT".treefile" ${OUTPUT}.$TREEMETHOD".nwk"
+
 else
-	echo -e "\nERROR, no recognized tree program was detected. Please specify 'FastTree' or 'iqtree' in -t option\n"
+	echo -e "\nERROR, no recognized tree program was detected. Please specify 'FastTree', 'iqtree-fast' or 'iqtree' in -t option\n"
 	exit 1;
 fi
 
