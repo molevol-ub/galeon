@@ -207,10 +207,10 @@ if __name__ == "__main__":
         help = "PATH to the bedtools binary file")
 
     parser_default.add_argument("-t", "--EvoTreeSoft",
-        default = "FastTree",
+        default = "iqtree-fast",
         type = str,
-        choices = ["FastTree", "iqtree"],
-        help = "Software for the computation of Evolutionary Distances. (Default: FastTree)")
+        choices = ["FastTree", "iqtree-fast", "iqtree"],
+        help = "Software for the computation of Evolutionary Distances. (Default: iqtree-fast)")
 
     parser_default.add_argument("-m", "--MSAalgorithm",
         default = "mafft-linsi",
@@ -431,7 +431,9 @@ if config["mode"] == "clusterfinder":
         Tree_SoftName = Tree_Soft + "2"
     elif Tree_Soft == "FastTree":
         Tree_SoftName = Tree_Soft
-
+    elif Tree_Soft == "iqtree-fast":
+        Tree_SoftName = "iqtree2"
+        
     g_values_data = config["gValue"]
 
     # Start...
