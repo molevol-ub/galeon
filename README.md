@@ -140,7 +140,9 @@ We provide a `bin` directory with binaries of `bedtools`, `FastTree` and `iqtree
 
 **Notes**:
 - **FastTree** - By default, GALEON uses FastTree to infer the phylogeny among gene family copies. http://www.microbesonline.org/fasttree/
-- **Iqtree** - IqTree can be used instead of FastTree to reconstruct the gene family phylogeny: http://www.iqtree.org/
+- **Iqtree** - To reconstruct the gene family phylogeny, [IqTree](http://www.iqtree.org/) can be run using with default presets or using '--fast' option in order to perform a fast tree search (resembling the FastTree method).
+    - By default, GALEON runs iqtree with '--fast' option (`-t iqtree-fast`)
+    - For more accurate tree search run GALEON changing the `-t` parameter (`-t iqtree`)
 
 Alternatively, check the corresponding documentation for installation instructions.
 
