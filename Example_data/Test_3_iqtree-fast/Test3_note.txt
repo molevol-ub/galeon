@@ -1,0 +1,5 @@
+# --- Test 3 --- with iqtree-fast #
+# Find gene clusters for GR (gustatory receptors) and IR (ionotropic receptors) gene families.
+# Run Galeon with two g values: 100kb and 300kb
+
+# Add evolutionary distance information for each family by aligning the proteins and computing the evolutionary distances between them using iqtree-fast

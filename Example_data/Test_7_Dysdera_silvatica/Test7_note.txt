@@ -1,0 +1,4 @@
+# --- Test 7 ---  #
+# Find gene clusters between GR (gustatory receptors) and IR (ionotropic receptors) gene families.
+# This dataset includes 98 GRs and 411 IRs annotated in Dysdera silvatca genome
+# Run Galeon with one g value: 100kb

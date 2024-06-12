@@ -1,0 +1,5 @@
+# --- Test 5 --- #
+# Find gene clusters for GR (gustatory receptors) and IR (ionotropic receptors) gene families.
+# Run Galeon with two g values: 100kb and 300kb
+
+# Add evolutionary distance information for each family by computing the evolutionary distances using a pre-computed protein aligment
