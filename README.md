@@ -822,7 +822,7 @@ GALEON_SummaryFiles.py -fam merged -clust 5_TwoFamJointAnalysis_GFF3/ -coords GF
 GALEON_Report.py -clust 5_TwoFamJointAnalysis_GFF3/ -ssize ChrSizes.txt -echo False
 ```
 
-### 4.6. Test 6. Single family analysis using physical and evolutionary distances (using a protein MSA)
+### 4.6. Test 6. GR and IR, single family analysis using physical and evolutionary distances (using a protein MSA) in *Dysdera silvatica*
 
 This dataset includes the information for 98 GRs and 411 IRs annotated in *Dysdera silvatica* genome ([Escuer et al. 2022](https://doi.org/10.1111/1755-0998.13471)).
 
