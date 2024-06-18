@@ -824,7 +824,7 @@ GALEON_Report.py -clust 5_TwoFamJointAnalysis_GFF3/ -ssize ChrSizes.txt -echo Fa
 
 ### 4.6. Test 6. Single family analysis using physical and evolutionary distances (using a protein MSA)
 
-This dataset includes the information for 98 GRs and 411 IRs annotated in *Dysdera silvatica* genome ((Escuer et al. 2022)[https://doi.org/10.1111/1755-0998.13471]).
+This dataset includes the information for 98 GRs and 411 IRs annotated in *Dysdera silvatica* genome ([Escuer et al. 2022](https://doi.org/10.1111/1755-0998.13471)).
 
 - Input directory with annotation files: `-a GFFs`
 - Input g value: `-g 100`
