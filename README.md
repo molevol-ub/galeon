@@ -734,21 +734,27 @@ GALEON_SummaryFiles.py -fam IR -clust 2_OneFam_PhysDistOnly_GFF3/ -coords GFFs -
 GALEON_Report.py -clust 2_OneFam_PhysDistOnly_GFF3/ -ssize ChrSizes.txt -echo False
 ```
 
-### 4.3. Test 3. Single family analysis using physical and evolutionary distances (using the protein sequences)
+### 4.3. Test 3. Single family analysis using physical and evolutionary distances (using unaligned protein sequences)
 - Input directory with annotation files: `-a GFFs`
 - Input g value: `-g 100,200`
 - Enable the usage of Proteins: `-e enabled`
 - Protein directory with fasta files: `-p Proteins`
 - Output directory: `-outdir 3_OneFam_PhysEvoDistances_GFF3`
+- Square frame color: `-f orange`
 - Chromosome/Scaffold size file: `-ssize ChrSizes.txt`
 - Summarize the results for the first 7 largest scaffolds: `-sfilter 7`
 - Write the path to files in the final report?: `-echo False`
 
+There are three directories, one for each option to compute the evolutionary distance:
+- Test_3_iqtree-fast
+- Test_3_iqtree
+- Test_3_FastTree
+
 ```
-cd Test_3
+cd Test_3_iqtree-fast/
 
 # Run Galeon
-GALEON_ControlScript.py clusterfinder -a GFFs/ -g 100,300 -e enabled -p Proteins/ -outdir 3_OneFam_PhysEvoDistances_GFF3/
+GALEON_ControlScript.py clusterfinder -a GFFs/ -g 100,300 -e enabled -p Proteins/ -outdir 3_OneFam_PhysEvoDistances_GFF3/ -f orange
 
 # Get evolutionary statistics (Cst) and perform the Mann-Whitney test
 GALEON_GetEvoStats.py -clust 3_OneFam_PhysEvoDistances_GFF3/ -prot Proteins/ -coords GFFs
@@ -795,8 +801,11 @@ GALEON_Report.py -clust 4_OneFam_PhysEvoDistances_GFF3_pm/ -plots Plots -ssize C
 
 ### 4.5. Test 5. Joint analysis of two gene families
 - Input directory with annotation files: `-a GFFs`
-- Input g value: `-g 100,200`
+- Input g value: `-g 100`
 - Enable the usage of Proteins: `-e enabled`
+- Color map: `-cmap_1 Blues_r`
+- Square frame color for family 1 `-f red`
+- Square frame color for family 2 `-f2 orange`
 - Perform the joint analysis of two families: `-F BetweenFamilies`
 - Output directory: `-outdir 5_TwoFamJointAnalysis_GFF3`
 
@@ -804,7 +813,7 @@ GALEON_Report.py -clust 4_OneFam_PhysEvoDistances_GFF3_pm/ -plots Plots -ssize C
 cd Test_5
 
 # Run Galeon
-GALEON_ControlScript.py clusterfinder -a GFFs/ -F BetweenFamilies -e disabled -outdir 5_TwoFamJointAnalysis_GFF3
+GALEON_ControlScript.py clusterfinder -a GFFs/ -F BetweenFamilies -e disabled -outdir 5_TwoFamJointAnalysis_GFF3 -cmap_1 Blues_r -f red -f2 orange
 
 # Generate summary files and tables
 GALEON_SummaryFiles.py -fam merged -clust 5_TwoFamJointAnalysis_GFF3/ -coords GFFs/merged_dir/ -ssize ChrSizes.txt -sfilter 7
@@ -813,13 +822,49 @@ GALEON_SummaryFiles.py -fam merged -clust 5_TwoFamJointAnalysis_GFF3/ -coords GF
 GALEON_Report.py -clust 5_TwoFamJointAnalysis_GFF3/ -ssize ChrSizes.txt -echo False
 ```
 
+### 4.6. Test 6. Single family analysis using physical and evolutionary distances (using a protein MSA)
+
+This dataset includes the information for 98 GRs and 411 IRs annotated in *Dysdera silvatica* genome ((Escuer et al. 2022)[https://doi.org/10.1111/1755-0998.13471]).
+
+- Input directory with annotation files: `-a GFFs`
+- Input g value: `-g 100`
+- Enable the usage of Proteins: `-e enabled`
+- Protein directory with fasta files: `-p Proteins`
+- Use pre-computed MSA files: `-pm True`
+- Output directory: `-outdir 4_OneFam_PhysEvoDistances_GFF3_pm`
+- Square frame color: `-f orange`
+- Chromosome/Scaffold size file: `-ssize ChrSizes.txt`
+- Summarize the results for the first 7 largest scaffolds: `-sfilter 7`
+- Write the path to files in the final report?: `-echo False`
+
+```
+cd Test_6
+
+# Run Galeon
+GALEON_ControlScript.py clusterfinder -a GFFs/ -g 100 -e enabled -p Proteins/ -outdir 6_OneFam_PhysEvoDistances_GFF3/ -f orange -pm True
+
+# Get evolutionary statistics (Cst) and perform the Mann-Whitney test
+GALEON_GetEvoStats.py -clust 6_OneFam_PhysEvoDistances_GFF3/ -prot Proteins/ -coords GFFs
+
+# Generate summary files and tables for GR family
+GALEON_SummaryFiles.py -fam GR -clust 6_OneFam_PhysEvoDistances_GFF3/ -coords GFFs -ssize ChrSizes.txt -sfilter 7 -colval magma
+
+# Generate summary files and tables for IR family
+GALEON_SummaryFiles.py -fam IR -clust 6_OneFam_PhysEvoDistances_GFF3/ -coords GFFs -ssize ChrSizes.txt -sfilter 7 -colval magma
+
+# Create a summary report
+GALEON_Report.py -clust 6_OneFam_PhysEvoDistances_GFF3/ -plots Plots -ssize ChrSizes.txt -echo False
+```
 
 ## 5. Citation
 
 Vadim Pisarenco, Joel Vizueta, Julio Rozas. GALEON: A Comprehensive Bioinformatic Tool to Analyse and Visualise Gene Clusters in Complete Genomes. Submitted. 2024. https://www.biorxiv.org/content/10.1101/2024.04.15.589673v1
 
+## 6. References
 
-## 6. Troubleshooting
+[1] Escuer, P., Pisarenco, V. A., Fernández-Ruiz, A. A., Vizueta, J., Sánchez-Herrero, J. F., Arnedo, M. A., Sánchez-Gracia, A., & Rozas, J. (2022). The chromosome-scale assembly of the Canary Islands endemic spider Dysdera silvatica (Arachnida, Araneae) sheds light on the origin and genome structure of chemoreceptor gene families in chelicerates. Molecular Ecology Resources, 22, 375–390. https://doi.org/10.1111/1755-0998.13471 
+
+## 7. Troubleshooting
 
 Should you encounter any error, please create an issue on GitHub specifying the error and providing as many details as possible.
 
