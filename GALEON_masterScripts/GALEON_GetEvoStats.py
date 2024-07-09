@@ -324,7 +324,8 @@ def GetStatistics_and_RunMWtest(i_FAMname, i_bedfile, i_evodistfile, i_clusterfi
     D_clusters = CheckClusterData(CLUSTERdictfile)
     
     if D_clusters == None:
-        return "Empty dictionary"
+        # return "Empty dictionary"
+        sys.exit(f"Exit caused by empty dictionary. Your ('{i_FAMname}') family may either don't have clusters or the chosen g value ('{i_gvhint}') is to small.")
     
     ''' Exclude overlapping entries (if any) '''
     # Load the information about overlapping genes
