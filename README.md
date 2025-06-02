@@ -858,7 +858,7 @@ GALEON_Report.py -clust 6_OneFam_PhysEvoDistances_GFF3/ -plots Plots -ssize ChrS
 
 ## 5. Citation
 
-Vadim Pisarenco, Joel Vizueta, Julio Rozas. GALEON: A Comprehensive Bioinformatic Tool to Analyse and Visualise Gene Clusters in Complete Genomes. Submitted. 2024. https://www.biorxiv.org/content/10.1101/2024.04.15.589673v1
+Vadim Pisarenco, Joel Vizueta, Julio Rozas. GALEON: A Comprehensive Bioinformatic Tool to Analyse and Visualise Gene Clusters in Complete Genomes. Bioinformatics, Volume 40, Issue 7, July 2024, btae439, https://doi.org/10.1093/bioinformatics/btae439
 
 ## 6. References
 
